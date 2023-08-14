@@ -1,4 +1,4 @@
-# Usage: OPENAI_API_KEY="...." python3 sample_llm_speak.py 100.94.1.1:26400
+# Usage: OPENAI_API_KEY="...." python3 sample_llm_speak.py
 
 from __future__ import annotations
 
@@ -13,11 +13,7 @@ import openai
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
-from kachaka_api import (  # noqa: E402
-    CommandTextFormatter,
-    ShelfLocationResolver,
-    pb2,
-)
+from kachaka_api import CommandTextFormatter, pb2  # noqa: E402
 from kachaka_api.aio import KachakaApiClient  # noqa: E402
 
 
@@ -89,17 +85,16 @@ def generate_speak_text(history: list[KachakaCommandRecord]) -> str:
 
 async def main() -> None:
     client = KachakaApiClient()
-    resolver = ShelfLocationResolver(client)
-    formatter = CommandTextFormatter(resolver)
+    formatter = CommandTextFormatter(client.resolver)
 
     state, command = await client.get_command_state()
     skip = state != pb2.CommandState.COMMAND_STATE_RUNNING
 
     async def on_shelves(shelves: list[pb2.Shelf]) -> None:
-        resolver.set_shelves(shelves)
+        client.resolver.set_shelves(shelves)
 
     async def on_locations(locations: list[pb2.Location]) -> None:
-        resolver.set_locations(locations)
+        client.resolver.set_locations(locations)
 
     async def on_command_result(result, command):
         nonlocal skip

@@ -17,11 +17,17 @@ import grpc
 
 from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
+from .layout_util import ShelfLocationResolver
 
 
 class KachakaApiClientBase:
     def __init__(self, target="100.94.1.1:26400"):
         self.stub = KachakaApiStub(grpc.insecure_channel(target))
+        self.resolver = ShelfLocationResolver()
+
+    def update_resolver(self):
+        self.resolver.set_shelves(self.get_shelves())
+        self.resolver.set_locations(self.get_locations())
 
     def get_robot_serial_number(self):
         request = pb2.GetRequest()
@@ -97,13 +103,15 @@ class KachakaApiClientBase:
 
     def move_shelf(
         self,
-        shelf_id: str,
-        location_id: str,
+        shelf_name_or_id: str,
+        location_name_or_id: str,
         *,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ):
+        shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
+        location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return self.start_command(
             pb2.Command(
                 move_shelf_command=pb2.MoveShelfCommand(
@@ -118,12 +126,13 @@ class KachakaApiClientBase:
 
     def return_shelf(
         self,
-        shelf_id: str = "",
+        shelf_name_or_id: str = "",
         *,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ):
+        shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         return self.start_command(
             pb2.Command(
                 return_shelf_command=pb2.ReturnShelfCommand(
@@ -151,12 +160,13 @@ class KachakaApiClientBase:
 
     def move_to_location(
         self,
-        location_id: str,
+        location_name_or_id: str,
         *,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ):
+        location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return self.start_command(
             pb2.Command(
                 move_to_location_command=pb2.MoveToLocationCommand(
