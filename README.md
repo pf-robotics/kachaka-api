@@ -34,7 +34,7 @@
   - [Playgroundでサンプルプログラムを実行する](#playgroundでサンプルプログラムを実行する)
   - [自作ソフトの自動起動](#自作ソフトの自動起動)
   - [サンプルを自動起動する例](#サンプルを自動起動する例)
-  - [playgroundのリソース制限](#playgroundのリソース制限)
+  - [Playgroundのリソース制限](#playgroundのリソース制限)
 
 
 ## 用語
@@ -584,7 +584,7 @@ python3 /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400 &
 * 保存後、カチャカを再起動します。再起動後、暫くすると、1分間隔で現在時刻を発話します。
 
 
-### playgroundのリソース制限
+### Playgroundのリソース制限
 
 * ストレージ総計(/home, tmp) 3GB
 * メモリー 512MB
