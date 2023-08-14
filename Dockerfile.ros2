@@ -1,0 +1,230 @@
+# syntax=docker/dockerfile:1.4.2
+#=============================================================================
+ARG BASE_ARCH
+
+#=============================================================================
+FROM amd64/ros:humble-ros-core-jammy AS x86_64
+#-----------------------------------------------------------------------------
+FROM arm64v8/ros:humble-ros-core-jammy AS aarch64
+
+#=============================================================================
+FROM ${BASE_ARCH} AS kachaka-api-base
+
+COPY --from=impactaky/mimic-cross:host-jammy /usr/bin/qemu-aarch64-static /usr/bin
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        dumb-init \
+        language-pack-ja-base \
+        libgrpc++ \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+#=============================================================================
+FROM kachaka-api-base AS kachaka-api-rosdep
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        python3-rosdep \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN rosdep init
+RUN rosdep update
+
+RUN mkdir -p /ws/src
+WORKDIR /ws
+
+COPY ros2/kachaka_description/package.xml /ws/src/kachaka_description/package.xml
+COPY ros2/kachaka_grpc_ros2_bridge/package.xml /ws/src/kachaka_grpc_ros2_bridge/package.xml
+COPY ros2/kachaka_interfaces/package.xml /ws/src/kachaka_interfaces/package.xml
+COPY ros2/demos/kachaka_follow/package.xml /ws/src/kachaka_follow/package.xml
+COPY ros2/demos/kachaka_smart_speaker/package.xml /ws/src/kachaka_smart_speaker/package.xml
+COPY ros2/demos/kachaka_speak/package.xml /ws/src/kachaka_speak/package.xml
+COPY ros2/demos/kachaka_vision/package.xml /ws/src/kachaka_vision/package.xml
+
+RUN rosdep keys --ignore-src --from-paths src \
+    | xargs rosdep resolve --rosdistro humble --os=ubuntu:jammy \
+    | grep -v '^#' \
+    | sed 's/ \+/\n/g'\
+    | sort \
+    > /rosdep-package-list.txt
+
+#=============================================================================
+FROM kachaka-api-base AS kachaka-api-ros-base
+
+COPY --from=kachaka-api-rosdep /rosdep-package-list.txt /tmp/rosdep-package-list.txt
+RUN cat /tmp/rosdep-package-list.txt \
+    && apt-get update \
+    && cat /tmp/rosdep-package-list.txt | xargs apt-get install -y --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+#=============================================================================
+FROM kachaka-api-base AS kachaka-api-protogen
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        protobuf-compiler-grpc \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY protos/kachaka-api.proto /ws/protos/
+WORKDIR /ws
+RUN mkdir -p \
+        /ws/gen-src/cpp \
+    && protoc -I protos \
+              --grpc_out=/ws/gen-src/cpp \
+              --plugin=protoc-gen-grpc=/usr/bin/grpc_cpp_plugin \
+              --cpp_out=/ws/gen-src/cpp \
+              protos/*.proto
+
+#=============================================================================
+FROM kachaka-api-ros-base AS kachaka-api-build-base-arm64-aarch64
+
+#-----------------------------------------------------------------------------
+FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-x86_64
+
+#-----------------------------------------------------------------------------
+FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-aarch64
+
+COPY --from=impactaky/mimic-cross:host-jammy / /host
+RUN mv /host/mimic-cross-target /mimic-cross
+RUN /mimic-cross/setup.sh
+
+#-----------------------------------------------------------------------------
+FROM kachaka-api-build-base-${BUILDARCH}-${BASE_ARCH} AS kachaka-api-build-base
+
+#=============================================================================
+FROM kachaka-api-build-base AS kachaka-api-build-grpc-ros2-bridge
+
+ARG PREFIX=/opt/kachaka
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        libprotobuf-dev \
+        libgrpc++-dev \
+        ros-dev-tools \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /ws
+
+COPY ros2/kachaka_description /ws/src/kachaka_description
+COPY ros2/kachaka_grpc_ros2_bridge /ws/src/kachaka_grpc_ros2_bridge
+COPY ros2/kachaka_interfaces /ws/src/kachaka_interfaces
+COPY --from=kachaka-api-protogen /ws/gen-src/cpp /ws/src/kachaka_grpc_ros2_bridge/gen-src
+RUN . /opt/ros/humble/setup.sh && \
+    colcon build --install-base ${PREFIX} --merge-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release
+
+#=============================================================================
+FROM kachaka-api-build-base AS kachaka-api-build-ros2-demos
+
+ARG PREFIX=/opt/kachaka
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        ros-dev-tools \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /ws
+
+COPY --from=kachaka-api-build-grpc-ros2-bridge ${PREFIX} ${PREFIX}
+COPY ros2/demos/kachaka_follow /ws/src/kachaka_follow
+COPY ros2/demos/kachaka_smart_speaker /ws/src/kachaka_smart_speaker
+COPY ros2/demos/kachaka_speak /ws/src/kachaka_speak
+COPY ros2/demos/kachaka_vision /ws/src/kachaka_vision
+RUN . /opt/kachaka/setup.sh && \
+    colcon build --install-base ${PREFIX} --merge-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release
+
+#=============================================================================
+FROM kachaka-api-ros-base AS kachaka-grpc-ros2-bridge
+
+ARG PREFIX=/opt/kachaka
+
+COPY --from=kachaka-api-build-grpc-ros2-bridge ${PREFIX} ${PREFIX}
+
+ARG BUILD_VERSION="no-version-specified"
+ENV BUILD_VERSION=${BUILD_VERSION}
+ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--"]
+
+#=============================================================================
+FROM kachaka-api-ros-base AS kachaka-ros2-demos
+
+ARG PREFIX=/opt/kachaka
+
+COPY --from=kachaka-api-build-ros2-demos ${PREFIX} ${PREFIX}
+
+ARG BUILD_VERSION="no-version-specified"
+ENV BUILD_VERSION=${BUILD_VERSION}
+ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--"]
+
+#=============================================================================
+FROM ubuntu:22.04 AS kachaka-playground-base-x86_64
+
+#-----------------------------------------------------------------------------
+# This image was created by executing the following command within https://github.com/multiarch/ubuntu-core
+# sudo ./update.sh -a arm64 -v jammy -q aarch64 -u v6.1.0-5 -d docker.io/multiarch/ubuntu-core -t arm64
+FROM asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/multiarch/ubuntu-core:KEEP-arm64-jammy AS kachaka-playground-base-aarch64
+
+#-----------------------------------------------------------------------------
+FROM kachaka-playground-base-${BASE_ARCH} AS kachaka-playground
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# NOTE: gcc is required for installing jupyterlab install
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        curl \
+        gcc \
+        git \
+        iproute2 \
+        libglib2.0-0 \
+        nano \
+        net-tools \
+        openssh-server \
+        python3-dev \
+        python3-pip \
+        python3-venv \
+        rsync \
+        unzip \
+        vim-tiny \
+        wget \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN pip3 install jupyterlab grpcio-tools ipywidgets
+
+RUN sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN mkdir /var/run/sshd
+# TODO(nozaki) Change password
+RUN adduser kachaka --uid 5000
+RUN echo kachaka:kachaka | chpasswd
+
+ARG PROTO_DIR=/usr/local/share/kachaka/protos
+ARG PYTHON_PACKAGE_DIR=/usr/local/lib/python3.10/dist-packages/
+COPY protos/kachaka-api.proto ${PROTO_DIR}/kachaka-api.proto
+RUN python3 -m grpc_tools.protoc \
+    -I${PROTO_DIR} \
+    --python_out=${PYTHON_PACKAGE_DIR} \
+    --pyi_out=${PYTHON_PACKAGE_DIR} \
+    --grpc_python_out=${PYTHON_PACKAGE_DIR} \
+    ${PROTO_DIR}/*.proto
+
+# These lines should come at the end of the kachaka-playground
+WORKDIR /home/kachaka
+USER kachaka
+
+#=============================================================================
+FROM scratch AS kachaka-api-dummy
+
+COPY --from=kachaka-grpc-ros2-bridge /etc/os-release /dummy-copy-for-build
+COPY --from=kachaka-ros2-demos /etc/os-release /dummy-copy-for-build
+COPY --from=kachaka-playground /etc/os-release /dummy-copy-for-build

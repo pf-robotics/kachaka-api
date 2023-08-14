@@ -1,0 +1,22 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+DerivePointerAlignment: false
+IncludeBlocks: Regroup
+IncludeCategories:
+  # First-party header
+  - Regex:           '".*"'
+    Priority:        3
+  # Library header
+  - Regex:           '^<.*/.*>'
+    Priority:        2
+  # Standard library header
+  - Regex:           '^<.*>'
+    Priority:        1
+IncludeIsMainRegex: (_test)?$
+PointerAlignment: Left
+...

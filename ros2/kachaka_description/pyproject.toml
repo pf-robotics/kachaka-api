@@ -1,0 +1,14 @@
+[tool.pysen]
+version = "0.9.1"
+
+[tool.pysen-cli]
+settings_dir = "."
+
+[tool.pysen.lint]
+enable_black = false
+enable_flake8 = false
+enable_isort = false
+enable_mypy = false
+
+[tool.pysen.plugin.cmake_format]
+function = "pysen_plugins::cmake_format"

@@ -1,0 +1,451 @@
+//  Copyright 2023 Preferred Robotics, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package kachaka_api;
+
+// Common messages
+message Metadata {
+  sfixed64 cursor = 1;
+}
+
+message Result {
+  bool success = 1;
+  int32 error_code = 3;
+}
+
+message Error {
+  int32 error_code = 2;
+}
+
+message RosHeader {
+  int64 stamp_nsec = 1;
+  string frame_id = 2;
+}
+
+message Pose {
+  double x = 1;
+  double y = 2;
+  double theta = 3;
+}
+
+message Vector3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Quaternion {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  double w = 4;
+}
+
+message Pose3d {
+  Vector3 position = 1;
+  Quaternion orientation = 2;
+}
+
+message Twist {
+  Vector3 linear = 1;
+  Vector3 angular = 2;
+}
+
+message Pose3dWithCovariance {
+  Pose3d pose = 1;
+  repeated double covariance = 2;
+}
+
+message TwistWithCovariance {
+  Twist twist = 1;
+  repeated double covariance = 2;
+}
+
+message Map {
+  bytes data = 1;  // uint8[]
+  string name = 2;
+  double resolution = 3;
+  int32 width = 4;   // larger than 0
+  int32 height = 5;  // larger than 0
+  Pose origin = 6;
+}
+
+enum LocationType {
+  LOCATION_TYPE_UNSPECIFIED = 0;  // normal location
+  LOCATION_TYPE_CHARGER = 1;
+  LOCATION_TYPE_SHELF_HOME = 2;
+}
+
+message Location {
+  string id = 1;
+  string name = 2;
+  Pose pose = 3;  // relative to map origin
+  LocationType type = 4;
+  bool undock_shelf_aligning_to_wall = 5;
+  bool undock_shelf_avoiding_obstacles = 6;
+  bool ignore_voice_recognition = 7;
+}
+
+message ShelfSize {
+  double width = 1;
+  double depth = 2;
+  double height = 3;
+}
+
+enum ShelfAppearance {
+  SHELF_APPEARANCE_UNSPECIFIED = 0;
+  SHELF_APPEARANCE_DEFAULT_SHELF = 1;
+  SHELF_APPEARANCE_KACHAKA_SHELF_3DRAWERS = 2;
+  SHELF_APPEARANCE_KACHAKA_SHELF_2DRAWERS = 3;
+}
+
+enum ShelfSpeedMode {
+  SHELF_SPEED_MODE_UNSPECIFIED = 0;
+  SHELF_SPEED_MODE_LOW = 1;
+  SHELF_SPEED_MODE_NORMAL = 2;
+}
+
+message RecognizableName {
+  string name = 1;
+  bool deletable = 2;
+}
+
+message Shelf {
+  string id = 1;
+  string name = 2;
+  Pose pose = 3;  // relative to map origin
+  ShelfSize size = 4;
+  ShelfAppearance appearance = 5;
+  repeated RecognizableName recognizable_names = 7;  // Recognizable by speech recognition.
+  string home_location_id = 8;
+  ShelfSpeedMode speed_mode = 9;
+  bool ignore_voice_recognition = 10;
+}
+
+message RosImu {
+  RosHeader header = 1;
+  Quaternion orientation = 2;
+  repeated double orientation_covariance = 3;
+  Vector3 angular_velocity = 4;
+  repeated double angular_velocity_covariance = 5;
+  Vector3 linear_acceleration = 6;
+  repeated double linear_acceleration_covariance = 7;
+}
+
+message RosOdometry {
+  RosHeader header = 1;
+  string child_frame_id = 2;
+  Pose3dWithCovariance pose = 3;
+  TwistWithCovariance twist = 4;
+}
+
+message RosLaserScan {
+  RosHeader header = 1;
+  double angle_min = 2;
+  double angle_max = 3;
+  double angle_increment = 4;
+  double time_increment = 5;
+  double scan_time = 6;
+  double range_min = 7;
+  double range_max = 8;
+  repeated double ranges = 9;
+  repeated double intensities = 10;
+}
+
+message RegionOfInterest {
+  uint32 x_offset = 1;
+  uint32 y_offset = 2;
+  uint32 height = 3;
+  uint32 width = 4;
+  bool do_rectify = 5;
+}
+
+message RosCameraInfo {
+ RosHeader header = 1;
+ uint32 height = 2;
+ uint32 width = 3;
+ string distortion_model = 4;
+ repeated double D = 5;
+ repeated double K = 6;
+ repeated double R = 7;
+ repeated double P = 8;
+ uint32 binning_x = 9;
+ uint32 binning_y = 10;
+ RegionOfInterest roi = 11;
+}
+
+message RosImage {
+  RosHeader header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  string encoding = 4;
+  bool is_bigendian = 5;
+  uint32 step = 6;
+  bytes data = 7;
+}
+
+message RosCompressedImage {
+  RosHeader header = 1;
+  string format = 2;
+  bytes data = 3;
+}
+
+enum ObjectLabel {
+  OBJECT_LABEL_UNSPECIFIED = 0;
+  OBJECT_LABEL_PERSON = 1;
+  OBJECT_LABEL_SHELF = 2;
+  OBJECT_LABEL_CHARGER = 3;
+  OBJECT_LABEL_DOOR = 4;
+}
+
+message ObjectDetection {
+  uint32 label = 1;
+  RegionOfInterest roi = 2;
+  float score = 3;
+  double distance_median = 4;
+}
+
+// Commands
+message Command {
+  oneof command {
+    MoveShelfCommand move_shelf_command = 1;
+    ReturnShelfCommand return_shelf_command = 2;
+    UndockShelfCommand undock_shelf_command = 5;
+    MoveToLocationCommand move_to_location_command = 7;
+    ReturnHomeCommand return_home_command = 8;
+    DockShelfCommand dock_shelf_command = 9;
+    SpeakCommand speak_command = 12;
+    MoveToPoseCommand move_to_pose_command = 13;
+  }
+}
+
+message MoveShelfCommand {
+  string target_shelf_id = 1;
+  string destination_location_id = 2;
+}
+
+message ReturnShelfCommand {
+  string target_shelf_id = 1;
+}
+
+message UndockShelfCommand {
+  string target_shelf_id = 1;
+}
+
+message MoveToLocationCommand {
+  string target_location_id = 1;
+}
+
+message ReturnHomeCommand {
+}
+
+message DockShelfCommand {
+}
+
+message SpeakCommand {
+  string text = 1;
+}
+
+message MoveToPoseCommand {
+  double x = 1;
+  double y = 2;
+  double yaw = 3;
+}
+
+enum CommandState {
+  COMMAND_STATE_UNSPECIFIED = 0;
+  COMMAND_STATE_PENDING = 1;  // No command is running. Waiting for requests.
+  COMMAND_STATE_RUNNING = 2;
+}
+
+// Requests and Responses
+message EmptyRequest {
+}
+
+message GetRequest {
+  Metadata metadata = 1;
+}
+
+message GetRobotSerialNumberResponse {
+  Metadata metadata = 1;
+  string serial_number = 2;
+}
+
+message GetRobotVersionResponse {
+  Metadata metadata = 1;
+  string version = 2;
+}
+
+message GetRobotPoseResponse {
+  Metadata metadata = 1;
+  Pose pose = 2;
+}
+
+message GetPngMapResponse {
+  Metadata metadata = 1;
+  Map map = 2;
+}
+
+message GetObjectDetectionResponse {
+  Metadata metadata = 1;
+  RosHeader header = 2;
+  repeated ObjectDetection objects = 3;
+}
+
+message GetRosImuResponse {
+  Metadata metadata = 1;
+  RosImu imu = 2;
+}
+
+message GetRosOdometryResponse {
+  Metadata metadata = 1;
+  RosOdometry odometry = 2;
+}
+
+message GetRosLaserScanResponse {
+  Metadata metadata = 1;
+  RosLaserScan scan = 2;
+}
+
+message GetFrontCameraRosCameraInfoResponse {
+  Metadata metadata = 1;
+  RosCameraInfo camera_info = 2;
+}
+
+message GetFrontCameraRosImageResponse {
+  Metadata metadata = 1;
+  RosImage image = 2;
+}
+
+message GetFrontCameraRosCompressedImageResponse {
+  Metadata metadata = 1;
+  RosCompressedImage image = 2;
+}
+
+message StartCommandRequest {
+  Command command = 1;
+  bool cancel_all = 2;
+  string tts_on_success = 3;
+  string title = 4;
+}
+
+message StartCommandResponse {
+  Result result = 1;
+  string command_id = 2;
+}
+
+message CancelCommandResponse {
+  Result result = 1;
+  Command command = 2;
+}
+
+message GetCommandStateResponse {
+  Metadata metadata = 1;
+  CommandState state = 2;
+  Command command = 3;
+}
+
+message GetLastCommandResultResponse {
+  Metadata metadata = 1;
+  Result result = 2;  // Empty if there is no last command
+  Command command = 3;
+}
+
+message GetLocationsResponse {
+  Metadata metadata = 1;
+  repeated Location locations = 2;
+  string default_location_id = 3;
+}
+
+message GetShelvesResponse {
+  Metadata metadata = 1;
+  repeated Shelf shelves = 2;
+}
+
+message SetAutoHomingEnabledRequest {
+  bool enable = 1;
+}
+
+message SetAutoHomingEnabledResponse {
+  Result result = 1;
+}
+
+message GetAutoHomingEnabledResponse {
+  Metadata metadata = 1;
+  bool enabled = 2;
+}
+
+message SetManualControlEnabledRequest {
+  bool enable = 1;
+  bool use_shelf_registration = 2;  // effective only if enable==true
+}
+
+message SetManualControlEnabledResponse {
+  Result result = 1;
+}
+
+message GetManualControlEnabledResponse {
+  Metadata metadata = 1;
+  bool enabled = 2;
+}
+
+message SetRobotVelocityRequest {
+  double linear = 1;   // [-1, 1]
+  double angular = 2;  // [-1, 1]
+}
+
+message SetRobotVelocityResponse {
+  Result result = 1;
+}
+
+// History
+message History {
+  string id = 1;
+  Command command = 4;
+  bool success = 5;
+  int32 error_code = 6;
+  int64 command_executed_time = 7;
+}
+
+message GetHistoryListResponse {
+  Metadata metadata = 1;
+  repeated History histories = 2;
+}
+
+// Services
+service KachakaApi {
+  rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
+  rpc GetRobotVersion (GetRequest) returns (GetRobotVersionResponse);
+  rpc GetRobotPose (GetRequest) returns (GetRobotPoseResponse);
+  rpc GetPngMap (GetRequest) returns (GetPngMapResponse);
+  rpc GetObjectDetection (GetRequest) returns (GetObjectDetectionResponse);
+  rpc GetRosImu (GetRequest) returns (GetRosImuResponse);
+  rpc GetRosOdometry (GetRequest) returns (GetRosOdometryResponse);
+  rpc GetRosLaserScan (GetRequest) returns (GetRosLaserScanResponse);
+  rpc GetFrontCameraRosCameraInfo (GetRequest) returns (GetFrontCameraRosCameraInfoResponse);
+  rpc GetFrontCameraRosImage (GetRequest) returns (GetFrontCameraRosImageResponse);
+  rpc GetFrontCameraRosCompressedImage (GetRequest) returns (GetFrontCameraRosCompressedImageResponse);
+  rpc StartCommand (StartCommandRequest) returns (StartCommandResponse);
+  rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
+  rpc GetCommandState (GetRequest) returns (GetCommandStateResponse);
+  rpc GetLastCommandResult (GetRequest) returns (GetLastCommandResultResponse);
+  rpc GetLocations (GetRequest) returns (GetLocationsResponse);
+  rpc GetShelves (GetRequest) returns (GetShelvesResponse);
+  rpc SetAutoHomingEnabled (SetAutoHomingEnabledRequest) returns (SetAutoHomingEnabledResponse);
+  rpc GetAutoHomingEnabled (GetRequest) returns (GetAutoHomingEnabledResponse);
+  rpc SetManualControlEnabled (SetManualControlEnabledRequest) returns (SetManualControlEnabledResponse);
+  rpc GetManualControlEnabled (GetRequest) returns (GetManualControlEnabledResponse);
+  rpc SetRobotVelocity (SetRobotVelocityRequest) returns (SetRobotVelocityResponse);
+  rpc GetHistoryList (GetRequest) returns (GetHistoryListResponse);
+}

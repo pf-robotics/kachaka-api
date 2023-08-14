@@ -1,0 +1,102 @@
+parse:
+  additional_commands:
+    add_action_files:
+      pargs:
+        nargs: 0
+        flags:
+          - NOINSTALL
+      kwargs:
+        DIRECTORY: 1
+        FILES:
+          pargs:
+            nargs: 1+
+            sortable: True
+    add_message_files:
+      pargs:
+        nargs: 0
+        flags:
+          - NOINSTALL
+      kwargs:
+        DIRECTORY: 1
+        BASE_DIR: 1
+        FILES:
+          pargs:
+            nargs: 1+
+            sortable: True
+    add_rostest:
+      pargs:
+        nargs: 1+
+        flags: []
+      kwargs:
+        WORKING_DIRECTORY: 1
+        ARGS: +
+        DEPENDENCIES: +
+    add_rostest_gtest:
+      pargs:
+        nargs: 2
+    add_rostest_gmock:
+      pargs:
+        nargs: 2
+    add_service_files:
+      pargs:
+        nargs: 0
+        flags:
+          - NOINSTALL
+      kwargs:
+        DIRECTORY: 1
+        FILES:
+          pargs:
+            nargs: 1+
+            sortable: True
+    catkin_install_python:
+      pargs:
+        nargs: 1+
+        flags:
+          - OPTIONAL
+      kwargs:
+        DESTINATION: 1
+    catkin_package:
+      kwargs:
+        INCLUDE_DIRS: "*"
+        LIBRARIES: "*"
+        CATKIN_DEPENDS:
+          pargs:
+            nargs: 1+
+            sortable: True
+        DEPENDS:
+          pargs:
+            nargs: 1+
+            sortable: True
+        CFG_EXTRAS: "*"
+    # manually configure find_package to sort COMPONENTS
+    find_package:
+      pargs:
+        nargs: 1
+        flags:
+          - REQUIRED
+      kwargs:
+        COMPONENTS:
+          pargs:
+            nargs: 1+
+            sortable: True
+    generate_messages:
+      pargs:
+        nargs: "*"
+        flags: []
+      kwargs:
+        DEPENDENCIES: +
+        LANGS: +
+format:
+  line_width: 90
+  max_pargs_hwrap: 3
+  autosort: true
+  layout_passes:
+    ArgGroupNode:
+      [[0, False], [1, False], [2, False], [3, False], [4, False], [5, False]]
+  always_wrap:
+    - add_action_files
+    - add_message_files
+    - add_rostest_gmock
+    - add_service_files
+    - catkin_install_python
+    - generate_messages

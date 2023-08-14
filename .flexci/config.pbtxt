@@ -1,0 +1,59 @@
+configs {
+  key: "kachaka-api.lint"
+  value {
+    requirement {
+      cpu: 2
+      disk: 10
+      memory: 5 
+      image: "docker"
+    }
+    time_limit {
+      seconds: 1200  # 20min
+    }
+    checkout_strategy {
+      include_dot_git: true
+    }
+    enable_ssh_agent: true
+    command: "/bin/bash .flexci/lint.sh"
+  }
+}
+configs {
+  key: "kachaka-api.ros.aarch64"
+  value {
+    requirement {
+      cpu: 5
+      disk: 100
+      memory: 32
+      image: "docker"
+      google_nvme_disk: 1
+    }
+    time_limit {
+      seconds: 3600  # 60m
+    }
+    checkout_strategy {
+      include_dot_git: true
+    }
+    enable_ssh_agent: true
+    command: "/bin/bash .flexci/launcher.sh kachaka-api.ros.aarch64"
+  }
+}
+configs {
+  key: "kachaka-api.ros.x86_64"
+  value {
+    requirement {
+      cpu: 5
+      disk: 100
+      memory: 32
+      image: "docker"
+      google_nvme_disk: 1
+    }
+    time_limit {
+      seconds: 3600  # 60m
+    }
+    checkout_strategy {
+      include_dot_git: true
+    }
+    enable_ssh_agent: true
+    command: "/bin/bash .flexci/launcher.sh kachaka-api.ros.x86_64"
+  }
+}

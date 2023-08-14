@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="robot_state_publisher"
+        exec="robot_state_publisher"
+        name="robot_state_publisher"
+        namespace="kachaka_description">
+    <param name="robot_description"
+           value="$(command 'cat $(find-pkg-share kachaka_description)/robot/kachaka.urdf')" />
+  </node>
+  <node pkg="joint_state_publisher"
+        exec="joint_state_publisher"
+        name="joint_state_publisher"
+        namespace="kachaka_description" />
+</launch>

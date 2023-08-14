@@ -1,0 +1,8 @@
+kachaka_interfaces/KachakaCommand kachaka_command
+bool cancel_all
+string tts_on_success
+---
+bool success
+int32 error_code
+string message
+---

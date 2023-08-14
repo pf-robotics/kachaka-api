@@ -1,0 +1,8 @@
+PyYAML==6.0.1
+black==23.7.0
+cmake-format==0.6.13
+flake8==6.1.0
+isort==5.12.0
+nbqa==1.7.0
+pysen-plugins==2023.5.22
+pysen==0.10.4
