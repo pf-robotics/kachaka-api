@@ -142,13 +142,6 @@ class KachakaApiClient(KachakaApiClientBase):
             callable[[bool], Awaitable[None]]
         ] = None
 
-    @classmethod
-    async def create(
-        cls, target: str = "100.94.1.1:26400"
-    ) -> "KachakaApiClient":
-        self = KachakaApiClient(target)
-        return self
-
     def shutdown(self) -> None:
         self._running = False
 

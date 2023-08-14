@@ -13,6 +13,6 @@ output.write("# Don't edit directly\n\n")
 for line in aio_base:
     line = line.replace("await ", "")
     line = line.replace("async ", "")
-    line = line.replace("from ..generated", "from .generated")
+    line = line.replace("from ..", "from .")
     line = line.replace("grpc.aio.", "grpc.")
     output.write(line)
