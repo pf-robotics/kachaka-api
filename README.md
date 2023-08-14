@@ -201,14 +201,19 @@ Verify password: <新しいパスワード>
 
 ### 使用方法
 
-* JupyterLabで以下のファイルを参照してください
-    * 同期ライブラリ：[python/demos/kachaka_api_client.ipynb](python/demos/kachaka_api_client.ipynb)
-    * 非同期ライブラリ：[python/demos/kachaka_api_client_async.ipynb](python/demos/kachaka_api_client_async.ipynb)
+[python/demos/kachaka_api_client.ipynb](python/demos/kachaka_api_client.ipynb) で各APIを動作させながら試すことができます。
 
 ### カチャカAPIライブラリのサンプルコード
 
 * [sample_llm_speak.py](python/demos/sample_llm_speak.py) ... ChatGPT を使って、コマンド終了時にお喋りをするサンプル
 * その他、[python/demos/](python/demos) 以下に、JupyterLab で利用できる Notebook 形式が多数あります
+
+### 非同期ライブラリ
+
+gRPCの呼び出しを非同期にしたライブラリも提供しています。必要に応じてご利用ください。  
+同期ライブラリの機能に加えてcallback登録をサポートしています。  
+callback機能については[sample_llm_speak.py](python/demos/sample_llm_speak.py)をご参照ください。  
+使用方法を非同期版に書き換えたものはこちらです。[python/demos/kachaka_api_client_async.ipynb](python/demos/kachaka_api_client_async.ipynb)
 
 ## gRPC
 
@@ -219,6 +224,7 @@ Verify password: <新しいパスワード>
 
 ### PythonによるgRPCクライアント開発の準備（PCで行う場合）
 
+* この章の説明はNotebookではなくPCのTerminalによる実行を想定しています。
 * 以下のコマンドを実行し、サンプルコードをダウンロードします。
 
 ```
@@ -242,8 +248,8 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 
 ### PythonによるgRPCクライアント開発の準備（カチャカにsshして行う場合）
 
-
-* sshの手順はPlaygroundの項目を参照してください。
+* この章の説明はNotebookではなくTerminalによる実行を想定しています。カチャカにsshするか、JupyterLabのTerminal機能を利用してください。
+    * sshの手順はPlaygroundの項目を参照してください。
 * kachaka-api.protoファイルは予めPlaygoundにインストール済みですので、すぐに開発を始めることができます。
 * サンプルコードは「サンプルコードをJupyterLabで実行する」の項目の手順を参考にダウンロードします。
 
