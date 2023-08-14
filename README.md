@@ -540,7 +540,6 @@ rviz2 -d kachaka.rviz
 * utils/set_authorized_keys_from_github.ipynbを使用した設定方法
     * 画面左上のFile Browserを選択します。
     * 画面左のファイル一覧からutils → set_authorized_keys_from_github.ipynbをダブルクリックします。
-    * 画面中央のpublic_keysに公開鍵のテキストを貼り付けます。
     * 上部メニューの「▶▶」ボタンを押します
 
 ![set-authorized-keys-from-github](docs/images/set_authorized_keys_from_github.png)
