@@ -149,11 +149,12 @@ FROM kachaka-api-ros-base AS kachaka-grpc-ros2-bridge
 
 ARG PREFIX=/opt/kachaka
 
+COPY tools/ros2_bridge/env.sh /opt/kachaka/env.sh
 COPY --from=kachaka-api-build-grpc-ros2-bridge ${PREFIX} ${PREFIX}
 
 ARG BUILD_VERSION="no-version-specified"
 ENV BUILD_VERSION=${BUILD_VERSION}
-ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--"]
+ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--", "/opt/kachaka/env.sh"]
 
 #=============================================================================
 FROM kachaka-api-ros-base AS kachaka-ros2-demos
@@ -164,7 +165,7 @@ COPY --from=kachaka-api-build-ros2-demos ${PREFIX} ${PREFIX}
 
 ARG BUILD_VERSION="no-version-specified"
 ENV BUILD_VERSION=${BUILD_VERSION}
-ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--"]
+ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--", "/opt/kachaka/env.sh"]
 
 #=============================================================================
 FROM ubuntu:22.04 AS kachaka-playground-base-x86_64
