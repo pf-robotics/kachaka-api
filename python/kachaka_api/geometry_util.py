@@ -7,7 +7,7 @@ from .generated.kachaka_api_pb2 import Map, Pose, Quaternion
 
 
 def calculate_yaw_from_quaternion(q: Quaternion) -> float:
-    # 与えられるクォータニオンはz軸周り以外の回転を含まないと仮定
+    # カチャカの姿勢はz軸周りの回転のみ含むため、他の軸は無視して算出する
     yaw = atan2(q.z, q.w) * 2
     if abs(yaw) > pi:
         yaw -= np.sign(yaw) * 2 * pi
