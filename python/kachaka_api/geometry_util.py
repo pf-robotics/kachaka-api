@@ -1,9 +1,17 @@
-from math import cos, sin
+from math import atan2, cos, pi, sin
 from typing import Tuple
 
 import numpy as np
 
-from .generated.kachaka_api_pb2 import Map, Pose
+from .generated.kachaka_api_pb2 import Map, Pose, Quaternion
+
+
+def calculate_yaw_from_quaternion(q: Quaternion) -> float:
+    # 与えられるクォータニオンはz軸周り以外の回転を含まないと仮定
+    yaw = atan2(q.z, q.w) * 2
+    if abs(yaw) > pi:
+        yaw -= np.sign(yaw) * 2 * pi
+    return yaw
 
 
 def _transform_matrix(tx: float, ty: float, theta: float = 0) -> np.ndarray:
