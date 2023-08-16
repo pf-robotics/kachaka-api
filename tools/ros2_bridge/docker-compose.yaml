@@ -15,7 +15,7 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      bash -c ". /opt/kachaka/setup.bash && ros2 launch kachaka_grpc_ros2_bridge grpc_ros2_bridge.launch.xml server_uri:=${API_GRPC_BRIDGE_SERVER_URI}"
+      ros2 launch kachaka_grpc_ros2_bridge grpc_ros2_bridge.launch.xml server_uri:=${API_GRPC_BRIDGE_SERVER_URI}
   kachaka_follow:
     image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"
     network_mode: "host"
@@ -29,7 +29,7 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      bash -c ". /opt/kachaka/setup.bash && ros2 run kachaka_follow follow"
+      ros2 run kachaka_follow follow
   kachaka_speak:
     image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"
     network_mode: "host"
@@ -43,7 +43,7 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      bash -c ". /opt/kachaka/setup.bash && ros2 run kachaka_speak speak"
+      ros2 run kachaka_speak speak
   kachaka_smart_speaker:
     image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"
     network_mode: "host"
@@ -57,7 +57,7 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      bash -c ". /opt/kachaka/setup.bash && ros2 run kachaka_smart_speaker smart_speaker"
+      ros2 run kachaka_smart_speaker smart_speaker
   kachaka_vision:
     image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"
     network_mode: "host"
@@ -71,4 +71,4 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      bash -c ". /opt/kachaka/setup.bash && ros2 launch kachaka_vision hand_recognition_launch.py"
+      ros2 launch kachaka_vision hand_recognition_launch.py
