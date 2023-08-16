@@ -32,6 +32,7 @@ from ..generated.kachaka_api_pb2 import (
     RosImage,
     RosImu,
     RosLaserScan,
+    RosOdometry,
     Shelf,
 )
 from .base import KachakaApiClientBase
@@ -52,6 +53,7 @@ class KachakaApiClient(KachakaApiClientBase):
         self.get_png_map_cursor = 0
         self.get_object_detection_cursor = 0
         self.get_ros_imu_cursor = 0
+        self.get_ros_odometry_cursor = 0
         self.get_ros_laser_scan_cursor = 0
         self.get_front_camera_ros_camera_info_cursor = 0
         self.get_front_camera_ros_image_cursor = 0
@@ -90,6 +92,10 @@ class KachakaApiClient(KachakaApiClientBase):
         self._ros_imu: Optional[RosImu] = None
         self._ros_imu_callback: Optional[
             callable[[RosImu], Awaitable[None]]
+        ] = None
+        self._ros_odometry: Optional[RosOdometry] = None
+        self._ros_odometry_callback: Optional[
+            callable[[RosOdometry], Awaitable[None]]
         ] = None
         self._ros_laser_scan: Optional[RosLaserScan] = None
         self._ros_laser_scan_callback: Optional[
@@ -219,6 +225,17 @@ class KachakaApiClient(KachakaApiClientBase):
 
             if self._ros_imu_callback:
                 await self._ros_imu_callback(self._ros_imu)
+
+    async def _run_get_ros_odometry(self) -> None:
+        while self._running and self._ros_odometry_callback is not None:
+            request = build_get_request(self.get_ros_odometry_cursor)
+            response = await self.stub.GetRosOdometry(request)
+            self.get_ros_odometry_cursor = response.metadata.cursor
+
+            self._ros_odometry = response.odometry
+
+            if self._ros_odometry_callback:
+                await self._ros_odometry_callback(self._ros_odometry)
 
     async def _run_get_ros_laser_scan(self) -> None:
         while self._running and self._ros_laser_scan_callback is not None:
@@ -433,6 +450,13 @@ class KachakaApiClient(KachakaApiClientBase):
         self._ros_imu_callback = callback
         if callback is not None:
             asyncio.create_task(self._run_get_ros_imu())
+
+    def set_ros_odometry_callback(
+        self, callback: Optional[callable[[RosOdometry], Awaitable[None]]]
+    ) -> None:
+        self._ros_odometry_callback = callback
+        if callback is not None:
+            asyncio.create_task(self._run_get_ros_odometry())
 
     def set_ros_laser_scan_callback(
         self, callback: Optional[callable[[RosLaserScan], Awaitable[None]]]
