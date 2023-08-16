@@ -215,7 +215,7 @@ class KachakaApiClient(KachakaApiClientBase):
             response = await self.stub.GetRosImu(request)
             self.get_ros_imu_cursor = response.metadata.cursor
 
-            self._ros_imu = response.ros_imu
+            self._ros_imu = response.imu
 
             if self._ros_imu_callback:
                 await self._ros_imu_callback(self._ros_imu)
@@ -226,7 +226,7 @@ class KachakaApiClient(KachakaApiClientBase):
             response = await self.stub.GetRosLaserScan(request)
             self.get_ros_laser_scan_cursor = response.metadata.cursor
 
-            self._ros_laser_scan = response.ros_laser_scan
+            self._ros_laser_scan = response.scan
 
             if self._ros_laser_scan_callback:
                 await self._ros_laser_scan_callback(self._ros_laser_scan)
