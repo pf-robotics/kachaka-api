@@ -285,6 +285,11 @@ class KachakaApiClientBase:
         response = self.stub.SetAutoHomingEnabled(request)
         return response.result
 
+    def get_auto_homing_enabled(self):
+        request = pb2.GetRequest()
+        response = self.stub.GetAutoHomingEnabled(request)
+        return response.enabled
+
     def set_manual_control_enabled(self, enable: bool):
         request = pb2.SetManualControlEnabledRequest(enable=enable)
         response = self.stub.SetManualControlEnabled(request)
