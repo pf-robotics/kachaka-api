@@ -171,7 +171,7 @@ class KachakaApiClient(KachakaApiClientBase):
             response = await self.stub.GetRobotVersion(request)
             self.get_robot_version_cursor = response.metadata.cursor
 
-            self._robot_version = response.robot_version
+            self._robot_version = response.version
             assert self._robot_version is not None
 
             if self._robot_version_callback:
