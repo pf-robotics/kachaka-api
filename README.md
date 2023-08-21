@@ -570,6 +570,7 @@ python3 /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400
 * /home/kachaka/kachaka_startup.sh に自動起動したい処理を記述してください。
 * カチャカ起動時に自動的に実行されます
 * ログが /tmp/kachaka_startup.log に記録されます
+    * python3 を自動起動する際は `-u` オプションを付けると良いです。そうでないと標準出力がバッファリングされてしまい、ログが確認できないことがあります。
 
 ### サンプルを自動起動する例
 
@@ -580,7 +581,7 @@ python3 /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400
 jupyter-lab --port=26501 --ip='0.0.0.0' &
 
 # 以下の行を追加します
-python3 /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400 &
+python3 -u /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400 &
 ```
 
 * 保存後、カチャカを再起動します。再起動後、暫くすると、1分間隔で現在時刻を発話します。
