@@ -9,7 +9,7 @@ class KachakaApiStub(object):
     """Services
     """
 
-    def __init__(self, channel):
+    def __init__(self, channel: grpc.Channel):
         """Constructor.
 
         Args:

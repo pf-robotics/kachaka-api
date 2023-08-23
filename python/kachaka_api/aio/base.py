@@ -18,84 +18,106 @@ from ..layout_util import ShelfLocationResolver
 
 
 class KachakaApiClientBase:
-    def __init__(self, target="100.94.1.1:26400"):
+    def __init__(self, target: str = "100.94.1.1:26400"):
         self.stub = KachakaApiStub(grpc.aio.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
 
-    async def update_resolver(self):
-        self.resolver.set_shelves(await self.get_shelves())
-        self.resolver.set_locations(await self.get_locations())
-
-    async def get_robot_serial_number(self):
+    async def get_robot_serial_number(self) -> str:
         request = pb2.GetRequest()
-        response = await self.stub.GetRobotSerialNumber(request)
+        response: pb2.GetRobotSerialNumberResponse = (
+            await self.stub.GetRobotSerialNumber(request)
+        )
         return response.serial_number
 
-    async def get_robot_version(self):
+    async def get_robot_version(self) -> str:
         request = pb2.GetRequest()
-        response = await self.stub.GetRobotVersion(request)
+        response: pb2.GetRobotVersionResponse = await self.stub.GetRobotVersion(
+            request
+        )
         return response.version
 
-    async def get_robot_pose(self):
+    async def get_robot_pose(self) -> pb2.Pose:
         request = pb2.GetRequest()
-        response = await self.stub.GetRobotPose(request)
+        response: pb2.GetRobotPoseResponse = await self.stub.GetRobotPose(
+            request
+        )
         return response.pose
 
-    async def get_png_map(self):
+    async def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
-        response = await self.stub.GetPngMap(request)
+        response: pb2.GetPngMapResponse = await self.stub.GetPngMap(request)
         return response.map
 
-    async def get_object_detection(self):
+    async def get_object_detection(
+        self,
+    ) -> tuple[
+        pb2.RosHeader, grpc.RepeatedCompositeFieldContainer[pb2.ObjectDetection]
+    ]:
         request = pb2.GetRequest()
-        response = await self.stub.GetObjectDetection(request)
+        response: pb2.GetObjectDetectionResponse = (
+            await self.stub.GetObjectDetection(request)
+        )
         return (response.header, response.objects)
 
-    async def get_ros_imu(self):
+    async def get_ros_imu(self) -> pb2.RosImu:
         request = pb2.GetRequest()
-        response = await self.stub.GetRosImu(request)
+        response: pb2.GetRosImuResponse = await self.stub.GetRosImu(request)
         return response.imu
 
-    async def get_ros_odometry(self):
+    async def get_ros_odometry(self) -> pb2.RosOdometry:
         request = pb2.GetRequest()
-        response = await self.stub.GetRosOdometry(request)
+        response: pb2.GetRosOdometryResponse = await self.stub.GetRosOdometry(
+            request
+        )
         return response.odometry
 
-    async def get_ros_laser_scan(self):
+    async def get_ros_laser_scan(self) -> pb2.RosLaserScan:
         request = pb2.GetRequest()
-        response = await self.stub.GetRosLaserScan(request)
+        response: pb2.GetRosLaserScanResponse = await self.stub.GetRosLaserScan(
+            request
+        )
         return response.scan
 
-    async def get_front_camera_ros_camera_info(self):
+    async def get_front_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
         request = pb2.GetRequest()
-        response = await self.stub.GetFrontCameraRosCameraInfo(request)
+        response: pb2.GetFrontCameraRosCameraInfoResponse = (
+            await self.stub.GetFrontCameraRosCameraInfo(request)
+        )
         return response.camera_info
 
-    async def get_front_camera_ros_image(self):
+    async def get_front_camera_ros_image(self) -> pb2.RosImage:
         request = pb2.GetRequest()
-        response = await self.stub.GetFrontCameraRosImage(request)
+        response: pb2.GetFrontCameraRosImageResponse = (
+            await self.stub.GetFrontCameraRosImage(request)
+        )
         return response.image
 
-    async def get_front_camera_ros_compressed_image(self):
+    async def get_front_camera_ros_compressed_image(
+        self,
+    ) -> pb2.RosCompressedImage:
         request = pb2.GetRequest()
-        response = await self.stub.GetFrontCameraRosCompressedImage(request)
+        response: pb2.GetFrontCameraRosCompressedImageResponse = (
+            await self.stub.GetFrontCameraRosCompressedImage(request)
+        )
         return response.image
 
     async def start_command(
         self,
         command: pb2.Command,
         *,
-        cancel_all=True,
-        tts_on_success="",
-        title="",
-    ):
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
         request = pb2.StartCommandRequest(
             command=command,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
         )
-        response = await self.stub.StartCommand(request)
+        response: pb2.StartCommandResponse = await self.stub.StartCommand(
+            request
+        )
         return response.result
 
     async def move_shelf(
@@ -106,7 +128,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return await self.start_command(
@@ -128,7 +150,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         return await self.start_command(
             pb2.Command(
@@ -147,7 +169,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(undock_shelf_command=pb2.UndockShelfCommand()),
             cancel_all=cancel_all,
@@ -162,7 +184,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return await self.start_command(
             pb2.Command(
@@ -181,7 +203,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(return_home_command=pb2.ReturnHomeCommand()),
             cancel_all=cancel_all,
@@ -195,7 +217,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(dock_shelf_command=pb2.DockShelfCommand()),
             cancel_all=cancel_all,
@@ -210,7 +232,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(speak_command=pb2.SpeakCommand(text=text)),
             cancel_all=cancel_all,
@@ -227,7 +249,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(
                 move_to_pose_command=pb2.MoveToPoseCommand(x=x, y=y, yaw=yaw)
@@ -237,72 +259,110 @@ class KachakaApiClientBase:
             title=title,
         )
 
-    async def cancel_command(self):
+    async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
-        response = await self.stub.CancelCommand(request)
+        response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
+            request
+        )
         return (response.result, response.command)
 
-    async def get_command_state(self):
+    async def get_command_state(self) -> tuple[pb2.CommandState, pb2.Command]:
         request = pb2.GetRequest()
-        response = await self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
+            request
+        )
         return (response.state, response.command)
 
-    async def is_command_running(self):
+    async def is_command_running(self) -> bool:
         request = pb2.GetRequest()
-        response = await self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
+            request
+        )
         return response.state == pb2.CommandState.COMMAND_STATE_RUNNING
 
-    async def get_running_command(self):
+    async def get_running_command(self) -> pb2.Command | None:
         request = pb2.GetRequest()
-        response = await self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
+            request
+        )
         return response.command if response.HasField("command") else None
 
-    async def get_last_command_result(self):
+    async def get_last_command_result(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.GetRequest()
-        response = await self.stub.GetLastCommandResult(request)
+        response: pb2.GetLastCommandResultResponse = (
+            await self.stub.GetLastCommandResult(request)
+        )
         return (response.result, response.command)
 
-    async def get_locations(self):
+    async def get_locations(
+        self,
+    ) -> grpc.RepeatedCompositeFieldContainer[pb2.Location]:
         request = pb2.GetRequest()
-        response = await self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = await self.stub.GetLocations(
+            request
+        )
         return response.locations
 
-    async def get_default_location_id(self):
+    async def get_default_location_id(self) -> str:
         request = pb2.GetRequest()
-        response = await self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = await self.stub.GetLocations(
+            request
+        )
         return response.default_location_id
 
-    async def get_shelves(self):
+    async def get_shelves(
+        self,
+    ) -> grpc.RepeatedCompositeFieldContainer[pb2.Shelf]:
         request = pb2.GetRequest()
-        response = await self.stub.GetShelves(request)
+        response: pb2.GetShelvesResponse = await self.stub.GetShelves(request)
         return response.shelves
 
-    async def set_auto_homing_enabled(self, enable: bool):
+    async def set_auto_homing_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetAutoHomingEnabledRequest(enable=enable)
-        response = await self.stub.SetAutoHomingEnabled(request)
+        response: pb2.SetAutoHomingEnabledResponse = (
+            await self.stub.SetAutoHomingEnabled(request)
+        )
         return response.result
 
-    async def get_auto_homing_enabled(self):
+    async def get_auto_homing_enabled(self) -> bool:
         request = pb2.GetRequest()
-        response = await self.stub.GetAutoHomingEnabled(request)
+        response: pb2.GetAutoHomingEnabledResponse = (
+            await self.stub.GetAutoHomingEnabled(request)
+        )
         return response.enabled
 
-    async def set_manual_control_enabled(self, enable: bool):
+    async def set_manual_control_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetManualControlEnabledRequest(enable=enable)
-        response = await self.stub.SetManualControlEnabled(request)
+        response: pb2.SetManualControlEnabledResponse = (
+            await self.stub.SetManualControlEnabled(request)
+        )
         return response.result
 
-    async def get_manual_control_enabled(self):
+    async def get_manual_control_enabled(self) -> bool:
         request = pb2.GetRequest()
-        response = await self.stub.GetManualControlEnabled(request)
+        response: pb2.GetManualControlEnabledResponse = (
+            await self.stub.GetManualControlEnabled(request)
+        )
         return response.enabled
 
-    async def set_robot_velocity(self, linear, angular):
+    async def set_robot_velocity(
+        self, linear: float, angular: float
+    ) -> pb2.Result:
         request = pb2.SetRobotVelocityRequest(linear=linear, angular=angular)
-        response = await self.stub.SetRobotVelocity(request)
+        response: pb2.SetRobotVelocityResponse = (
+            await self.stub.SetRobotVelocity(request)
+        )
         return response.result
 
-    async def get_history_list(self):
+    async def get_history_list(
+        self,
+    ) -> grpc.RepeatedCompositeFieldContainer[pb2.History]:
         request = pb2.GetRequest()
-        response = await self.stub.GetHistoryList(request)
+        response: pb2.GetHistoryListResponse = await self.stub.GetHistoryList(
+            request
+        )
         return response.histories
+
+    async def update_resolver(self) -> None:
+        self.resolver.set_shelves(await self.get_shelves())
+        self.resolver.set_locations(await self.get_locations())
