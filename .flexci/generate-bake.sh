@@ -17,13 +17,13 @@ cat << EOF
 
 target "base" {
     dockerfile = "${DOCKERFILE}"
+    platforms = ["${PLATFORM}"]
 EOF
 if [[ -n ${OUTPUT_TYPE-} ]]; then
     echo "    output = [\"type=${OUTPUT_TYPE}\"]"
 fi
 cat << EOF
     args = {
-        BASE_ARCH = "${BASE_ARCH}"
         BUILD_VERSION = "${BUILD_VERSION}"
         SOFTWARE_VERSION = "${SOFTWARE_VERSION}"
         TAG = "${TAG}"
