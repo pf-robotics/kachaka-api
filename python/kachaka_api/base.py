@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import grpc
+from google._upb._message import RepeatedCompositeContainer
 
 from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
@@ -51,9 +52,7 @@ class KachakaApiClientBase:
 
     def get_object_detection(
         self,
-    ) -> tuple[
-        pb2.RosHeader, grpc.RepeatedCompositeFieldContainer[pb2.ObjectDetection]
-    ]:
+    ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
         request = pb2.GetRequest()
         response: pb2.GetObjectDetectionResponse = self.stub.GetObjectDetection(
             request
@@ -291,7 +290,7 @@ class KachakaApiClientBase:
 
     def get_locations(
         self,
-    ) -> grpc.RepeatedCompositeFieldContainer[pb2.Location]:
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
         response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
         return response.locations
@@ -303,7 +302,7 @@ class KachakaApiClientBase:
 
     def get_shelves(
         self,
-    ) -> grpc.RepeatedCompositeFieldContainer[pb2.Shelf]:
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
         response: pb2.GetShelvesResponse = self.stub.GetShelves(request)
         return response.shelves
@@ -345,7 +344,7 @@ class KachakaApiClientBase:
 
     def get_history_list(
         self,
-    ) -> grpc.RepeatedCompositeFieldContainer[pb2.History]:
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
         response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(request)
         return response.histories
