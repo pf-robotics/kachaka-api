@@ -25,5 +25,5 @@ docker run --rm \
     -v "${REPO_TOP_DIR}:${REPO_TOP_DIR}" \
     --workdir="$(pwd)" \
     --user="$(id -u):$(id -g)" \
-    asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/kachaka-api.lint:KEEP-20230815 \
+    asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/kachaka-api.lint:KEEP-20230824 \
     bash ./tools/lint/local_run.sh "${OPTS[@]}"
