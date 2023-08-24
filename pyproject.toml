@@ -30,6 +30,7 @@ excludes = [
 
 [[tool.pysen.lint.mypy_targets]]
 paths = [
+    "python/kachaka_api/base.py",
     "python/kachaka_api/aio/base.py",
 ]
 
