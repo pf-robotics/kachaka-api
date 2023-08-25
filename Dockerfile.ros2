@@ -1,14 +1,11 @@
-# syntax=docker/dockerfile:1.4.2
+# syntax=docker/dockerfile:1.6.0
 #=============================================================================
-ARG BASE_ARCH
-
-#=============================================================================
-FROM amd64/ros:humble-ros-core-jammy AS x86_64
+FROM amd64/ros:humble-ros-core-jammy AS kachaka-api-base-amd64
 #-----------------------------------------------------------------------------
-FROM arm64v8/ros:humble-ros-core-jammy AS aarch64
+FROM arm64v8/ros:humble-ros-core-jammy AS kachaka-api-base-arm64
 
 #=============================================================================
-FROM ${BASE_ARCH} AS kachaka-api-base
+FROM kachaka-api-base-${TARGETARCH} AS kachaka-api-base
 
 COPY --from=impactaky/mimic-cross:host-jammy /usr/bin/qemu-aarch64-static /usr/bin
 ENV DEBIAN_FRONTEND=noninteractive
@@ -84,20 +81,20 @@ RUN mkdir -p \
               protos/*.proto
 
 #=============================================================================
-FROM kachaka-api-ros-base AS kachaka-api-build-base-arm64-aarch64
+FROM kachaka-api-ros-base AS kachaka-api-build-base-arm64-arm64
 
 #-----------------------------------------------------------------------------
-FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-x86_64
+FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-amd64
 
 #-----------------------------------------------------------------------------
-FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-aarch64
+FROM kachaka-api-ros-base AS kachaka-api-build-base-amd64-arm64
 
 COPY --from=impactaky/mimic-cross:host-jammy / /host
 RUN mv /host/mimic-cross-target /mimic-cross
 RUN /mimic-cross/setup.sh
 
 #-----------------------------------------------------------------------------
-FROM kachaka-api-build-base-${BUILDARCH}-${BASE_ARCH} AS kachaka-api-build-base
+FROM kachaka-api-build-base-${BUILDARCH}-${TARGETARCH} AS kachaka-api-build-base
 
 #=============================================================================
 FROM kachaka-api-build-base AS kachaka-api-build-grpc-ros2-bridge
@@ -168,15 +165,15 @@ ENV BUILD_VERSION=${BUILD_VERSION}
 ENTRYPOINT ["dumb-init", "--rewrite", "15:2", "--", "/opt/kachaka/env.sh"]
 
 #=============================================================================
-FROM ubuntu:22.04 AS kachaka-playground-base-x86_64
+FROM ubuntu:22.04 AS kachaka-playground-base-amd64
 
 #-----------------------------------------------------------------------------
 # This image was created by executing the following command within https://github.com/multiarch/ubuntu-core
 # sudo ./update.sh -a arm64 -v jammy -q aarch64 -u v6.1.0-5 -d docker.io/multiarch/ubuntu-core -t arm64
-FROM asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/multiarch/ubuntu-core:KEEP-arm64-jammy AS kachaka-playground-base-aarch64
+FROM asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/multiarch/ubuntu-core:KEEP-arm64-jammy AS kachaka-playground-base-arm64
 
 #-----------------------------------------------------------------------------
-FROM kachaka-playground-base-${BASE_ARCH} AS kachaka-playground
+FROM kachaka-playground-base-${TARGETARCH} AS kachaka-playground
 
 ENV DEBIAN_FRONTEND=noninteractive
 

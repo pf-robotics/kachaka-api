@@ -322,8 +322,7 @@ function prepare_build {
 
     download_docker_cache "${cache_project_name}" "${branch}"
 
-    # configure binfmt-support on the Docker host (works locally or remotely, i.e: using boot2docker)
-    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    docker run --rm --privileged tonistiigi/binfmt --install all
 
     # Setup buildkit
     docker buildx version
@@ -417,13 +416,13 @@ BUILD_VERSION="$(git describe --always --dirty --all --long)-$(date '+%Y%m%d-%H%
 
 prepare_build "${project}" "${FLEXCI_BRANCH}"
 
-BASE_ARCH=""
+PLATFORM=""
 DOCKERFILE=Dockerfile.ros2
 TARGET_NAMES=("${JAMMY_TARGET_NAMES[@]}")
 if [[ "${project}" == kachaka-api.ros.aarch64 ]]; then
-    BASE_ARCH=aarch64
+    PLATFORM=arm64
 elif [[ "${project}" == kachaka-api.ros.x86_64 ]]; then
-    BASE_ARCH=x86_64
+    PLATFORM=amd64
 else
     false
 fi
@@ -432,19 +431,16 @@ if [[ ${FLEXCI_BRANCH} == refs/heads/main ]]; then
     # On main, push image with hash at first, then tag it with main.
     # Otherwise an image from other CI job may be tagged with wrong hash.
     head_hash="$(git rev-parse --short HEAD)"
-    tag="main-${head_hash}"
+    tag="main-${head_hash}-${PLATFORM}"
 else
-    tag="$(gen_docker_image_tag_name "${FLEXCI_BRANCH}")"
-fi
-if [[ "${project}" == kachaka-api.ros.x86_64 ]]; then
-    tag="${tag}-x86_64"
+    tag="$(gen_docker_image_tag_name "${FLEXCI_BRANCH}")-${PLATFORM}"
 fi
 version="$(get_branch_or_tag_name "${FLEXCI_BRANCH}")"
 
 # Whole build
 start_timer "build"
 BAKE_FILE=/tmp/bake.hcl
-BASE_ARCH="${BASE_ARCH}" \
+PLATFORM="linux/${PLATFORM}" \
     BUILD_VERSION="${BUILD_VERSION}" \
     SOFTWARE_VERSION="${version}" \
     DOCKERFILE="${DOCKERFILE}" \
@@ -462,7 +458,7 @@ if [[ ${FLEXCI_BRANCH} == refs/heads/main ]]; then
     for target in "${TARGET_NAMES[@]}"; do
         crane copy \
             "asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/${target}:${tag}" \
-            "asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/${target}:main-${BASE_ARCH}"
+            "asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/${target}:main-${PLATFORM}"
     done
     record_timer "push main-{hash}"
 fi
