@@ -9,3 +9,4 @@ nbqa==1.7.0
 pysen-plugins==2023.5.22
 pysen==0.10.4
 shellcheck-py==0.8.0.4
+-e .
