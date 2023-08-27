@@ -59,8 +59,8 @@ def ask_chatgpt(system: str, prompt: str) -> str:
             {"role": "system", "content": system},
             {"role": "user", "content": prompt},
         ],
-    )  # type: ignore
-    return result["choices"][0]["message"]["content"]  # type: ignore
+    )
+    return result["choices"][0]["message"]["content"]
 
 
 def generate_speak_text(history: list[KachakaCommandRecord]) -> str:
@@ -96,9 +96,7 @@ async def main() -> None:
     async def on_locations(locations: list[pb2.Location]) -> None:
         client.resolver.set_locations(locations)
 
-    async def on_command_result(
-        result: pb2.Result, command: pb2.Command
-    ) -> None:
+    async def on_command_result(result, command):
         nonlocal skip
         if skip:
             print("command result before this script launched was skipped")
