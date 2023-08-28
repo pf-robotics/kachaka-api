@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import grpc
+from google._upb._message import RepeatedCompositeContainer
 
 from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
@@ -21,84 +22,98 @@ from .layout_util import ShelfLocationResolver
 
 
 class KachakaApiClientBase:
-    def __init__(self, target="100.94.1.1:26400"):
+    def __init__(self, target: str = "100.94.1.1:26400"):
         self.stub = KachakaApiStub(grpc.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
 
-    def update_resolver(self):
-        self.resolver.set_shelves(self.get_shelves())
-        self.resolver.set_locations(self.get_locations())
-
-    def get_robot_serial_number(self):
+    def get_robot_serial_number(self) -> str:
         request = pb2.GetRequest()
-        response = self.stub.GetRobotSerialNumber(request)
+        response: pb2.GetRobotSerialNumberResponse = (
+            self.stub.GetRobotSerialNumber(request)
+        )
         return response.serial_number
 
-    def get_robot_version(self):
+    def get_robot_version(self) -> str:
         request = pb2.GetRequest()
-        response = self.stub.GetRobotVersion(request)
+        response: pb2.GetRobotVersionResponse = self.stub.GetRobotVersion(
+            request
+        )
         return response.version
 
-    def get_robot_pose(self):
+    def get_robot_pose(self) -> pb2.Pose:
         request = pb2.GetRequest()
-        response = self.stub.GetRobotPose(request)
+        response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(request)
         return response.pose
 
-    def get_png_map(self):
+    def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
-        response = self.stub.GetPngMap(request)
+        response: pb2.GetPngMapResponse = self.stub.GetPngMap(request)
         return response.map
 
-    def get_object_detection(self):
+    def get_object_detection(
+        self,
+    ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
         request = pb2.GetRequest()
-        response = self.stub.GetObjectDetection(request)
+        response: pb2.GetObjectDetectionResponse = self.stub.GetObjectDetection(
+            request
+        )
         return (response.header, response.objects)
 
-    def get_ros_imu(self):
+    def get_ros_imu(self) -> pb2.RosImu:
         request = pb2.GetRequest()
-        response = self.stub.GetRosImu(request)
+        response: pb2.GetRosImuResponse = self.stub.GetRosImu(request)
         return response.imu
 
-    def get_ros_odometry(self):
+    def get_ros_odometry(self) -> pb2.RosOdometry:
         request = pb2.GetRequest()
-        response = self.stub.GetRosOdometry(request)
+        response: pb2.GetRosOdometryResponse = self.stub.GetRosOdometry(request)
         return response.odometry
 
-    def get_ros_laser_scan(self):
+    def get_ros_laser_scan(self) -> pb2.RosLaserScan:
         request = pb2.GetRequest()
-        response = self.stub.GetRosLaserScan(request)
+        response: pb2.GetRosLaserScanResponse = self.stub.GetRosLaserScan(
+            request
+        )
         return response.scan
 
-    def get_front_camera_ros_camera_info(self):
+    def get_front_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
         request = pb2.GetRequest()
-        response = self.stub.GetFrontCameraRosCameraInfo(request)
+        response: pb2.GetFrontCameraRosCameraInfoResponse = (
+            self.stub.GetFrontCameraRosCameraInfo(request)
+        )
         return response.camera_info
 
-    def get_front_camera_ros_image(self):
+    def get_front_camera_ros_image(self) -> pb2.RosImage:
         request = pb2.GetRequest()
-        response = self.stub.GetFrontCameraRosImage(request)
+        response: pb2.GetFrontCameraRosImageResponse = (
+            self.stub.GetFrontCameraRosImage(request)
+        )
         return response.image
 
-    def get_front_camera_ros_compressed_image(self):
+    def get_front_camera_ros_compressed_image(
+        self,
+    ) -> pb2.RosCompressedImage:
         request = pb2.GetRequest()
-        response = self.stub.GetFrontCameraRosCompressedImage(request)
+        response: pb2.GetFrontCameraRosCompressedImageResponse = (
+            self.stub.GetFrontCameraRosCompressedImage(request)
+        )
         return response.image
 
     def start_command(
         self,
         command: pb2.Command,
         *,
-        cancel_all=True,
-        tts_on_success="",
-        title="",
-    ):
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
         request = pb2.StartCommandRequest(
             command=command,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
         )
-        response = self.stub.StartCommand(request)
+        response: pb2.StartCommandResponse = self.stub.StartCommand(request)
         return response.result
 
     def move_shelf(
@@ -109,7 +124,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return self.start_command(
@@ -131,7 +146,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         return self.start_command(
             pb2.Command(
@@ -150,7 +165,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return self.start_command(
             pb2.Command(undock_shelf_command=pb2.UndockShelfCommand()),
             cancel_all=cancel_all,
@@ -165,7 +180,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
         return self.start_command(
             pb2.Command(
@@ -184,7 +199,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return self.start_command(
             pb2.Command(return_home_command=pb2.ReturnHomeCommand()),
             cancel_all=cancel_all,
@@ -198,7 +213,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return self.start_command(
             pb2.Command(dock_shelf_command=pb2.DockShelfCommand()),
             cancel_all=cancel_all,
@@ -213,7 +228,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return self.start_command(
             pb2.Command(speak_command=pb2.SpeakCommand(text=text)),
             cancel_all=cancel_all,
@@ -230,7 +245,7 @@ class KachakaApiClientBase:
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
-    ):
+    ) -> pb2.Result:
         return self.start_command(
             pb2.Command(
                 move_to_pose_command=pb2.MoveToPoseCommand(x=x, y=y, yaw=yaw)
@@ -240,72 +255,100 @@ class KachakaApiClientBase:
             title=title,
         )
 
-    def cancel_command(self):
+    def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
-        response = self.stub.CancelCommand(request)
+        response: pb2.CancelCommandResponse = self.stub.CancelCommand(request)
         return (response.result, response.command)
 
-    def get_command_state(self):
+    def get_command_state(self) -> tuple[pb2.CommandState, pb2.Command]:
         request = pb2.GetRequest()
-        response = self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = self.stub.GetCommandState(
+            request
+        )
         return (response.state, response.command)
 
-    def is_command_running(self):
+    def is_command_running(self) -> bool:
         request = pb2.GetRequest()
-        response = self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = self.stub.GetCommandState(
+            request
+        )
         return response.state == pb2.CommandState.COMMAND_STATE_RUNNING
 
-    def get_running_command(self):
+    def get_running_command(self) -> pb2.Command | None:
         request = pb2.GetRequest()
-        response = self.stub.GetCommandState(request)
+        response: pb2.GetCommandStateResponse = self.stub.GetCommandState(
+            request
+        )
         return response.command if response.HasField("command") else None
 
-    def get_last_command_result(self):
+    def get_last_command_result(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.GetRequest()
-        response = self.stub.GetLastCommandResult(request)
+        response: pb2.GetLastCommandResultResponse = (
+            self.stub.GetLastCommandResult(request)
+        )
         return (response.result, response.command)
 
-    def get_locations(self):
+    def get_locations(
+        self,
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response = self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
         return response.locations
 
-    def get_default_location_id(self):
+    def get_default_location_id(self) -> str:
         request = pb2.GetRequest()
-        response = self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
         return response.default_location_id
 
-    def get_shelves(self):
+    def get_shelves(
+        self,
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response = self.stub.GetShelves(request)
+        response: pb2.GetShelvesResponse = self.stub.GetShelves(request)
         return response.shelves
 
-    def set_auto_homing_enabled(self, enable: bool):
+    def set_auto_homing_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetAutoHomingEnabledRequest(enable=enable)
-        response = self.stub.SetAutoHomingEnabled(request)
+        response: pb2.SetAutoHomingEnabledResponse = (
+            self.stub.SetAutoHomingEnabled(request)
+        )
         return response.result
 
-    def get_auto_homing_enabled(self):
+    def get_auto_homing_enabled(self) -> bool:
         request = pb2.GetRequest()
-        response = self.stub.GetAutoHomingEnabled(request)
+        response: pb2.GetAutoHomingEnabledResponse = (
+            self.stub.GetAutoHomingEnabled(request)
+        )
         return response.enabled
 
-    def set_manual_control_enabled(self, enable: bool):
+    def set_manual_control_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetManualControlEnabledRequest(enable=enable)
-        response = self.stub.SetManualControlEnabled(request)
+        response: pb2.SetManualControlEnabledResponse = (
+            self.stub.SetManualControlEnabled(request)
+        )
         return response.result
 
-    def get_manual_control_enabled(self):
+    def get_manual_control_enabled(self) -> bool:
         request = pb2.GetRequest()
-        response = self.stub.GetManualControlEnabled(request)
+        response: pb2.GetManualControlEnabledResponse = (
+            self.stub.GetManualControlEnabled(request)
+        )
         return response.enabled
 
-    def set_robot_velocity(self, linear, angular):
+    def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
         request = pb2.SetRobotVelocityRequest(linear=linear, angular=angular)
-        response = self.stub.SetRobotVelocity(request)
+        response: pb2.SetRobotVelocityResponse = self.stub.SetRobotVelocity(
+            request
+        )
         return response.result
 
-    def get_history_list(self):
+    def get_history_list(
+        self,
+    ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response = self.stub.GetHistoryList(request)
+        response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(request)
         return response.histories
+
+    def update_resolver(self) -> None:
+        self.resolver.set_shelves(self.get_shelves())
+        self.resolver.set_locations(self.get_locations())

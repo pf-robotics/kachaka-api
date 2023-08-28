@@ -18,13 +18,20 @@ version = "0.10.5"
 enable_black = true
 enable_flake8 = true
 enable_isort = true
-enable_mypy = false
+enable_mypy = true
 line_length = 80
+py_version = "py310"
 
 [tool.pysen.lint.source]
 excludes = [
   ".flexci/env.sh",
   "python/kachaka_api/generated",
+]
+
+[[tool.pysen.lint.mypy_targets]]
+paths = [
+    "python/kachaka_api/base.py",
+    "python/kachaka_api/aio/base.py",
 ]
 
 [tool.pysen.plugin.clang_format]

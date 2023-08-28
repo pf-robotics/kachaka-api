@@ -21,9 +21,15 @@ done
 set -eu
 
 REPO_TOP_DIR="$(git rev-parse --show-toplevel)"
-docker run --rm \
+docker run --rm -i \
     -v "${REPO_TOP_DIR}:${REPO_TOP_DIR}" \
     --workdir="$(pwd)" \
     --user="$(id -u):$(id -g)" \
-    asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/kachaka-api.lint:KEEP-20230815 \
-    bash ./tools/lint/local_run.sh "${OPTS[@]}"
+    asia-northeast1-docker.pkg.dev/pfr-flexci/tmp/kachaka-api.lint:KEEP-20230828 \
+    bash << EOF
+        python3 -m venv /tmp/env
+        source /tmp/env/bin/activate
+        pip3 install -r tools/lint/requirements.txt
+        pip3 install -e .
+        ./tools/lint/local_run.sh ${OPTS[*]}
+EOF
