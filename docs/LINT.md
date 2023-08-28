@@ -4,6 +4,7 @@
 
 ```
 pip3 install -r /lint/requirements.txt
+pip3 install -e .
 ```
 
 ## Run format
