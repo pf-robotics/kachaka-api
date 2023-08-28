@@ -13,15 +13,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import (
-    Any,
-    Awaitable,
-    Callable,
-    Generic,
-    ParamSpec,
-    Protocol,
-    TypeVar,
-)
+from typing import Awaitable, Callable, Generic, ParamSpec, Protocol, TypeVar
 
 from google._upb._message import RepeatedCompositeContainer
 
@@ -39,7 +31,6 @@ class HasMetadata(Protocol):
 
 T = TypeVar("T", bound=HasMetadata)
 U = TypeVar("U")
-V = TypeVar("V", bound=tuple[Any, ...])
 P = ParamSpec("P")
 CallbackType = Callable[[U], Awaitable[None]] | None
 
@@ -76,11 +67,11 @@ class TupleResponseHandler(ResponseHandler[T, U], Generic[T, U, P]):
     def set_tuple_callback(
         self, callback: Callable[P, Awaitable[None]] | None
     ) -> None:
-        if self.callback is not None and callback is not None:
-            raise RuntimeError("Callback is already set")
         if callback is None:
             self.callback = None
             return
+        if self.callback is not None:
+            raise RuntimeError("Callback is already set")
 
         def extract_tuple_and_run(args: U) -> Awaitable[None]:
             assert isinstance(args, tuple)
