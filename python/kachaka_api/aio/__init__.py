@@ -86,13 +86,13 @@ class KachakaApiClient(KachakaApiClientBase):
         super().__init__(target)
         self._running = True
 
-        self.robot_pose: ResponseHandler[
-            pb2.GetRobotPoseResponse, pb2.Pose
-        ] = ResponseHandler(self.stub.GetRobotPose, lambda r: r.pose)
-
         self.png_map: ResponseHandler[
             pb2.GetPngMapResponse, pb2.Map
         ] = ResponseHandler(self.stub.GetPngMap, lambda r: r.map)
+
+        self.robot_pose: ResponseHandler[
+            pb2.GetRobotPoseResponse, pb2.Pose
+        ] = ResponseHandler(self.stub.GetRobotPose, lambda r: r.pose)
 
         self.object_detection: TupleResponseHandler[
             pb2.GetObjectDetectionResponse,
@@ -140,13 +140,17 @@ class KachakaApiClient(KachakaApiClientBase):
             self.stub.GetLastCommandResult, lambda r: (r.result, r.command)
         )
 
+        self.shelves: ResponseHandler[
+            pb2.GetShelvesResponse, RepeatedCompositeContainer
+        ] = ResponseHandler(self.stub.GetShelves, lambda r: r.shelves)
+
         self.locations: ResponseHandler[
             pb2.GetLocationsResponse, RepeatedCompositeContainer
         ] = ResponseHandler(self.stub.GetLocations, lambda r: r.locations)
 
-        self.shelves: ResponseHandler[
-            pb2.GetShelvesResponse, RepeatedCompositeContainer
-        ] = ResponseHandler(self.stub.GetShelves, lambda r: r.shelves)
+        self.history_list: ResponseHandler[
+            pb2.GetHistoryListResponse, RepeatedCompositeContainer
+        ] = ResponseHandler(self.stub.GetHistoryList, lambda r: r.histories)
 
         self.auto_homing_enabled: ResponseHandler[
             pb2.GetAutoHomingEnabledResponse, bool
@@ -158,15 +162,11 @@ class KachakaApiClient(KachakaApiClientBase):
             self.stub.GetManualControlEnabled, lambda r: r.enabled
         )
 
-        self.history_list: ResponseHandler[
-            pb2.GetHistoryListResponse, RepeatedCompositeContainer
-        ] = ResponseHandler(self.stub.GetHistoryList, lambda r: r.histories)
+    def set_png_map_callback(self, callback: CallbackType[pb2.Map]) -> None:
+        self.png_map.set_callback(callback)
 
     def set_robot_pose_callback(self, callback: CallbackType[pb2.Pose]) -> None:
         self.robot_pose.set_callback(callback)
-
-    def set_png_map_callback(self, callback: CallbackType[pb2.Map]) -> None:
-        self.png_map.set_callback(callback)
 
     def set_object_detection_callback(
         self,
@@ -214,21 +214,26 @@ class KachakaApiClient(KachakaApiClientBase):
     ) -> None:
         self.command_state.set_tuple_callback(callback)
 
-    def set_locations_callback(
-        self, callback: CallbackType[RepeatedCompositeContainer]
+    def set_last_command_result_callback(
+        self,
+        callback: Callable[[pb2.Result, pb2.Command], Awaitable[None]] | None,
     ) -> None:
-        self.locations.set_callback(callback)
+        self.last_command_result.set_tuple_callback(callback)
 
     def set_shelves_callback(
         self, callback: CallbackType[RepeatedCompositeContainer]
     ) -> None:
         self.shelves.set_callback(callback)
 
-    def set_last_command_result_callback(
-        self,
-        callback: Callable[[pb2.Result, pb2.Command], Awaitable[None]] | None,
+    def set_locations_callback(
+        self, callback: CallbackType[RepeatedCompositeContainer]
     ) -> None:
-        self.last_command_result.set_tuple_callback(callback)
+        self.locations.set_callback(callback)
+
+    def set_history_list_callback(
+        self, callback: CallbackType[RepeatedCompositeContainer]
+    ) -> None:
+        self.history_list.set_callback(callback)
 
     def set_auto_homing_enabled_callback(
         self, callback: CallbackType[bool]
@@ -239,8 +244,3 @@ class KachakaApiClient(KachakaApiClientBase):
         self, callback: CallbackType[bool]
     ) -> None:
         self.manual_control_enabled.set_callback(callback)
-
-    def set_history_list_callback(
-        self, callback: CallbackType[RepeatedCompositeContainer]
-    ) -> None:
-        self.history_list.set_callback(callback)
