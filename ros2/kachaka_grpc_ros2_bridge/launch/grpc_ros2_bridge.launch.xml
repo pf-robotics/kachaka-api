@@ -96,6 +96,7 @@
       <extra_arg name="use_intra_process_comms"
                  value="false" />
     </composable_node>
+
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::TfComponent"
                      name="tf"
@@ -123,6 +124,18 @@
       <extra_arg name="use_intra_process_comms"
                  value="false" />
     </composable_node>
+    <group if="$(arg enable_static_tf_node" >
+      <composable_node pkg="kachaka_grpc_ros2_bridge"
+                       plugin="kachaka::grpc_ros2_bridge::StaticTfComponent"
+                       name="static_tf"
+                       namespace="kachaka">
+	<param name="server_uri"
+               value="$(var server_uri)" />
+	<extra_arg name="use_intra_process_comms"
+                   value="false" />
+      </composable_node>
+    </group>
+
   </node_container>
   <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" />
 </launch>
