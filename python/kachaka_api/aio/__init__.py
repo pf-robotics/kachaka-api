@@ -41,24 +41,24 @@ class ResponseHandler(Generic[T, U]):
         get_function: Callable[[pb2.GetRequest], Awaitable[T]],
         pick_response: Callable[[T], U],
     ) -> None:
-        self.callback: CallbackType[U] = None
-        self.get_function = get_function
-        self.pick_response = pick_response
+        self._callback: CallbackType[U] = None
+        self._get_function = get_function
+        self._pick_response = pick_response
 
     async def _run(self) -> None:
         cursor = 0
-        while self.callback is not None:
+        while self._callback is not None:
             request = build_get_request(cursor)
-            response = await self.get_function(request)
+            response = await self._get_function(request)
             cursor = response.metadata.cursor
-            if self.callback is not None:
-                picked_response = self.pick_response(response)
-                await self.callback(picked_response)
+            if self._callback is not None:
+                picked_response = self._pick_response(response)
+                await self._callback(picked_response)
 
     def set_callback(self, callback: CallbackType[U]) -> None:
-        if self.callback is not None and callback is not None:
+        if self._callback is not None and callback is not None:
             raise RuntimeError("Callback is already set")
-        self.callback = callback
+        self._callback = callback
         if callback is not None:
             asyncio.create_task(self._run())
 
@@ -86,161 +86,95 @@ class KachakaApiClient(KachakaApiClientBase):
         super().__init__(target)
         self._running = True
 
-        self.png_map: ResponseHandler[
-            pb2.GetPngMapResponse, pb2.Map
-        ] = ResponseHandler(self.stub.GetPngMap, lambda r: r.map)
+        self.png_map = ResponseHandler[pb2.GetPngMapResponse, pb2.Map](
+            self.stub.GetPngMap, lambda r: r.map
+        )
+        self.set_png_map_callback = self.png_map.set_callback
 
-        self.robot_pose: ResponseHandler[
-            pb2.GetRobotPoseResponse, pb2.Pose
-        ] = ResponseHandler(self.stub.GetRobotPose, lambda r: r.pose)
+        self.robot_pose = ResponseHandler[pb2.GetRobotPoseResponse, pb2.Pose](
+            self.stub.GetRobotPose, lambda r: r.pose
+        )
+        self.set_robot_pose_callback = self.robot_pose.set_callback
 
-        self.object_detection: TupleResponseHandler[
+        self.object_detection = TupleResponseHandler[
             pb2.GetObjectDetectionResponse,
             tuple[pb2.RosHeader, RepeatedCompositeContainer],
             [pb2.RosHeader, RepeatedCompositeContainer],
-        ] = TupleResponseHandler(
-            self.stub.GetObjectDetection, lambda r: (r.header, r.objects)
+        ](self.stub.GetObjectDetection, lambda r: (r.header, r.objects))
+        self.object_detection_callback = (
+            self.object_detection.set_tuple_callback
         )
 
-        self.ros_imu: ResponseHandler[
-            pb2.GetRosImuResponse, pb2.RosImu
-        ] = ResponseHandler(self.stub.GetRosImu, lambda r: r.imu)
+        self.ros_imu = ResponseHandler[pb2.GetRosImuResponse, pb2.RosImu](
+            self.stub.GetRosImu, lambda r: r.imu
+        )
+        self.set_ros_imu_callback = self.ros_imu.set_callback
 
-        self.ros_odometry: ResponseHandler[
+        self.ros_odometry = ResponseHandler[
             pb2.GetRosOdometryResponse, pb2.RosOdometry
-        ] = ResponseHandler(self.stub.GetRosOdometry, lambda r: r.odometry)
+        ](self.stub.GetRosOdometry, lambda r: r.odometry)
+        self.set_ros_odometry_callback = self.ros_odometry.set_callback
 
-        self.ros_laser_scan: ResponseHandler[
+        self.ros_laser_scan = ResponseHandler[
             pb2.GetRosLaserScanResponse, pb2.RosLaserScan
-        ] = ResponseHandler(self.stub.GetRosLaserScan, lambda r: r.scan)
+        ](self.stub.GetRosLaserScan, lambda r: r.scan)
+        self.set_ros_laser_scan_callback = self.ros_laser_scan.set_callback
 
-        self.front_camera_ros_image: ResponseHandler[
+        self.front_camera_ros_image = ResponseHandler[
             pb2.GetFrontCameraRosImageResponse, pb2.RosImage
-        ] = ResponseHandler(self.stub.GetFrontCameraRosImage, lambda r: r.image)
-
-        self.front_camera_ros_compressed_image: ResponseHandler[
-            pb2.GetFrontCameraRosCompressedImageResponse, pb2.RosCompressedImage
-        ] = ResponseHandler(
-            self.stub.GetFrontCameraRosCompressedImage, lambda r: r.image
+        ](self.stub.GetFrontCameraRosImage, lambda r: r.image)
+        self.set_front_camera_ros_image_callback = (
+            self.front_camera_ros_image.set_callback
         )
 
-        self.command_state: TupleResponseHandler[
+        self.front_camera_ros_compressed_image = ResponseHandler[
+            pb2.GetFrontCameraRosCompressedImageResponse, pb2.RosCompressedImage
+        ](self.stub.GetFrontCameraRosCompressedImage, lambda r: r.image)
+        self.set_front_camera_ros_compressed_image_callback = (
+            self.front_camera_ros_compressed_image.set_callback
+        )
+
+        self.command_state = TupleResponseHandler[
             pb2.GetCommandStateResponse,
             tuple[pb2.CommandState, pb2.Command],
             [pb2.CommandState, pb2.Command],
-        ] = TupleResponseHandler(
-            self.stub.GetCommandState, lambda r: (r.state, r.command)
-        )
+        ](self.stub.GetCommandState, lambda r: (r.state, r.command))
+        self.set_command_state_callback = self.command_state.set_callback
 
-        self.last_command_result: TupleResponseHandler[
+        self.last_command_result = TupleResponseHandler[
             pb2.GetLastCommandResultResponse,
             tuple[pb2.Result, pb2.Command],
             [pb2.Result, pb2.Command],
-        ] = TupleResponseHandler(
-            self.stub.GetLastCommandResult, lambda r: (r.result, r.command)
+        ](self.stub.GetLastCommandResult, lambda r: (r.result, r.command))
+        self.set_last_command_result_callback = (
+            self.last_command_result.set_tuple_callback
         )
 
-        self.shelves: ResponseHandler[
+        self.shelves = ResponseHandler[
             pb2.GetShelvesResponse, RepeatedCompositeContainer
-        ] = ResponseHandler(self.stub.GetShelves, lambda r: r.shelves)
+        ](self.stub.GetShelves, lambda r: r.shelves)
+        self.set_shelves_callback = self.shelves.set_callback
 
-        self.locations: ResponseHandler[
+        self.locations = ResponseHandler[
             pb2.GetLocationsResponse, RepeatedCompositeContainer
-        ] = ResponseHandler(self.stub.GetLocations, lambda r: r.locations)
+        ](self.stub.GetLocations, lambda r: r.locations)
+        self.set_locations_callback = self.locations.set_callback
 
-        self.history_list: ResponseHandler[
+        self.history_list = ResponseHandler[
             pb2.GetHistoryListResponse, RepeatedCompositeContainer
-        ] = ResponseHandler(self.stub.GetHistoryList, lambda r: r.histories)
+        ](self.stub.GetHistoryList, lambda r: r.histories)
+        self.set_history_list_callback = self.history_list.set_callback
 
-        self.auto_homing_enabled: ResponseHandler[
+        self.auto_homing_enabled = ResponseHandler[
             pb2.GetAutoHomingEnabledResponse, bool
-        ] = ResponseHandler(self.stub.GetAutoHomingEnabled, lambda r: r.enabled)
-
-        self.manual_control_enabled: ResponseHandler[
-            pb2.GetManualControlEnabledResponse, bool
-        ] = ResponseHandler(
-            self.stub.GetManualControlEnabled, lambda r: r.enabled
+        ](self.stub.GetAutoHomingEnabled, lambda r: r.enabled)
+        self.set_auto_homing_enabled_callback = (
+            self.auto_homing_enabled.set_callback
         )
 
-    def set_png_map_callback(self, callback: CallbackType[pb2.Map]) -> None:
-        self.png_map.set_callback(callback)
-
-    def set_robot_pose_callback(self, callback: CallbackType[pb2.Pose]) -> None:
-        self.robot_pose.set_callback(callback)
-
-    def set_object_detection_callback(
-        self,
-        callback: Callable[
-            [pb2.RosHeader, RepeatedCompositeContainer], Awaitable[None]
-        ]
-        | None,
-    ) -> None:
-        self.object_detection.set_tuple_callback(callback)
-
-    def set_ros_imu_callback(
-        self,
-        callback: CallbackType[pb2.RosImu],
-    ) -> None:
-        self.ros_imu.set_callback(callback)
-
-    def set_ros_odometry_callback(
-        self,
-        callback: CallbackType[pb2.RosOdometry],
-    ) -> None:
-        self.ros_odometry.set_callback(callback)
-
-    def set_ros_laser_scan_callback(
-        self,
-        callback: CallbackType[pb2.RosLaserScan],
-    ) -> None:
-        self.ros_laser_scan.set_callback(callback)
-
-    def set_front_camera_ros_image_callback(
-        self,
-        callback: CallbackType[pb2.RosImage],
-    ) -> None:
-        self.front_camera_ros_image.set_callback(callback)
-
-    def set_front_camera_ros_compressed_image_callback(
-        self,
-        callback: CallbackType[pb2.RosCompressedImage],
-    ) -> None:
-        self.front_camera_ros_compressed_image.set_callback(callback)
-
-    def set_command_state_callback(
-        self,
-        callback: Callable[[pb2.CommandState, pb2.Command], Awaitable[None]]
-        | None,
-    ) -> None:
-        self.command_state.set_tuple_callback(callback)
-
-    def set_last_command_result_callback(
-        self,
-        callback: Callable[[pb2.Result, pb2.Command], Awaitable[None]] | None,
-    ) -> None:
-        self.last_command_result.set_tuple_callback(callback)
-
-    def set_shelves_callback(
-        self, callback: CallbackType[RepeatedCompositeContainer]
-    ) -> None:
-        self.shelves.set_callback(callback)
-
-    def set_locations_callback(
-        self, callback: CallbackType[RepeatedCompositeContainer]
-    ) -> None:
-        self.locations.set_callback(callback)
-
-    def set_history_list_callback(
-        self, callback: CallbackType[RepeatedCompositeContainer]
-    ) -> None:
-        self.history_list.set_callback(callback)
-
-    def set_auto_homing_enabled_callback(
-        self, callback: CallbackType[bool]
-    ) -> None:
-        self.auto_homing_enabled.set_callback(callback)
-
-    def set_manual_control_enabled_callback(
-        self, callback: CallbackType[bool]
-    ) -> None:
-        self.manual_control_enabled.set_callback(callback)
+        self.manual_control_enabled = ResponseHandler[
+            pb2.GetManualControlEnabledResponse, bool
+        ](self.stub.GetManualControlEnabled, lambda r: r.enabled)
+        self.set_manual_control_enabled_callback = (
+            self.manual_control_enabled.set_callback
+        )
