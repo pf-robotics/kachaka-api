@@ -84,6 +84,26 @@ class MappingComponent : public rclcpp::Node {
     cv::flip(map, flipped, 0);
     ros2_msg->data.reserve(grpc_msg.map().height() * grpc_msg.map().width());
     ros2_msg->data.assign(flipped.begin<uint8_t>(), flipped.end<uint8_t>());
+
+    // The occupancy grid uses color images for the user interface.
+    // However, the occupancy grid has to follow the ROS convention.
+    // Avoid using occupancy constants and instead use a pure grayscale
+    // occupancy grid.
+    static constexpr int8_t kPngOccupied = -82;
+    static constexpr int8_t kPngFree = -3;
+    static constexpr int8_t kPngUnkown = -22;
+    static constexpr int8_t kRosOccupied = 100;
+    static constexpr int8_t kRosFree = 0;
+    static constexpr int8_t kRosUnkown = -1;
+    for (int8_t& value : ros2_msg->data) {
+      if (value == kPngOccupied) {
+        value = kRosOccupied;
+      } else if (value == kPngFree) {
+        value = kRosFree;
+      } else {
+        value = kRosUnkown;
+      }
+    }
   }
 
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
