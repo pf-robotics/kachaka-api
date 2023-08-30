@@ -31,7 +31,8 @@ excludes = [
 [[tool.pysen.lint.mypy_targets]]
 paths = [
     "python/kachaka_api/base.py",
-    "python/kachaka_api/aio/base.py",
+    "python/kachaka_api/aio/",
+    "python/demos/sample_llm_speak.py",
 ]
 
 [tool.pysen.plugin.clang_format]
