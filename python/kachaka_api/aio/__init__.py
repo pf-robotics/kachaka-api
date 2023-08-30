@@ -13,7 +13,15 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Awaitable, Callable, Generic, ParamSpec, Protocol, TypeVar
+from typing import (
+    AsyncGenerator,
+    Awaitable,
+    Callable,
+    Generic,
+    ParamSpec,
+    Protocol,
+    TypeVar,
+)
 
 from google._upb._message import RepeatedCompositeContainer
 
@@ -45,15 +53,17 @@ class ResponseHandler(Generic[T, U]):
         self._get_function = get_function
         self._pick_response = pick_response
 
+    async def _get(self, cursor: int = 0) -> tuple[int, U]:
+        request: pb2.GetRequest = build_get_request(cursor)
+        response: T = await self._get_function(request)
+        cursor = response.metadata.cursor
+        return (cursor, self._pick_response(response))
+
     async def _run(self) -> None:
         cursor = 0
         while self._callback is not None:
-            request = build_get_request(cursor)
-            response = await self._get_function(request)
-            cursor = response.metadata.cursor
-            if self._callback is not None:
-                picked_response = self._pick_response(response)
-                await self._callback(picked_response)
+            (cursor, picked_response) = await self._get(cursor)
+            await self._callback(picked_response)
 
     def set_callback(self, callback: CallbackType[U]) -> None:
         if self._callback is not None and callback is not None:
@@ -61,6 +71,12 @@ class ResponseHandler(Generic[T, U]):
         self._callback = callback
         if callback is not None:
             asyncio.create_task(self._run())
+
+    async def stream(self) -> AsyncGenerator[U, None]:
+        cursor = 0
+        while True:
+            (cursor, picked_response) = await self._get(cursor)
+            yield picked_response
 
 
 class TupleResponseHandler(ResponseHandler[T, U], Generic[T, U, P]):
