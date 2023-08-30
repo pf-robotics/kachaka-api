@@ -53,7 +53,7 @@ class ResponseHandler(Generic[T, U]):
         self._get_function = get_function
         self._pick_response = pick_response
 
-    async def get(self, cursor: int = 0) -> tuple[int, U]:
+    async def _get(self, cursor: int = 0) -> tuple[int, U]:
         request: pb2.GetRequest = build_get_request(cursor)
         response: T = await self._get_function(request)
         cursor = response.metadata.cursor
@@ -62,7 +62,7 @@ class ResponseHandler(Generic[T, U]):
     async def _run(self) -> None:
         cursor = 0
         while self._callback is not None:
-            (cursor, picked_response) = await self.get(cursor)
+            (cursor, picked_response) = await self._get(cursor)
             await self._callback(picked_response)
 
     def set_callback(self, callback: CallbackType[U]) -> None:
@@ -75,7 +75,7 @@ class ResponseHandler(Generic[T, U]):
     async def stream(self) -> AsyncGenerator[U, None]:
         cursor = 0
         while True:
-            (cursor, picked_response) = await self.get(cursor)
+            (cursor, picked_response) = await self._get(cursor)
             yield picked_response
 
 
