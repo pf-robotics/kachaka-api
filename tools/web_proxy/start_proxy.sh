@@ -20,7 +20,9 @@ DOCKER_COMPOSE_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "${DOCKER_COMPOSE_DIR}"
 
 # render envoy.yaml from template
-cat ./envoy.yaml.in | sed "s/KACHAKA_IP_ADDRESS/${KACHAKA_IP_ADDRESS}/" | sed "s/GRPC_WEB_PROXY_PORT/${GRPC_WEB_PROXY_PORT}/" > envoy.yaml
+sed "s/KACHAKA_IP_ADDRESS/${KACHAKA_IP_ADDRESS}/" ./envoy.yaml.in \
+  | sed "s/GRPC_WEB_PROXY_PORT/${GRPC_WEB_PROXY_PORT}/" \
+  > envoy.yaml
 
 export GRPC_WEB_PROXY_PORT
 
