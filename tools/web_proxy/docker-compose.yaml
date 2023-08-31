@@ -1,0 +1,9 @@
+version: "3"
+services:
+  grpc_web_proxy:
+    image: envoyproxy/envoy:v1.16-latest
+    ports:
+      - "${GRPC_WEB_PROXY_PORT}:${GRPC_WEB_PROXY_PORT}"
+    volumes:
+      - "./envoy.yaml:/etc/envoy/envoy.yaml"
+    command: "/usr/local/bin/envoy -c /etc/envoy/envoy.yaml"
