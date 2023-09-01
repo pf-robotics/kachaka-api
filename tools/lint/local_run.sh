@@ -25,6 +25,7 @@ mapfile -t ipynb_files < <(git ls-files | grep ipynb)
 if [[ "$FORMAT" -eq 1 ]]; then
     ./tools/update_kachaka_api_base.py
     pysen run format lint
+    mypy
     # TODO(nozaki) Use pysen plugins
     nbqa black "${ipynb_files[@]}"
     nbqa isort "${ipynb_files[@]}"
@@ -39,6 +40,7 @@ else
         exit 1
     }
     pysen run lint
+    mypy
     # TODO(nozaki) Use pysen plugins
     nbqa black "${ipynb_files[@]}" --diff --check
     nbqa isort "${ipynb_files[@]}" --diff --check-only

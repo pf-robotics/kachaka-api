@@ -11,10 +11,11 @@
 # limitations under the License.
 
 from . import aio  # noqa: F401
-from .base import KachakaApiClientBase  # noqa: F401
-from .command_util import CommandTextFormatter  # noqa: F401
+from .base import KachakaApiClientBase
 from .generated import kachaka_api_pb2 as pb2  # noqa: F401
-from .layout_util import ShelfLocationResolver  # noqa: F401
+from .util import command as command_util  # noqa: F401
+from .util import geometry as geometry_util  # noqa: F401
+from .util import layout as layout_util  # noqa: F401
 
 
 class KachakaApiClient(KachakaApiClientBase):
