@@ -13,8 +13,9 @@ import openai
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
-from kachaka_api import CommandTextFormatter, pb2  # noqa: E402
+from kachaka_api import pb2  # noqa: E402
 from kachaka_api.aio import KachakaApiClient  # noqa: E402
+from kachaka_api.util.command import CommandTextFormatter  # noqa: E402
 
 
 @dataclass
@@ -59,7 +60,7 @@ def ask_chatgpt(system: str, prompt: str) -> str:
             {"role": "system", "content": system},
             {"role": "user", "content": prompt},
         ],
-    )  # type: ignore
+    )
     return result["choices"][0]["message"]["content"]  # type: ignore
 
 

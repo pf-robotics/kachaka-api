@@ -3,7 +3,7 @@ from typing import Tuple
 
 import numpy as np
 
-from .generated.kachaka_api_pb2 import Map, Pose, Quaternion
+from ..generated.kachaka_api_pb2 import Map, Pose, Quaternion
 
 
 def calculate_yaw_from_quaternion(q: Quaternion) -> float:

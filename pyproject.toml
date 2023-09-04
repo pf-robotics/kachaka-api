@@ -11,6 +11,15 @@ Repository = "https://github.com/pf-robotics/kachaka-api"
 [tool.setuptools]
 package-dir = {"" = "python"}
 
+[tool.mypy]
+files = [
+    "python/kachaka_api/base.py",
+    "python/kachaka_api/aio/",
+    "python/kachaka_api/util/",
+    "python/demos/sample_llm_speak.py",
+]
+ignore_missing_imports = true
+
 [tool.pysen]
 version = "0.10.5"
 
@@ -18,7 +27,7 @@ version = "0.10.5"
 enable_black = true
 enable_flake8 = true
 enable_isort = true
-enable_mypy = true
+enable_mypy = false
 line_length = 80
 py_version = "py310"
 
@@ -26,13 +35,6 @@ py_version = "py310"
 excludes = [
   ".flexci/env.sh",
   "python/kachaka_api/generated",
-]
-
-[[tool.pysen.lint.mypy_targets]]
-paths = [
-    "python/kachaka_api/base.py",
-    "python/kachaka_api/aio/",
-    "python/demos/sample_llm_speak.py",
 ]
 
 [tool.pysen.plugin.clang_format]

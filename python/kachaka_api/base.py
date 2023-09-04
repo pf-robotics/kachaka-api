@@ -18,7 +18,7 @@ from google._upb._message import RepeatedCompositeContainer
 
 from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
-from .layout_util import ShelfLocationResolver
+from .util.layout import ShelfLocationResolver
 
 
 class KachakaApiClientBase:

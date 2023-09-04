@@ -10,8 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .generated import kachaka_api_pb2
-from .layout_util import ShelfLocationResolver
+from ..generated import kachaka_api_pb2
+from .layout import ShelfLocationResolver
 
 
 class CommandTextFormatter:

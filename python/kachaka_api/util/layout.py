@@ -12,13 +12,15 @@
 
 from typing import Tuple
 
-from .generated import kachaka_api_pb2 as pb2
+from ..generated import kachaka_api_pb2 as pb2
 
 
 class ShelfLocationResolver:
-    def __init__(self, shelves=None, locations=None) -> None:
-        self.shelves: list[pb2.Shelf] = shelves or []
-        self.locations: list[pb2.Location] = locations or []
+    def __init__(
+        self, shelves: list[pb2.Shelf] = [], locations: list[pb2.Location] = []
+    ) -> None:
+        self.shelves = shelves
+        self.locations = locations
 
     def set_shelves(self, shelves: list[pb2.Shelf]) -> None:
         self.shelves = shelves
