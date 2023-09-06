@@ -9,6 +9,7 @@ frozenlist==1.4.0
 grpcio-tools==1.56.2
 grpcio==1.56.2
 idna==3.4
+ipympl==0.9.3
 ipywidgets==8.1.0
 matplotlib==3.7.2
 multidict==6.0.4
