@@ -30,7 +30,7 @@ from nav2_common.launch import RewrittenYaml
 
 def generate_launch_description():
     # Get the launch directory
-    bringup_dir = get_package_share_directory("kachaka_bringup")
+    bringup_dir = get_package_share_directory("nav2_bringup")
 
     namespace = LaunchConfiguration("namespace")
     use_sim_time = LaunchConfiguration("use_sim_time")
@@ -69,8 +69,7 @@ def generate_launch_description():
     ]
 
     # Create our own temporary YAML files that include substitutions
-    param_substitutions = {
-        "use_sim_time": use_sim_time, "autostart": autostart}
+    param_substitutions = {"use_sim_time": use_sim_time, "autostart": autostart}
 
     configured_params = RewrittenYaml(
         source_file=params_file,
