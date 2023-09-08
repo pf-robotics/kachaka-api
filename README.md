@@ -611,7 +611,7 @@ $ ./tools/web_proxy/start_proxy_remote.sh <カチャカのIPアドレス>
 * プロキシサーバーは、webアプリからアクセスでき、またカチャカにアクセスできるネットワーク接続を備えた場所であればどこで起動しても構いません。
 * このスクリプトでは、`localhost:50000`にプロキシサーバを立てる例を示しています。
 
-### webサンプル
+### Webサンプル
 
 ![](docs/images/web_sample_capture.png)
 
