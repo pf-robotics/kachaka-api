@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react';
 
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Paper from '@mui/material/Paper'
-import Select from '@mui/material/Select'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Select from '@mui/material/Select';
 import {
   Checkbox,
   FormControl,
@@ -11,11 +11,11 @@ import {
   MenuItem,
   type SelectChangeEvent,
   TextField,
-} from '@mui/material'
+} from '@mui/material';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
-import { type Command, type Location, type Shelf } from '../protos/kachaka-api'
-import { useStartCommand, useCancelCommand } from '../kachakaApi'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
+import { type Command, type Location, type Shelf } from '../protos/kachaka-api';
+import { useStartCommand, useCancelCommand } from '../kachakaApi';
 
 enum CommandType {
   Undefined = 'Undefined',
@@ -33,23 +33,23 @@ function CommandTypeSelect({
   commandType,
   setCommandType,
 }: {
-  commandType: CommandType
-  setCommandType: (commandType: CommandType) => void
+  commandType: CommandType;
+  setCommandType: (commandType: CommandType) => void;
 }) {
   const handleChange = (event: SelectChangeEvent<CommandType>) => {
     if (!event.target.value) {
-      setCommandType(CommandType.Undefined)
+      setCommandType(CommandType.Undefined);
     } else {
-      setCommandType(event.target.value as CommandType)
+      setCommandType(event.target.value as CommandType);
     }
-  }
+  };
   return (
     <FormControl size="small" fullWidth sx={{ p: 1 }}>
       <Select
         variant="outlined"
         value={commandType}
         onChange={(event) => {
-          handleChange(event)
+          handleChange(event);
         }}
       >
         {Object.entries(CommandType).map(([key, value]) => (
@@ -59,7 +59,7 @@ function CommandTypeSelect({
         ))}
       </Select>
     </FormControl>
-  )
+  );
 }
 
 function LocationSelect({
@@ -67,24 +67,24 @@ function LocationSelect({
   setLocationId,
   locations,
 }: {
-  locationId: string
-  setLocationId: (id: string) => void
-  locations: Location[] | undefined
+  locationId: string;
+  setLocationId: (id: string) => void;
+  locations: Location[] | undefined;
 }) {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) {
-      setLocationId('')
+      setLocationId('');
     } else {
-      setLocationId(event.target.value)
+      setLocationId(event.target.value);
     }
-  }
+  };
   return (
     <>
       <Select
         variant="outlined"
         value={locationId}
         onChange={(event) => {
-          handleChange(event)
+          handleChange(event);
         }}
         fullWidth
       >
@@ -95,7 +95,7 @@ function LocationSelect({
         ))}
       </Select>
     </>
-  )
+  );
 }
 
 function ShelfSelect({
@@ -103,24 +103,24 @@ function ShelfSelect({
   shelfId,
   setShelfId,
 }: {
-  shelves: Shelf[] | undefined
-  shelfId: string
-  setShelfId: (id: string) => void
+  shelves: Shelf[] | undefined;
+  shelfId: string;
+  setShelfId: (id: string) => void;
 }) {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) {
-      setShelfId('')
+      setShelfId('');
     } else {
-      setShelfId(event.target.value)
+      setShelfId(event.target.value);
     }
-  }
+  };
   return (
     <>
       <Select
         variant="outlined"
         value={shelfId}
         onChange={(event) => {
-          handleChange(event)
+          handleChange(event);
         }}
         fullWidth
       >
@@ -131,7 +131,7 @@ function ShelfSelect({
         ))}
       </Select>
     </>
-  )
+  );
 }
 
 function CommandArgInput({
@@ -151,25 +151,25 @@ function CommandArgInput({
   moveToPoseGoal,
   setMoveToPoseGoal,
 }: {
-  locations: Location[] | undefined
-  shelves: Shelf[] | undefined
-  commandType: CommandType
-  moveShelfTargetShelf: string
-  setMoveShelfTargetShelf: (id: string) => void
-  moveShelfDestination: string
-  setMoveShelfDestination: (id: string) => void
-  returnShelfTargetShelf: string
-  setReturnShelfTargetShelf: (id: string) => void
-  moveToLocationTargetLocation: string
-  setMoveToLocationTargetLocation: (id: string) => void
-  speakText: string
-  setSpeakText: (text: string) => void
-  moveToPoseGoal: [number, number, number]
-  setMoveToPoseGoal: (goal: [number, number, number]) => void
+  locations: Location[] | undefined;
+  shelves: Shelf[] | undefined;
+  commandType: CommandType;
+  moveShelfTargetShelf: string;
+  setMoveShelfTargetShelf: (id: string) => void;
+  moveShelfDestination: string;
+  setMoveShelfDestination: (id: string) => void;
+  returnShelfTargetShelf: string;
+  setReturnShelfTargetShelf: (id: string) => void;
+  moveToLocationTargetLocation: string;
+  setMoveToLocationTargetLocation: (id: string) => void;
+  speakText: string;
+  setSpeakText: (text: string) => void;
+  moveToPoseGoal: [number, number, number];
+  setMoveToPoseGoal: (goal: [number, number, number]) => void;
 }) {
   switch (commandType) {
     case CommandType.Undefined:
-      return <></>
+      return <></>;
     case CommandType.MoveShelf:
       return (
         <>
@@ -188,7 +188,7 @@ function CommandArgInput({
             />
           </FormControl>
         </>
-      )
+      );
     case CommandType.ReturnShelf:
       return (
         <FormControl size="small" fullWidth>
@@ -198,9 +198,9 @@ function CommandArgInput({
             setShelfId={setReturnShelfTargetShelf}
           />
         </FormControl>
-      )
+      );
     case CommandType.UndockShelf:
-      return <></>
+      return <></>;
     case CommandType.MoveToLocation:
       return (
         <FormControl size="small" fullWidth>
@@ -210,22 +210,22 @@ function CommandArgInput({
             setLocationId={setMoveToLocationTargetLocation}
           />
         </FormControl>
-      )
+      );
     case CommandType.ReturnHome:
-      return <></>
+      return <></>;
     case CommandType.DockShelf:
-      return <></>
+      return <></>;
     case CommandType.Speak:
       return (
         <FormControl size="small" fullWidth>
           <TextField
             value={speakText}
             onChange={(e) => {
-              setSpeakText(e.target.value)
+              setSpeakText(e.target.value);
             }}
           />
         </FormControl>
-      )
+      );
     case CommandType.MoveToPose:
       return (
         <FormControl size="small" fullWidth>
@@ -237,7 +237,7 @@ function CommandArgInput({
                 Number(e.target.value),
                 moveToPoseGoal[1],
                 moveToPoseGoal[2],
-              ])
+              ]);
             }}
           />
           <TextField
@@ -248,7 +248,7 @@ function CommandArgInput({
                 moveToPoseGoal[0],
                 Number(e.target.value),
                 moveToPoseGoal[2],
-              ])
+              ]);
             }}
           />
           <TextField
@@ -259,11 +259,11 @@ function CommandArgInput({
                 moveToPoseGoal[0],
                 moveToPoseGoal[1],
                 Number(e.target.value),
-              ])
+              ]);
             }}
           />
         </FormControl>
-      )
+      );
   }
 }
 
@@ -276,17 +276,17 @@ function buildCommand({
   speakText,
   moveToPoseGoal,
 }: {
-  commandType: CommandType
-  moveShelfTargetShelf: string
-  moveShelfDestination: string
-  returnShelfTargetShelf: string
-  moveToLocationTargetLocation: string
-  speakText: string
-  moveToPoseGoal: [number, number, number]
+  commandType: CommandType;
+  moveShelfTargetShelf: string;
+  moveShelfDestination: string;
+  returnShelfTargetShelf: string;
+  moveToLocationTargetLocation: string;
+  speakText: string;
+  moveToPoseGoal: [number, number, number];
 }): Command | undefined {
   switch (commandType) {
     case CommandType.Undefined:
-      return undefined
+      return undefined;
     case CommandType.MoveShelf:
       return {
         command: {
@@ -296,7 +296,7 @@ function buildCommand({
             destinationLocationId: moveShelfDestination,
           },
         },
-      }
+      };
     case CommandType.ReturnShelf:
       return {
         command: {
@@ -305,7 +305,7 @@ function buildCommand({
             targetShelfId: returnShelfTargetShelf,
           },
         },
-      }
+      };
     case CommandType.UndockShelf:
       return {
         command: {
@@ -314,7 +314,7 @@ function buildCommand({
             targetShelfId: '',
           },
         },
-      }
+      };
     case CommandType.MoveToLocation:
       return {
         command: {
@@ -323,21 +323,21 @@ function buildCommand({
             targetLocationId: moveToLocationTargetLocation,
           },
         },
-      }
+      };
     case CommandType.ReturnHome:
       return {
         command: {
           oneofKind: 'returnHomeCommand',
           returnHomeCommand: {},
         },
-      }
+      };
     case CommandType.DockShelf:
       return {
         command: {
           oneofKind: 'dockShelfCommand',
           dockShelfCommand: {},
         },
-      }
+      };
     case CommandType.Speak:
       return {
         command: {
@@ -346,7 +346,7 @@ function buildCommand({
             text: speakText,
           },
         },
-      }
+      };
     case CommandType.MoveToPose:
       return {
         command: {
@@ -357,9 +357,9 @@ function buildCommand({
             yaw: moveToPoseGoal[2],
           },
         },
-      }
+      };
     default:
-      return undefined
+      return undefined;
   }
 }
 
@@ -368,22 +368,22 @@ export function CommandPanel({
   locations,
   shelves,
 }: {
-  kachakaApiClient: KachakaApiClient
-  locations: Location[] | undefined
-  shelves: Shelf[] | undefined
+  kachakaApiClient: KachakaApiClient;
+  locations: Location[] | undefined;
+  shelves: Shelf[] | undefined;
 }) {
   const [commandType, setCommandType] = useState<CommandType>(
     CommandType.Undefined,
-  )
-  const [moveShelfTargetShelf, setMoveShelfTargetShelf] = useState('')
-  const [moveShelfDestination, setMoveShelfDestination] = useState('')
-  const [returnShelfTargetShelf, setReturnShelfTargetShelf] = useState('')
+  );
+  const [moveShelfTargetShelf, setMoveShelfTargetShelf] = useState('');
+  const [moveShelfDestination, setMoveShelfDestination] = useState('');
+  const [returnShelfTargetShelf, setReturnShelfTargetShelf] = useState('');
   const [moveToLocationTargetLocation, setMoveToLocationTargetLocation] =
-    useState('')
-  const [speakText, setSpeakText] = useState('')
+    useState('');
+  const [speakText, setSpeakText] = useState('');
   const [moveToPoseGoal, setMoveToPoseGoal] = useState<
     [number, number, number]
-  >([0, 0, 0])
+  >([0, 0, 0]);
 
   const command = useMemo(() => {
     return buildCommand({
@@ -394,7 +394,7 @@ export function CommandPanel({
       moveToLocationTargetLocation,
       speakText,
       moveToPoseGoal,
-    })
+    });
   }, [
     commandType,
     moveShelfTargetShelf,
@@ -403,22 +403,22 @@ export function CommandPanel({
     moveToLocationTargetLocation,
     speakText,
     moveToPoseGoal,
-  ])
+  ]);
 
-  const [cancelAll, setCancelAll] = useState(true)
+  const [cancelAll, setCancelAll] = useState(true);
 
   const startCommand = useStartCommand(kachakaApiClient, (result) => {
-    console.log(result.success + ', ' + result.errorCode)
-  })
-  const cancelCommand = useCancelCommand(kachakaApiClient)
+    console.log(result.success + ', ' + result.errorCode);
+  });
+  const cancelCommand = useCancelCommand(kachakaApiClient);
 
   const handleStartCommand = useCallback(() => {
     if (!command) {
-      console.log('undefined command')
-      return
+      console.log('undefined command');
+      return;
     }
-    startCommand(command, cancelAll, 'command from web sample', '')
-  }, [startCommand, command, cancelAll])
+    startCommand(command, cancelAll, 'command from web sample', '');
+  }, [startCommand, command, cancelAll]);
 
   return (
     <Paper
@@ -439,7 +439,7 @@ export function CommandPanel({
             defaultChecked
             value={cancelAll}
             onChange={() => {
-              setCancelAll(!cancelAll)
+              setCancelAll(!cancelAll);
             }}
           />
         }
@@ -470,7 +470,7 @@ export function CommandPanel({
           variant="contained"
           disabled={!command}
           onClick={() => {
-            handleStartCommand()
+            handleStartCommand();
           }}
         >
           RUN
@@ -479,12 +479,12 @@ export function CommandPanel({
           sx={{ m: 2 }}
           variant="outlined"
           onClick={() => {
-            cancelCommand()
+            cancelCommand();
           }}
         >
           CANCEL
         </Button>
       </div>
     </Paper>
-  )
+  );
 }

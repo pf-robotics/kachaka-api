@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
-import { useRobotPose } from '../kachakaApi'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
+import { useRobotPose } from '../kachakaApi';
 
 export function RobotPosePanel({
   kachakaApiClient,
 }: {
-  kachakaApiClient: KachakaApiClient
+  kachakaApiClient: KachakaApiClient;
 }) {
-  const robotPose = useRobotPose(kachakaApiClient)
+  const robotPose = useRobotPose(kachakaApiClient);
 
   return (
     <Box sx={{ paddingTop: 2, textAlign: 'center' }}>
@@ -20,5 +20,5 @@ export function RobotPosePanel({
         : 'NaN, NaN, NaN'}
       )
     </Box>
-  )
+  );
 }

@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
-import { useAutoHomingEnabled, useSetAutoHomingEnabled } from '../kachakaApi'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
+import { useAutoHomingEnabled, useSetAutoHomingEnabled } from '../kachakaApi';
 
 export function AutoHomingPanel({
   kachakaApiClient,
 }: {
-  kachakaApiClient: KachakaApiClient
+  kachakaApiClient: KachakaApiClient;
 }) {
-  const autoHomingEnabled = useAutoHomingEnabled(kachakaApiClient)
-  const setAutoHomingEnabled = useSetAutoHomingEnabled(kachakaApiClient)
+  const autoHomingEnabled = useAutoHomingEnabled(kachakaApiClient);
+  const setAutoHomingEnabled = useSetAutoHomingEnabled(kachakaApiClient);
 
   return (
     <Box
@@ -31,7 +31,7 @@ export function AutoHomingPanel({
         disabled={autoHomingEnabled}
         sx={{ mr: 1 }}
         onClick={() => {
-          setAutoHomingEnabled(true)
+          setAutoHomingEnabled(true);
         }}
       >
         ON
@@ -40,11 +40,11 @@ export function AutoHomingPanel({
         variant="outlined"
         disabled={!autoHomingEnabled}
         onClick={() => {
-          setAutoHomingEnabled(false)
+          setAutoHomingEnabled(false);
         }}
       >
         OFF
       </Button>
     </Box>
-  )
+  );
 }

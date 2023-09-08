@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 export function PngImage({ data }: { data: Uint8Array | undefined }) {
-  const [url, setUrl] = useState<string | undefined>(undefined)
+  const [url, setUrl] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (data) {
-      const blob = new Blob([data], { type: 'image/png' })
-      const obj = URL.createObjectURL(blob)
-      setUrl(obj)
+      const blob = new Blob([data], { type: 'image/png' });
+      const obj = URL.createObjectURL(blob);
+      setUrl(obj);
       return () => {
-        URL.revokeObjectURL(obj)
-      }
+        URL.revokeObjectURL(obj);
+      };
     } else {
-      setUrl(undefined)
+      setUrl(undefined);
     }
-  }, [data])
+  }, [data]);
 
-  return <img src={url} style={{ width: '100%' }} />
+  return <img src={url} style={{ width: '100%' }} />;
 }

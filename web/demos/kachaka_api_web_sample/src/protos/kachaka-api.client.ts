@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { RpcTransport } from '@protobuf-ts/runtime-rpc'
-import type { ServiceInfo } from '@protobuf-ts/runtime-rpc'
-import { KachakaApi } from './kachaka-api'
+import type { RpcTransport } from '@protobuf-ts/runtime-rpc';
+import type { ServiceInfo } from '@protobuf-ts/runtime-rpc';
+import { KachakaApi } from './kachaka-api';
 import type {
   GetHistoryListResponse,
   SetRobotVelocityResponse,
@@ -46,10 +46,10 @@ import type {
   GetRobotVersionResponse,
   GetRobotSerialNumberResponse,
   GetRequest,
-} from './kachaka-api'
-import { stackIntercept } from '@protobuf-ts/runtime-rpc'
-import type { UnaryCall } from '@protobuf-ts/runtime-rpc'
-import type { RpcOptions } from '@protobuf-ts/runtime-rpc'
+} from './kachaka-api';
+import { stackIntercept } from '@protobuf-ts/runtime-rpc';
+import type { UnaryCall } from '@protobuf-ts/runtime-rpc';
+import type { RpcOptions } from '@protobuf-ts/runtime-rpc';
 /**
  * Services
  *
@@ -62,133 +62,133 @@ export interface IKachakaApiClient {
   getRobotSerialNumber: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRobotSerialNumberResponse>
+  ) => UnaryCall<GetRequest, GetRobotSerialNumberResponse>;
   /**
    * @generated from protobuf rpc: GetRobotVersion(kachaka_api.GetRequest) returns (kachaka_api.GetRobotVersionResponse);
    */
   getRobotVersion: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRobotVersionResponse>
+  ) => UnaryCall<GetRequest, GetRobotVersionResponse>;
   /**
    * @generated from protobuf rpc: GetRobotPose(kachaka_api.GetRequest) returns (kachaka_api.GetRobotPoseResponse);
    */
   getRobotPose: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRobotPoseResponse>
+  ) => UnaryCall<GetRequest, GetRobotPoseResponse>;
   /**
    * @generated from protobuf rpc: GetPngMap(kachaka_api.GetRequest) returns (kachaka_api.GetPngMapResponse);
    */
   getPngMap: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetPngMapResponse>
+  ) => UnaryCall<GetRequest, GetPngMapResponse>;
   /**
    * @generated from protobuf rpc: GetObjectDetection(kachaka_api.GetRequest) returns (kachaka_api.GetObjectDetectionResponse);
    */
   getObjectDetection: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetObjectDetectionResponse>
+  ) => UnaryCall<GetRequest, GetObjectDetectionResponse>;
   /**
    * @generated from protobuf rpc: GetRosImu(kachaka_api.GetRequest) returns (kachaka_api.GetRosImuResponse);
    */
   getRosImu: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRosImuResponse>
+  ) => UnaryCall<GetRequest, GetRosImuResponse>;
   /**
    * @generated from protobuf rpc: GetRosOdometry(kachaka_api.GetRequest) returns (kachaka_api.GetRosOdometryResponse);
    */
   getRosOdometry: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRosOdometryResponse>
+  ) => UnaryCall<GetRequest, GetRosOdometryResponse>;
   /**
    * @generated from protobuf rpc: GetRosLaserScan(kachaka_api.GetRequest) returns (kachaka_api.GetRosLaserScanResponse);
    */
   getRosLaserScan: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetRosLaserScanResponse>
+  ) => UnaryCall<GetRequest, GetRosLaserScanResponse>;
   /**
    * @generated from protobuf rpc: GetFrontCameraRosCameraInfo(kachaka_api.GetRequest) returns (kachaka_api.GetFrontCameraRosCameraInfoResponse);
    */
   getFrontCameraRosCameraInfo: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetFrontCameraRosCameraInfoResponse>
+  ) => UnaryCall<GetRequest, GetFrontCameraRosCameraInfoResponse>;
   /**
    * @generated from protobuf rpc: GetFrontCameraRosImage(kachaka_api.GetRequest) returns (kachaka_api.GetFrontCameraRosImageResponse);
    */
   getFrontCameraRosImage: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetFrontCameraRosImageResponse>
+  ) => UnaryCall<GetRequest, GetFrontCameraRosImageResponse>;
   /**
    * @generated from protobuf rpc: GetFrontCameraRosCompressedImage(kachaka_api.GetRequest) returns (kachaka_api.GetFrontCameraRosCompressedImageResponse);
    */
   getFrontCameraRosCompressedImage: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetFrontCameraRosCompressedImageResponse>
+  ) => UnaryCall<GetRequest, GetFrontCameraRosCompressedImageResponse>;
   /**
    * @generated from protobuf rpc: StartCommand(kachaka_api.StartCommandRequest) returns (kachaka_api.StartCommandResponse);
    */
   startCommand: (
     input: StartCommandRequest,
     options?: RpcOptions,
-  ) => UnaryCall<StartCommandRequest, StartCommandResponse>
+  ) => UnaryCall<StartCommandRequest, StartCommandResponse>;
   /**
    * @generated from protobuf rpc: CancelCommand(kachaka_api.EmptyRequest) returns (kachaka_api.CancelCommandResponse);
    */
   cancelCommand: (
     input: EmptyRequest,
     options?: RpcOptions,
-  ) => UnaryCall<EmptyRequest, CancelCommandResponse>
+  ) => UnaryCall<EmptyRequest, CancelCommandResponse>;
   /**
    * @generated from protobuf rpc: GetCommandState(kachaka_api.GetRequest) returns (kachaka_api.GetCommandStateResponse);
    */
   getCommandState: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetCommandStateResponse>
+  ) => UnaryCall<GetRequest, GetCommandStateResponse>;
   /**
    * @generated from protobuf rpc: GetLastCommandResult(kachaka_api.GetRequest) returns (kachaka_api.GetLastCommandResultResponse);
    */
   getLastCommandResult: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetLastCommandResultResponse>
+  ) => UnaryCall<GetRequest, GetLastCommandResultResponse>;
   /**
    * @generated from protobuf rpc: GetLocations(kachaka_api.GetRequest) returns (kachaka_api.GetLocationsResponse);
    */
   getLocations: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetLocationsResponse>
+  ) => UnaryCall<GetRequest, GetLocationsResponse>;
   /**
    * @generated from protobuf rpc: GetShelves(kachaka_api.GetRequest) returns (kachaka_api.GetShelvesResponse);
    */
   getShelves: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetShelvesResponse>
+  ) => UnaryCall<GetRequest, GetShelvesResponse>;
   /**
    * @generated from protobuf rpc: SetAutoHomingEnabled(kachaka_api.SetAutoHomingEnabledRequest) returns (kachaka_api.SetAutoHomingEnabledResponse);
    */
   setAutoHomingEnabled: (
     input: SetAutoHomingEnabledRequest,
     options?: RpcOptions,
-  ) => UnaryCall<SetAutoHomingEnabledRequest, SetAutoHomingEnabledResponse>
+  ) => UnaryCall<SetAutoHomingEnabledRequest, SetAutoHomingEnabledResponse>;
   /**
    * @generated from protobuf rpc: GetAutoHomingEnabled(kachaka_api.GetRequest) returns (kachaka_api.GetAutoHomingEnabledResponse);
    */
   getAutoHomingEnabled: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetAutoHomingEnabledResponse>
+  ) => UnaryCall<GetRequest, GetAutoHomingEnabledResponse>;
   /**
    * @generated from protobuf rpc: SetManualControlEnabled(kachaka_api.SetManualControlEnabledRequest) returns (kachaka_api.SetManualControlEnabledResponse);
    */
@@ -198,28 +198,28 @@ export interface IKachakaApiClient {
   ) => UnaryCall<
     SetManualControlEnabledRequest,
     SetManualControlEnabledResponse
-  >
+  >;
   /**
    * @generated from protobuf rpc: GetManualControlEnabled(kachaka_api.GetRequest) returns (kachaka_api.GetManualControlEnabledResponse);
    */
   getManualControlEnabled: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetManualControlEnabledResponse>
+  ) => UnaryCall<GetRequest, GetManualControlEnabledResponse>;
   /**
    * @generated from protobuf rpc: SetRobotVelocity(kachaka_api.SetRobotVelocityRequest) returns (kachaka_api.SetRobotVelocityResponse);
    */
   setRobotVelocity: (
     input: SetRobotVelocityRequest,
     options?: RpcOptions,
-  ) => UnaryCall<SetRobotVelocityRequest, SetRobotVelocityResponse>
+  ) => UnaryCall<SetRobotVelocityRequest, SetRobotVelocityResponse>;
   /**
    * @generated from protobuf rpc: GetHistoryList(kachaka_api.GetRequest) returns (kachaka_api.GetHistoryListResponse);
    */
   getHistoryList: (
     input: GetRequest,
     options?: RpcOptions,
-  ) => UnaryCall<GetRequest, GetHistoryListResponse>
+  ) => UnaryCall<GetRequest, GetHistoryListResponse>;
 }
 /**
  * Services
@@ -227,9 +227,9 @@ export interface IKachakaApiClient {
  * @generated from protobuf service kachaka_api.KachakaApi
  */
 export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
-  typeName = KachakaApi.typeName
-  methods = KachakaApi.methods
-  options = KachakaApi.options
+  typeName = KachakaApi.typeName;
+  methods = KachakaApi.methods;
+  options = KachakaApi.options;
   constructor(private readonly _transport: RpcTransport) {}
 
   /**
@@ -239,15 +239,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRobotSerialNumberResponse> {
-    const method = this.methods[0]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[0];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRobotSerialNumberResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -257,15 +257,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRobotVersionResponse> {
-    const method = this.methods[1]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[1];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRobotVersionResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -275,15 +275,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRobotPoseResponse> {
-    const method = this.methods[2]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[2];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRobotPoseResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -293,15 +293,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetPngMapResponse> {
-    const method = this.methods[3]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[3];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetPngMapResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -311,15 +311,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetObjectDetectionResponse> {
-    const method = this.methods[4]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[4];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetObjectDetectionResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -329,15 +329,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRosImuResponse> {
-    const method = this.methods[5]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[5];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRosImuResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -347,15 +347,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRosOdometryResponse> {
-    const method = this.methods[6]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[6];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRosOdometryResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -365,15 +365,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetRosLaserScanResponse> {
-    const method = this.methods[7]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[7];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetRosLaserScanResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -383,15 +383,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetFrontCameraRosCameraInfoResponse> {
-    const method = this.methods[8]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[8];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetFrontCameraRosCameraInfoResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -401,15 +401,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetFrontCameraRosImageResponse> {
-    const method = this.methods[9]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[9];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetFrontCameraRosImageResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -419,15 +419,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetFrontCameraRosCompressedImageResponse> {
-    const method = this.methods[10]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[10];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetFrontCameraRosCompressedImageResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -437,15 +437,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: StartCommandRequest,
     options?: RpcOptions,
   ): UnaryCall<StartCommandRequest, StartCommandResponse> {
-    const method = this.methods[11]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[11];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<StartCommandRequest, StartCommandResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -455,15 +455,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: EmptyRequest,
     options?: RpcOptions,
   ): UnaryCall<EmptyRequest, CancelCommandResponse> {
-    const method = this.methods[12]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[12];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<EmptyRequest, CancelCommandResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -473,15 +473,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetCommandStateResponse> {
-    const method = this.methods[13]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[13];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetCommandStateResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -491,15 +491,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetLastCommandResultResponse> {
-    const method = this.methods[14]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[14];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetLastCommandResultResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -509,15 +509,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetLocationsResponse> {
-    const method = this.methods[15]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[15];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetLocationsResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -527,15 +527,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetShelvesResponse> {
-    const method = this.methods[16]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[16];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetShelvesResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -545,12 +545,12 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: SetAutoHomingEnabledRequest,
     options?: RpcOptions,
   ): UnaryCall<SetAutoHomingEnabledRequest, SetAutoHomingEnabledResponse> {
-    const method = this.methods[17]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[17];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<
       SetAutoHomingEnabledRequest,
       SetAutoHomingEnabledResponse
-    >('unary', this._transport, method, opt, input)
+    >('unary', this._transport, method, opt, input);
   }
 
   /**
@@ -560,15 +560,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetAutoHomingEnabledResponse> {
-    const method = this.methods[18]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[18];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetAutoHomingEnabledResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -581,12 +581,12 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     SetManualControlEnabledRequest,
     SetManualControlEnabledResponse
   > {
-    const method = this.methods[19]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[19];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<
       SetManualControlEnabledRequest,
       SetManualControlEnabledResponse
-    >('unary', this._transport, method, opt, input)
+    >('unary', this._transport, method, opt, input);
   }
 
   /**
@@ -596,15 +596,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetManualControlEnabledResponse> {
-    const method = this.methods[20]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[20];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetManualControlEnabledResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -614,15 +614,15 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: SetRobotVelocityRequest,
     options?: RpcOptions,
   ): UnaryCall<SetRobotVelocityRequest, SetRobotVelocityResponse> {
-    const method = this.methods[21]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[21];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<SetRobotVelocityRequest, SetRobotVelocityResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 
   /**
@@ -632,14 +632,14 @@ export class KachakaApiClient implements IKachakaApiClient, ServiceInfo {
     input: GetRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRequest, GetHistoryListResponse> {
-    const method = this.methods[22]
-    const opt = this._transport.mergeOptions(options)
+    const method = this.methods[22];
+    const opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRequest, GetHistoryListResponse>(
       'unary',
       this._transport,
       method,
       opt,
       input,
-    )
+    );
   }
 }

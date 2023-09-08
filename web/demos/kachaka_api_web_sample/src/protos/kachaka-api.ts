@@ -13,21 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { ServiceType } from '@protobuf-ts/runtime-rpc'
+import { ServiceType } from '@protobuf-ts/runtime-rpc';
 import type {
   BinaryWriteOptions,
   IBinaryWriter,
   BinaryReadOptions,
   IBinaryReader,
   PartialMessage,
-} from '@protobuf-ts/runtime'
+} from '@protobuf-ts/runtime';
 import {
   WireType,
   UnknownFieldHandler,
   reflectionMergePartial,
   MESSAGE_TYPE,
   MessageType,
-} from '@protobuf-ts/runtime'
+} from '@protobuf-ts/runtime';
 /**
  * Common messages
  *
@@ -37,7 +37,7 @@ export interface Metadata {
   /**
    * @generated from protobuf field: sfixed64 cursor = 1;
    */
-  cursor: bigint
+  cursor: bigint;
 }
 /**
  * @generated from protobuf message kachaka_api.Result
@@ -46,11 +46,11 @@ export interface Result {
   /**
    * @generated from protobuf field: bool success = 1;
    */
-  success: boolean
+  success: boolean;
   /**
    * @generated from protobuf field: int32 error_code = 3;
    */
-  errorCode: number
+  errorCode: number;
 }
 /**
  * @generated from protobuf message kachaka_api.Error
@@ -59,7 +59,7 @@ export interface Error {
   /**
    * @generated from protobuf field: int32 error_code = 2;
    */
-  errorCode: number
+  errorCode: number;
 }
 /**
  * @generated from protobuf message kachaka_api.RosHeader
@@ -68,11 +68,11 @@ export interface RosHeader {
   /**
    * @generated from protobuf field: int64 stamp_nsec = 1;
    */
-  stampNsec: bigint
+  stampNsec: bigint;
   /**
    * @generated from protobuf field: string frame_id = 2;
    */
-  frameId: string
+  frameId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.Pose
@@ -81,15 +81,15 @@ export interface Pose {
   /**
    * @generated from protobuf field: double x = 1;
    */
-  x: number
+  x: number;
   /**
    * @generated from protobuf field: double y = 2;
    */
-  y: number
+  y: number;
   /**
    * @generated from protobuf field: double theta = 3;
    */
-  theta: number
+  theta: number;
 }
 /**
  * @generated from protobuf message kachaka_api.Vector3
@@ -98,15 +98,15 @@ export interface Vector3 {
   /**
    * @generated from protobuf field: double x = 1;
    */
-  x: number
+  x: number;
   /**
    * @generated from protobuf field: double y = 2;
    */
-  y: number
+  y: number;
   /**
    * @generated from protobuf field: double z = 3;
    */
-  z: number
+  z: number;
 }
 /**
  * @generated from protobuf message kachaka_api.Quaternion
@@ -115,19 +115,19 @@ export interface Quaternion {
   /**
    * @generated from protobuf field: double x = 1;
    */
-  x: number
+  x: number;
   /**
    * @generated from protobuf field: double y = 2;
    */
-  y: number
+  y: number;
   /**
    * @generated from protobuf field: double z = 3;
    */
-  z: number
+  z: number;
   /**
    * @generated from protobuf field: double w = 4;
    */
-  w: number
+  w: number;
 }
 /**
  * @generated from protobuf message kachaka_api.Pose3d
@@ -136,11 +136,11 @@ export interface Pose3d {
   /**
    * @generated from protobuf field: kachaka_api.Vector3 position = 1;
    */
-  position?: Vector3
+  position?: Vector3;
   /**
    * @generated from protobuf field: kachaka_api.Quaternion orientation = 2;
    */
-  orientation?: Quaternion
+  orientation?: Quaternion;
 }
 /**
  * @generated from protobuf message kachaka_api.Twist
@@ -149,11 +149,11 @@ export interface Twist {
   /**
    * @generated from protobuf field: kachaka_api.Vector3 linear = 1;
    */
-  linear?: Vector3
+  linear?: Vector3;
   /**
    * @generated from protobuf field: kachaka_api.Vector3 angular = 2;
    */
-  angular?: Vector3
+  angular?: Vector3;
 }
 /**
  * @generated from protobuf message kachaka_api.Pose3dWithCovariance
@@ -162,11 +162,11 @@ export interface Pose3dWithCovariance {
   /**
    * @generated from protobuf field: kachaka_api.Pose3d pose = 1;
    */
-  pose?: Pose3d
+  pose?: Pose3d;
   /**
    * @generated from protobuf field: repeated double covariance = 2;
    */
-  covariance: number[]
+  covariance: number[];
 }
 /**
  * @generated from protobuf message kachaka_api.TwistWithCovariance
@@ -175,11 +175,11 @@ export interface TwistWithCovariance {
   /**
    * @generated from protobuf field: kachaka_api.Twist twist = 1;
    */
-  twist?: Twist
+  twist?: Twist;
   /**
    * @generated from protobuf field: repeated double covariance = 2;
    */
-  covariance: number[]
+  covariance: number[];
 }
 /**
  * @generated from protobuf message kachaka_api.Map
@@ -188,27 +188,27 @@ export interface Map {
   /**
    * @generated from protobuf field: bytes data = 1;
    */
-  data: Uint8Array // uint8[]
+  data: Uint8Array; // uint8[]
   /**
    * @generated from protobuf field: string name = 2;
    */
-  name: string
+  name: string;
   /**
    * @generated from protobuf field: double resolution = 3;
    */
-  resolution: number
+  resolution: number;
   /**
    * @generated from protobuf field: int32 width = 4;
    */
-  width: number // larger than 0
+  width: number; // larger than 0
   /**
    * @generated from protobuf field: int32 height = 5;
    */
-  height: number // larger than 0
+  height: number; // larger than 0
   /**
    * @generated from protobuf field: kachaka_api.Pose origin = 6;
    */
-  origin?: Pose
+  origin?: Pose;
 }
 /**
  * @generated from protobuf message kachaka_api.Location
@@ -217,31 +217,31 @@ export interface Location {
   /**
    * @generated from protobuf field: string id = 1;
    */
-  id: string
+  id: string;
   /**
    * @generated from protobuf field: string name = 2;
    */
-  name: string
+  name: string;
   /**
    * @generated from protobuf field: kachaka_api.Pose pose = 3;
    */
-  pose?: Pose // relative to map origin
+  pose?: Pose; // relative to map origin
   /**
    * @generated from protobuf field: kachaka_api.LocationType type = 4;
    */
-  type: LocationType
+  type: LocationType;
   /**
    * @generated from protobuf field: bool undock_shelf_aligning_to_wall = 5;
    */
-  undockShelfAligningToWall: boolean
+  undockShelfAligningToWall: boolean;
   /**
    * @generated from protobuf field: bool undock_shelf_avoiding_obstacles = 6;
    */
-  undockShelfAvoidingObstacles: boolean
+  undockShelfAvoidingObstacles: boolean;
   /**
    * @generated from protobuf field: bool ignore_voice_recognition = 7;
    */
-  ignoreVoiceRecognition: boolean
+  ignoreVoiceRecognition: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.ShelfSize
@@ -250,15 +250,15 @@ export interface ShelfSize {
   /**
    * @generated from protobuf field: double width = 1;
    */
-  width: number
+  width: number;
   /**
    * @generated from protobuf field: double depth = 2;
    */
-  depth: number
+  depth: number;
   /**
    * @generated from protobuf field: double height = 3;
    */
-  height: number
+  height: number;
 }
 /**
  * @generated from protobuf message kachaka_api.RecognizableName
@@ -267,11 +267,11 @@ export interface RecognizableName {
   /**
    * @generated from protobuf field: string name = 1;
    */
-  name: string
+  name: string;
   /**
    * @generated from protobuf field: bool deletable = 2;
    */
-  deletable: boolean
+  deletable: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.Shelf
@@ -280,39 +280,39 @@ export interface Shelf {
   /**
    * @generated from protobuf field: string id = 1;
    */
-  id: string
+  id: string;
   /**
    * @generated from protobuf field: string name = 2;
    */
-  name: string
+  name: string;
   /**
    * @generated from protobuf field: kachaka_api.Pose pose = 3;
    */
-  pose?: Pose // relative to map origin
+  pose?: Pose; // relative to map origin
   /**
    * @generated from protobuf field: kachaka_api.ShelfSize size = 4;
    */
-  size?: ShelfSize
+  size?: ShelfSize;
   /**
    * @generated from protobuf field: kachaka_api.ShelfAppearance appearance = 5;
    */
-  appearance: ShelfAppearance
+  appearance: ShelfAppearance;
   /**
    * @generated from protobuf field: repeated kachaka_api.RecognizableName recognizable_names = 7;
    */
-  recognizableNames: RecognizableName[] // Recognizable by speech recognition.
+  recognizableNames: RecognizableName[]; // Recognizable by speech recognition.
   /**
    * @generated from protobuf field: string home_location_id = 8;
    */
-  homeLocationId: string
+  homeLocationId: string;
   /**
    * @generated from protobuf field: kachaka_api.ShelfSpeedMode speed_mode = 9;
    */
-  speedMode: ShelfSpeedMode
+  speedMode: ShelfSpeedMode;
   /**
    * @generated from protobuf field: bool ignore_voice_recognition = 10;
    */
-  ignoreVoiceRecognition: boolean
+  ignoreVoiceRecognition: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.RosImu
@@ -321,31 +321,31 @@ export interface RosImu {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: kachaka_api.Quaternion orientation = 2;
    */
-  orientation?: Quaternion
+  orientation?: Quaternion;
   /**
    * @generated from protobuf field: repeated double orientation_covariance = 3;
    */
-  orientationCovariance: number[]
+  orientationCovariance: number[];
   /**
    * @generated from protobuf field: kachaka_api.Vector3 angular_velocity = 4;
    */
-  angularVelocity?: Vector3
+  angularVelocity?: Vector3;
   /**
    * @generated from protobuf field: repeated double angular_velocity_covariance = 5;
    */
-  angularVelocityCovariance: number[]
+  angularVelocityCovariance: number[];
   /**
    * @generated from protobuf field: kachaka_api.Vector3 linear_acceleration = 6;
    */
-  linearAcceleration?: Vector3
+  linearAcceleration?: Vector3;
   /**
    * @generated from protobuf field: repeated double linear_acceleration_covariance = 7;
    */
-  linearAccelerationCovariance: number[]
+  linearAccelerationCovariance: number[];
 }
 /**
  * @generated from protobuf message kachaka_api.RosOdometry
@@ -354,19 +354,19 @@ export interface RosOdometry {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: string child_frame_id = 2;
    */
-  childFrameId: string
+  childFrameId: string;
   /**
    * @generated from protobuf field: kachaka_api.Pose3dWithCovariance pose = 3;
    */
-  pose?: Pose3dWithCovariance
+  pose?: Pose3dWithCovariance;
   /**
    * @generated from protobuf field: kachaka_api.TwistWithCovariance twist = 4;
    */
-  twist?: TwistWithCovariance
+  twist?: TwistWithCovariance;
 }
 /**
  * @generated from protobuf message kachaka_api.RosLaserScan
@@ -375,43 +375,43 @@ export interface RosLaserScan {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: double angle_min = 2;
    */
-  angleMin: number
+  angleMin: number;
   /**
    * @generated from protobuf field: double angle_max = 3;
    */
-  angleMax: number
+  angleMax: number;
   /**
    * @generated from protobuf field: double angle_increment = 4;
    */
-  angleIncrement: number
+  angleIncrement: number;
   /**
    * @generated from protobuf field: double time_increment = 5;
    */
-  timeIncrement: number
+  timeIncrement: number;
   /**
    * @generated from protobuf field: double scan_time = 6;
    */
-  scanTime: number
+  scanTime: number;
   /**
    * @generated from protobuf field: double range_min = 7;
    */
-  rangeMin: number
+  rangeMin: number;
   /**
    * @generated from protobuf field: double range_max = 8;
    */
-  rangeMax: number
+  rangeMax: number;
   /**
    * @generated from protobuf field: repeated double ranges = 9;
    */
-  ranges: number[]
+  ranges: number[];
   /**
    * @generated from protobuf field: repeated double intensities = 10;
    */
-  intensities: number[]
+  intensities: number[];
 }
 /**
  * @generated from protobuf message kachaka_api.RegionOfInterest
@@ -420,23 +420,23 @@ export interface RegionOfInterest {
   /**
    * @generated from protobuf field: uint32 x_offset = 1;
    */
-  xOffset: number
+  xOffset: number;
   /**
    * @generated from protobuf field: uint32 y_offset = 2;
    */
-  yOffset: number
+  yOffset: number;
   /**
    * @generated from protobuf field: uint32 height = 3;
    */
-  height: number
+  height: number;
   /**
    * @generated from protobuf field: uint32 width = 4;
    */
-  width: number
+  width: number;
   /**
    * @generated from protobuf field: bool do_rectify = 5;
    */
-  doRectify: boolean
+  doRectify: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.RosCameraInfo
@@ -445,47 +445,47 @@ export interface RosCameraInfo {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: uint32 height = 2;
    */
-  height: number
+  height: number;
   /**
    * @generated from protobuf field: uint32 width = 3;
    */
-  width: number
+  width: number;
   /**
    * @generated from protobuf field: string distortion_model = 4;
    */
-  distortionModel: string
+  distortionModel: string;
   /**
    * @generated from protobuf field: repeated double D = 5 [json_name = "D"];
    */
-  d: number[]
+  d: number[];
   /**
    * @generated from protobuf field: repeated double K = 6 [json_name = "K"];
    */
-  k: number[]
+  k: number[];
   /**
    * @generated from protobuf field: repeated double R = 7 [json_name = "R"];
    */
-  r: number[]
+  r: number[];
   /**
    * @generated from protobuf field: repeated double P = 8 [json_name = "P"];
    */
-  p: number[]
+  p: number[];
   /**
    * @generated from protobuf field: uint32 binning_x = 9;
    */
-  binningX: number
+  binningX: number;
   /**
    * @generated from protobuf field: uint32 binning_y = 10;
    */
-  binningY: number
+  binningY: number;
   /**
    * @generated from protobuf field: kachaka_api.RegionOfInterest roi = 11;
    */
-  roi?: RegionOfInterest
+  roi?: RegionOfInterest;
 }
 /**
  * @generated from protobuf message kachaka_api.RosImage
@@ -494,31 +494,31 @@ export interface RosImage {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: uint32 height = 2;
    */
-  height: number
+  height: number;
   /**
    * @generated from protobuf field: uint32 width = 3;
    */
-  width: number
+  width: number;
   /**
    * @generated from protobuf field: string encoding = 4;
    */
-  encoding: string
+  encoding: string;
   /**
    * @generated from protobuf field: bool is_bigendian = 5;
    */
-  isBigendian: boolean
+  isBigendian: boolean;
   /**
    * @generated from protobuf field: uint32 step = 6;
    */
-  step: number
+  step: number;
   /**
    * @generated from protobuf field: bytes data = 7;
    */
-  data: Uint8Array
+  data: Uint8Array;
 }
 /**
  * @generated from protobuf message kachaka_api.RosCompressedImage
@@ -527,15 +527,15 @@ export interface RosCompressedImage {
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 1;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: string format = 2;
    */
-  format: string
+  format: string;
   /**
    * @generated from protobuf field: bytes data = 3;
    */
-  data: Uint8Array
+  data: Uint8Array;
 }
 /**
  * @generated from protobuf message kachaka_api.ObjectDetection
@@ -544,19 +544,19 @@ export interface ObjectDetection {
   /**
    * @generated from protobuf field: uint32 label = 1;
    */
-  label: number
+  label: number;
   /**
    * @generated from protobuf field: kachaka_api.RegionOfInterest roi = 2;
    */
-  roi?: RegionOfInterest
+  roi?: RegionOfInterest;
   /**
    * @generated from protobuf field: float score = 3;
    */
-  score: number
+  score: number;
   /**
    * @generated from protobuf field: double distance_median = 4;
    */
-  distanceMedian: number
+  distanceMedian: number;
 }
 /**
  * Commands
@@ -569,64 +569,64 @@ export interface Command {
    */
   command:
     | {
-        oneofKind: 'moveShelfCommand'
+        oneofKind: 'moveShelfCommand';
         /**
          * @generated from protobuf field: kachaka_api.MoveShelfCommand move_shelf_command = 1;
          */
-        moveShelfCommand: MoveShelfCommand
+        moveShelfCommand: MoveShelfCommand;
       }
     | {
-        oneofKind: 'returnShelfCommand'
+        oneofKind: 'returnShelfCommand';
         /**
          * @generated from protobuf field: kachaka_api.ReturnShelfCommand return_shelf_command = 2;
          */
-        returnShelfCommand: ReturnShelfCommand
+        returnShelfCommand: ReturnShelfCommand;
       }
     | {
-        oneofKind: 'undockShelfCommand'
+        oneofKind: 'undockShelfCommand';
         /**
          * @generated from protobuf field: kachaka_api.UndockShelfCommand undock_shelf_command = 5;
          */
-        undockShelfCommand: UndockShelfCommand
+        undockShelfCommand: UndockShelfCommand;
       }
     | {
-        oneofKind: 'moveToLocationCommand'
+        oneofKind: 'moveToLocationCommand';
         /**
          * @generated from protobuf field: kachaka_api.MoveToLocationCommand move_to_location_command = 7;
          */
-        moveToLocationCommand: MoveToLocationCommand
+        moveToLocationCommand: MoveToLocationCommand;
       }
     | {
-        oneofKind: 'returnHomeCommand'
+        oneofKind: 'returnHomeCommand';
         /**
          * @generated from protobuf field: kachaka_api.ReturnHomeCommand return_home_command = 8;
          */
-        returnHomeCommand: ReturnHomeCommand
+        returnHomeCommand: ReturnHomeCommand;
       }
     | {
-        oneofKind: 'dockShelfCommand'
+        oneofKind: 'dockShelfCommand';
         /**
          * @generated from protobuf field: kachaka_api.DockShelfCommand dock_shelf_command = 9;
          */
-        dockShelfCommand: DockShelfCommand
+        dockShelfCommand: DockShelfCommand;
       }
     | {
-        oneofKind: 'speakCommand'
+        oneofKind: 'speakCommand';
         /**
          * @generated from protobuf field: kachaka_api.SpeakCommand speak_command = 12;
          */
-        speakCommand: SpeakCommand
+        speakCommand: SpeakCommand;
       }
     | {
-        oneofKind: 'moveToPoseCommand'
+        oneofKind: 'moveToPoseCommand';
         /**
          * @generated from protobuf field: kachaka_api.MoveToPoseCommand move_to_pose_command = 13;
          */
-        moveToPoseCommand: MoveToPoseCommand
+        moveToPoseCommand: MoveToPoseCommand;
       }
     | {
-        oneofKind: undefined
-      }
+        oneofKind: undefined;
+      };
 }
 /**
  * @generated from protobuf message kachaka_api.MoveShelfCommand
@@ -635,11 +635,11 @@ export interface MoveShelfCommand {
   /**
    * @generated from protobuf field: string target_shelf_id = 1;
    */
-  targetShelfId: string
+  targetShelfId: string;
   /**
    * @generated from protobuf field: string destination_location_id = 2;
    */
-  destinationLocationId: string
+  destinationLocationId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.ReturnShelfCommand
@@ -648,7 +648,7 @@ export interface ReturnShelfCommand {
   /**
    * @generated from protobuf field: string target_shelf_id = 1;
    */
-  targetShelfId: string
+  targetShelfId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.UndockShelfCommand
@@ -657,7 +657,7 @@ export interface UndockShelfCommand {
   /**
    * @generated from protobuf field: string target_shelf_id = 1;
    */
-  targetShelfId: string
+  targetShelfId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.MoveToLocationCommand
@@ -666,7 +666,7 @@ export interface MoveToLocationCommand {
   /**
    * @generated from protobuf field: string target_location_id = 1;
    */
-  targetLocationId: string
+  targetLocationId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.ReturnHomeCommand
@@ -683,7 +683,7 @@ export interface SpeakCommand {
   /**
    * @generated from protobuf field: string text = 1;
    */
-  text: string
+  text: string;
 }
 /**
  * @generated from protobuf message kachaka_api.MoveToPoseCommand
@@ -692,15 +692,15 @@ export interface MoveToPoseCommand {
   /**
    * @generated from protobuf field: double x = 1;
    */
-  x: number
+  x: number;
   /**
    * @generated from protobuf field: double y = 2;
    */
-  y: number
+  y: number;
   /**
    * @generated from protobuf field: double yaw = 3;
    */
-  yaw: number
+  yaw: number;
 }
 /**
  * Requests and Responses
@@ -715,7 +715,7 @@ export interface GetRequest {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
 }
 /**
  * @generated from protobuf message kachaka_api.GetRobotSerialNumberResponse
@@ -724,11 +724,11 @@ export interface GetRobotSerialNumberResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: string serial_number = 2;
    */
-  serialNumber: string
+  serialNumber: string;
 }
 /**
  * @generated from protobuf message kachaka_api.GetRobotVersionResponse
@@ -737,11 +737,11 @@ export interface GetRobotVersionResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: string version = 2;
    */
-  version: string
+  version: string;
 }
 /**
  * @generated from protobuf message kachaka_api.GetRobotPoseResponse
@@ -750,11 +750,11 @@ export interface GetRobotPoseResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.Pose pose = 2;
    */
-  pose?: Pose
+  pose?: Pose;
 }
 /**
  * @generated from protobuf message kachaka_api.GetPngMapResponse
@@ -763,11 +763,11 @@ export interface GetPngMapResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.Map map = 2;
    */
-  map?: Map
+  map?: Map;
 }
 /**
  * @generated from protobuf message kachaka_api.GetObjectDetectionResponse
@@ -776,15 +776,15 @@ export interface GetObjectDetectionResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosHeader header = 2;
    */
-  header?: RosHeader
+  header?: RosHeader;
   /**
    * @generated from protobuf field: repeated kachaka_api.ObjectDetection objects = 3;
    */
-  objects: ObjectDetection[]
+  objects: ObjectDetection[];
 }
 /**
  * @generated from protobuf message kachaka_api.GetRosImuResponse
@@ -793,11 +793,11 @@ export interface GetRosImuResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosImu imu = 2;
    */
-  imu?: RosImu
+  imu?: RosImu;
 }
 /**
  * @generated from protobuf message kachaka_api.GetRosOdometryResponse
@@ -806,11 +806,11 @@ export interface GetRosOdometryResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosOdometry odometry = 2;
    */
-  odometry?: RosOdometry
+  odometry?: RosOdometry;
 }
 /**
  * @generated from protobuf message kachaka_api.GetRosLaserScanResponse
@@ -819,11 +819,11 @@ export interface GetRosLaserScanResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosLaserScan scan = 2;
    */
-  scan?: RosLaserScan
+  scan?: RosLaserScan;
 }
 /**
  * @generated from protobuf message kachaka_api.GetFrontCameraRosCameraInfoResponse
@@ -832,11 +832,11 @@ export interface GetFrontCameraRosCameraInfoResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosCameraInfo camera_info = 2;
    */
-  cameraInfo?: RosCameraInfo
+  cameraInfo?: RosCameraInfo;
 }
 /**
  * @generated from protobuf message kachaka_api.GetFrontCameraRosImageResponse
@@ -845,11 +845,11 @@ export interface GetFrontCameraRosImageResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosImage image = 2;
    */
-  image?: RosImage
+  image?: RosImage;
 }
 /**
  * @generated from protobuf message kachaka_api.GetFrontCameraRosCompressedImageResponse
@@ -858,11 +858,11 @@ export interface GetFrontCameraRosCompressedImageResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.RosCompressedImage image = 2;
    */
-  image?: RosCompressedImage
+  image?: RosCompressedImage;
 }
 /**
  * @generated from protobuf message kachaka_api.StartCommandRequest
@@ -871,19 +871,19 @@ export interface StartCommandRequest {
   /**
    * @generated from protobuf field: kachaka_api.Command command = 1;
    */
-  command?: Command
+  command?: Command;
   /**
    * @generated from protobuf field: bool cancel_all = 2;
    */
-  cancelAll: boolean
+  cancelAll: boolean;
   /**
    * @generated from protobuf field: string tts_on_success = 3;
    */
-  ttsOnSuccess: string
+  ttsOnSuccess: string;
   /**
    * @generated from protobuf field: string title = 4;
    */
-  title: string
+  title: string;
 }
 /**
  * @generated from protobuf message kachaka_api.StartCommandResponse
@@ -892,11 +892,11 @@ export interface StartCommandResponse {
   /**
    * @generated from protobuf field: kachaka_api.Result result = 1;
    */
-  result?: Result
+  result?: Result;
   /**
    * @generated from protobuf field: string command_id = 2;
    */
-  commandId: string
+  commandId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.CancelCommandResponse
@@ -905,11 +905,11 @@ export interface CancelCommandResponse {
   /**
    * @generated from protobuf field: kachaka_api.Result result = 1;
    */
-  result?: Result
+  result?: Result;
   /**
    * @generated from protobuf field: kachaka_api.Command command = 2;
    */
-  command?: Command
+  command?: Command;
 }
 /**
  * @generated from protobuf message kachaka_api.GetCommandStateResponse
@@ -918,15 +918,15 @@ export interface GetCommandStateResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.CommandState state = 2;
    */
-  state: CommandState
+  state: CommandState;
   /**
    * @generated from protobuf field: kachaka_api.Command command = 3;
    */
-  command?: Command
+  command?: Command;
 }
 /**
  * @generated from protobuf message kachaka_api.GetLastCommandResultResponse
@@ -935,15 +935,15 @@ export interface GetLastCommandResultResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: kachaka_api.Result result = 2;
    */
-  result?: Result // Empty if there is no last command
+  result?: Result; // Empty if there is no last command
   /**
    * @generated from protobuf field: kachaka_api.Command command = 3;
    */
-  command?: Command
+  command?: Command;
 }
 /**
  * @generated from protobuf message kachaka_api.GetLocationsResponse
@@ -952,15 +952,15 @@ export interface GetLocationsResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: repeated kachaka_api.Location locations = 2;
    */
-  locations: Location[]
+  locations: Location[];
   /**
    * @generated from protobuf field: string default_location_id = 3;
    */
-  defaultLocationId: string
+  defaultLocationId: string;
 }
 /**
  * @generated from protobuf message kachaka_api.GetShelvesResponse
@@ -969,11 +969,11 @@ export interface GetShelvesResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: repeated kachaka_api.Shelf shelves = 2;
    */
-  shelves: Shelf[]
+  shelves: Shelf[];
 }
 /**
  * @generated from protobuf message kachaka_api.SetAutoHomingEnabledRequest
@@ -982,7 +982,7 @@ export interface SetAutoHomingEnabledRequest {
   /**
    * @generated from protobuf field: bool enable = 1;
    */
-  enable: boolean
+  enable: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.SetAutoHomingEnabledResponse
@@ -991,7 +991,7 @@ export interface SetAutoHomingEnabledResponse {
   /**
    * @generated from protobuf field: kachaka_api.Result result = 1;
    */
-  result?: Result
+  result?: Result;
 }
 /**
  * @generated from protobuf message kachaka_api.GetAutoHomingEnabledResponse
@@ -1000,11 +1000,11 @@ export interface GetAutoHomingEnabledResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: bool enabled = 2;
    */
-  enabled: boolean
+  enabled: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.SetManualControlEnabledRequest
@@ -1013,11 +1013,11 @@ export interface SetManualControlEnabledRequest {
   /**
    * @generated from protobuf field: bool enable = 1;
    */
-  enable: boolean
+  enable: boolean;
   /**
    * @generated from protobuf field: bool use_shelf_registration = 2;
    */
-  useShelfRegistration: boolean // effective only if enable==true
+  useShelfRegistration: boolean; // effective only if enable==true
 }
 /**
  * @generated from protobuf message kachaka_api.SetManualControlEnabledResponse
@@ -1026,7 +1026,7 @@ export interface SetManualControlEnabledResponse {
   /**
    * @generated from protobuf field: kachaka_api.Result result = 1;
    */
-  result?: Result
+  result?: Result;
 }
 /**
  * @generated from protobuf message kachaka_api.GetManualControlEnabledResponse
@@ -1035,11 +1035,11 @@ export interface GetManualControlEnabledResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: bool enabled = 2;
    */
-  enabled: boolean
+  enabled: boolean;
 }
 /**
  * @generated from protobuf message kachaka_api.SetRobotVelocityRequest
@@ -1048,11 +1048,11 @@ export interface SetRobotVelocityRequest {
   /**
    * @generated from protobuf field: double linear = 1;
    */
-  linear: number // [-1, 1]
+  linear: number; // [-1, 1]
   /**
    * @generated from protobuf field: double angular = 2;
    */
-  angular: number // [-1, 1]
+  angular: number; // [-1, 1]
 }
 /**
  * @generated from protobuf message kachaka_api.SetRobotVelocityResponse
@@ -1061,7 +1061,7 @@ export interface SetRobotVelocityResponse {
   /**
    * @generated from protobuf field: kachaka_api.Result result = 1;
    */
-  result?: Result
+  result?: Result;
 }
 /**
  * History
@@ -1072,23 +1072,23 @@ export interface History {
   /**
    * @generated from protobuf field: string id = 1;
    */
-  id: string
+  id: string;
   /**
    * @generated from protobuf field: kachaka_api.Command command = 4;
    */
-  command?: Command
+  command?: Command;
   /**
    * @generated from protobuf field: bool success = 5;
    */
-  success: boolean
+  success: boolean;
   /**
    * @generated from protobuf field: int32 error_code = 6;
    */
-  errorCode: number
+  errorCode: number;
   /**
    * @generated from protobuf field: int64 command_executed_time = 7;
    */
-  commandExecutedTime: bigint
+  commandExecutedTime: bigint;
 }
 /**
  * @generated from protobuf message kachaka_api.GetHistoryListResponse
@@ -1097,11 +1097,11 @@ export interface GetHistoryListResponse {
   /**
    * @generated from protobuf field: kachaka_api.Metadata metadata = 1;
    */
-  metadata?: Metadata
+  metadata?: Metadata;
   /**
    * @generated from protobuf field: repeated kachaka_api.History histories = 2;
    */
-  histories: History[]
+  histories: History[];
 }
 /**
  * @generated from protobuf enum kachaka_api.LocationType
@@ -1215,19 +1215,19 @@ class Metadata$Type extends MessageType<Metadata> {
         T: 16 /* ScalarType.SFIXED64 */,
         L: 0 /* LongType.BIGINT */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Metadata>): Metadata {
-    const message = { cursor: 0n }
+    const message = { cursor: 0n };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Metadata>(this, message, value)
+      reflectionMergePartial<Metadata>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1236,34 +1236,34 @@ class Metadata$Type extends MessageType<Metadata> {
     options: BinaryReadOptions,
     target?: Metadata,
   ): Metadata {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* sfixed64 cursor */ 1:
-          message.cursor = reader.sfixed64().toBigInt()
-          break
+          message.cursor = reader.sfixed64().toBigInt();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1273,23 +1273,23 @@ class Metadata$Type extends MessageType<Metadata> {
   ): IBinaryWriter {
     /* sfixed64 cursor = 1; */
     if (message.cursor !== 0n) {
-      writer.tag(1, WireType.Bit64).sfixed64(message.cursor)
+      writer.tag(1, WireType.Bit64).sfixed64(message.cursor);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Metadata
  */
-export const Metadata = new Metadata$Type()
+export const Metadata = new Metadata$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Result$Type extends MessageType<Result> {
   constructor() {
@@ -1301,19 +1301,19 @@ class Result$Type extends MessageType<Result> {
         kind: 'scalar',
         T: 5 /* ScalarType.INT32 */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Result>): Result {
-    const message = { success: false, errorCode: 0 }
+    const message = { success: false, errorCode: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Result>(this, message, value)
+      reflectionMergePartial<Result>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1322,37 +1322,37 @@ class Result$Type extends MessageType<Result> {
     options: BinaryReadOptions,
     target?: Result,
   ): Result {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* bool success */ 1:
-          message.success = reader.bool()
-          break
+          message.success = reader.bool();
+          break;
         case /* int32 error_code */ 3:
-          message.errorCode = reader.int32()
-          break
+          message.errorCode = reader.int32();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1362,27 +1362,27 @@ class Result$Type extends MessageType<Result> {
   ): IBinaryWriter {
     /* bool success = 1; */
     if (message.success) {
-      writer.tag(1, WireType.Varint).bool(message.success)
+      writer.tag(1, WireType.Varint).bool(message.success);
     }
     /* int32 error_code = 3; */
     if (message.errorCode !== 0) {
-      writer.tag(3, WireType.Varint).int32(message.errorCode)
+      writer.tag(3, WireType.Varint).int32(message.errorCode);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Result
  */
-export const Result = new Result$Type()
+export const Result = new Result$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Error$Type extends MessageType<Error> {
   constructor() {
@@ -1393,19 +1393,19 @@ class Error$Type extends MessageType<Error> {
         kind: 'scalar',
         T: 5 /* ScalarType.INT32 */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Error>): Error {
-    const message = { errorCode: 0 }
+    const message = { errorCode: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Error>(this, message, value)
+      reflectionMergePartial<Error>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1414,34 +1414,34 @@ class Error$Type extends MessageType<Error> {
     options: BinaryReadOptions,
     target?: Error,
   ): Error {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* int32 error_code */ 2:
-          message.errorCode = reader.int32()
-          break
+          message.errorCode = reader.int32();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1451,23 +1451,23 @@ class Error$Type extends MessageType<Error> {
   ): IBinaryWriter {
     /* int32 error_code = 2; */
     if (message.errorCode !== 0) {
-      writer.tag(2, WireType.Varint).int32(message.errorCode)
+      writer.tag(2, WireType.Varint).int32(message.errorCode);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Error
  */
-export const Error = new Error$Type()
+export const Error = new Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosHeader$Type extends MessageType<RosHeader> {
   constructor() {
@@ -1480,19 +1480,19 @@ class RosHeader$Type extends MessageType<RosHeader> {
         L: 0 /* LongType.BIGINT */,
       },
       { no: 2, name: 'frame_id', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosHeader>): RosHeader {
-    const message = { stampNsec: 0n, frameId: '' }
+    const message = { stampNsec: 0n, frameId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosHeader>(this, message, value)
+      reflectionMergePartial<RosHeader>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1501,37 +1501,37 @@ class RosHeader$Type extends MessageType<RosHeader> {
     options: BinaryReadOptions,
     target?: RosHeader,
   ): RosHeader {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* int64 stamp_nsec */ 1:
-          message.stampNsec = reader.int64().toBigInt()
-          break
+          message.stampNsec = reader.int64().toBigInt();
+          break;
         case /* string frame_id */ 2:
-          message.frameId = reader.string()
-          break
+          message.frameId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1541,27 +1541,27 @@ class RosHeader$Type extends MessageType<RosHeader> {
   ): IBinaryWriter {
     /* int64 stamp_nsec = 1; */
     if (message.stampNsec !== 0n) {
-      writer.tag(1, WireType.Varint).int64(message.stampNsec)
+      writer.tag(1, WireType.Varint).int64(message.stampNsec);
     }
     /* string frame_id = 2; */
     if (message.frameId !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.frameId)
+      writer.tag(2, WireType.LengthDelimited).string(message.frameId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosHeader
  */
-export const RosHeader = new RosHeader$Type()
+export const RosHeader = new RosHeader$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Pose$Type extends MessageType<Pose> {
   constructor() {
@@ -1569,19 +1569,19 @@ class Pose$Type extends MessageType<Pose> {
       { no: 1, name: 'x', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 2, name: 'y', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 3, name: 'theta', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Pose>): Pose {
-    const message = { x: 0, y: 0, theta: 0 }
+    const message = { x: 0, y: 0, theta: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Pose>(this, message, value)
+      reflectionMergePartial<Pose>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1590,40 +1590,40 @@ class Pose$Type extends MessageType<Pose> {
     options: BinaryReadOptions,
     target?: Pose,
   ): Pose {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double x */ 1:
-          message.x = reader.double()
-          break
+          message.x = reader.double();
+          break;
         case /* double y */ 2:
-          message.y = reader.double()
-          break
+          message.y = reader.double();
+          break;
         case /* double theta */ 3:
-          message.theta = reader.double()
-          break
+          message.theta = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1633,31 +1633,31 @@ class Pose$Type extends MessageType<Pose> {
   ): IBinaryWriter {
     /* double x = 1; */
     if (message.x !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.x)
+      writer.tag(1, WireType.Bit64).double(message.x);
     }
     /* double y = 2; */
     if (message.y !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.y)
+      writer.tag(2, WireType.Bit64).double(message.y);
     }
     /* double theta = 3; */
     if (message.theta !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.theta)
+      writer.tag(3, WireType.Bit64).double(message.theta);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Pose
  */
-export const Pose = new Pose$Type()
+export const Pose = new Pose$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Vector3$Type extends MessageType<Vector3> {
   constructor() {
@@ -1665,19 +1665,19 @@ class Vector3$Type extends MessageType<Vector3> {
       { no: 1, name: 'x', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 2, name: 'y', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 3, name: 'z', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Vector3>): Vector3 {
-    const message = { x: 0, y: 0, z: 0 }
+    const message = { x: 0, y: 0, z: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Vector3>(this, message, value)
+      reflectionMergePartial<Vector3>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1686,40 +1686,40 @@ class Vector3$Type extends MessageType<Vector3> {
     options: BinaryReadOptions,
     target?: Vector3,
   ): Vector3 {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double x */ 1:
-          message.x = reader.double()
-          break
+          message.x = reader.double();
+          break;
         case /* double y */ 2:
-          message.y = reader.double()
-          break
+          message.y = reader.double();
+          break;
         case /* double z */ 3:
-          message.z = reader.double()
-          break
+          message.z = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1729,31 +1729,31 @@ class Vector3$Type extends MessageType<Vector3> {
   ): IBinaryWriter {
     /* double x = 1; */
     if (message.x !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.x)
+      writer.tag(1, WireType.Bit64).double(message.x);
     }
     /* double y = 2; */
     if (message.y !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.y)
+      writer.tag(2, WireType.Bit64).double(message.y);
     }
     /* double z = 3; */
     if (message.z !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.z)
+      writer.tag(3, WireType.Bit64).double(message.z);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Vector3
  */
-export const Vector3 = new Vector3$Type()
+export const Vector3 = new Vector3$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Quaternion$Type extends MessageType<Quaternion> {
   constructor() {
@@ -1762,19 +1762,19 @@ class Quaternion$Type extends MessageType<Quaternion> {
       { no: 2, name: 'y', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 3, name: 'z', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 4, name: 'w', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Quaternion>): Quaternion {
-    const message = { x: 0, y: 0, z: 0, w: 0 }
+    const message = { x: 0, y: 0, z: 0, w: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Quaternion>(this, message, value)
+      reflectionMergePartial<Quaternion>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1783,43 +1783,43 @@ class Quaternion$Type extends MessageType<Quaternion> {
     options: BinaryReadOptions,
     target?: Quaternion,
   ): Quaternion {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double x */ 1:
-          message.x = reader.double()
-          break
+          message.x = reader.double();
+          break;
         case /* double y */ 2:
-          message.y = reader.double()
-          break
+          message.y = reader.double();
+          break;
         case /* double z */ 3:
-          message.z = reader.double()
-          break
+          message.z = reader.double();
+          break;
         case /* double w */ 4:
-          message.w = reader.double()
-          break
+          message.w = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1829,54 +1829,54 @@ class Quaternion$Type extends MessageType<Quaternion> {
   ): IBinaryWriter {
     /* double x = 1; */
     if (message.x !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.x)
+      writer.tag(1, WireType.Bit64).double(message.x);
     }
     /* double y = 2; */
     if (message.y !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.y)
+      writer.tag(2, WireType.Bit64).double(message.y);
     }
     /* double z = 3; */
     if (message.z !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.z)
+      writer.tag(3, WireType.Bit64).double(message.z);
     }
     /* double w = 4; */
     if (message.w !== 0) {
-      writer.tag(4, WireType.Bit64).double(message.w)
+      writer.tag(4, WireType.Bit64).double(message.w);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Quaternion
  */
-export const Quaternion = new Quaternion$Type()
+export const Quaternion = new Quaternion$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Pose3d$Type extends MessageType<Pose3d> {
   constructor() {
     super('kachaka_api.Pose3d', [
       { no: 1, name: 'position', kind: 'message', T: () => Vector3 },
       { no: 2, name: 'orientation', kind: 'message', T: () => Quaternion },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Pose3d>): Pose3d {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Pose3d>(this, message, value)
+      reflectionMergePartial<Pose3d>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1885,10 +1885,10 @@ class Pose3d$Type extends MessageType<Pose3d> {
     options: BinaryReadOptions,
     target?: Pose3d,
   ): Pose3d {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Vector3 position */ 1:
           message.position = Vector3.internalBinaryRead(
@@ -1896,36 +1896,36 @@ class Pose3d$Type extends MessageType<Pose3d> {
             reader.uint32(),
             options,
             message.position,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Quaternion orientation */ 2:
           message.orientation = Quaternion.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.orientation,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -1939,7 +1939,7 @@ class Pose3d$Type extends MessageType<Pose3d> {
         message.position,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Quaternion orientation = 2; */
     if (message.orientation) {
@@ -1947,42 +1947,42 @@ class Pose3d$Type extends MessageType<Pose3d> {
         message.orientation,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Pose3d
  */
-export const Pose3d = new Pose3d$Type()
+export const Pose3d = new Pose3d$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Twist$Type extends MessageType<Twist> {
   constructor() {
     super('kachaka_api.Twist', [
       { no: 1, name: 'linear', kind: 'message', T: () => Vector3 },
       { no: 2, name: 'angular', kind: 'message', T: () => Vector3 },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Twist>): Twist {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Twist>(this, message, value)
+      reflectionMergePartial<Twist>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -1991,10 +1991,10 @@ class Twist$Type extends MessageType<Twist> {
     options: BinaryReadOptions,
     target?: Twist,
   ): Twist {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Vector3 linear */ 1:
           message.linear = Vector3.internalBinaryRead(
@@ -2002,36 +2002,36 @@ class Twist$Type extends MessageType<Twist> {
             reader.uint32(),
             options,
             message.linear,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Vector3 angular */ 2:
           message.angular = Vector3.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.angular,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2045,7 +2045,7 @@ class Twist$Type extends MessageType<Twist> {
         message.linear,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Vector3 angular = 2; */
     if (message.angular) {
@@ -2053,23 +2053,23 @@ class Twist$Type extends MessageType<Twist> {
         message.angular,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Twist
  */
-export const Twist = new Twist$Type()
+export const Twist = new Twist$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Pose3dWithCovariance$Type extends MessageType<Pose3dWithCovariance> {
   constructor() {
@@ -2082,19 +2082,19 @@ class Pose3dWithCovariance$Type extends MessageType<Pose3dWithCovariance> {
         repeat: 1 /* RepeatType.PACKED */,
         T: 1 /* ScalarType.DOUBLE */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Pose3dWithCovariance>): Pose3dWithCovariance {
-    const message = { covariance: [] }
+    const message = { covariance: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Pose3dWithCovariance>(this, message, value)
+      reflectionMergePartial<Pose3dWithCovariance>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2103,10 +2103,10 @@ class Pose3dWithCovariance$Type extends MessageType<Pose3dWithCovariance> {
     options: BinaryReadOptions,
     target?: Pose3dWithCovariance,
   ): Pose3dWithCovariance {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Pose3d pose */ 1:
           message.pose = Pose3d.internalBinaryRead(
@@ -2114,37 +2114,37 @@ class Pose3dWithCovariance$Type extends MessageType<Pose3dWithCovariance> {
             reader.uint32(),
             options,
             message.pose,
-          )
-          break
+          );
+          break;
         case /* repeated double covariance */ 2:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.covariance.push(reader.double())
+              message.covariance.push(reader.double());
             }
           } else {
-            message.covariance.push(reader.double())
+            message.covariance.push(reader.double());
           }
-          break
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2158,31 +2158,31 @@ class Pose3dWithCovariance$Type extends MessageType<Pose3dWithCovariance> {
         message.pose,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated double covariance = 2; */
     if (message.covariance.length > 0) {
-      writer.tag(2, WireType.LengthDelimited).fork()
+      writer.tag(2, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.covariance.length; i++) {
-        writer.double(message.covariance[i])
+        writer.double(message.covariance[i]);
       }
-      writer.join()
+      writer.join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Pose3dWithCovariance
  */
-export const Pose3dWithCovariance = new Pose3dWithCovariance$Type()
+export const Pose3dWithCovariance = new Pose3dWithCovariance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TwistWithCovariance$Type extends MessageType<TwistWithCovariance> {
   constructor() {
@@ -2195,19 +2195,19 @@ class TwistWithCovariance$Type extends MessageType<TwistWithCovariance> {
         repeat: 1 /* RepeatType.PACKED */,
         T: 1 /* ScalarType.DOUBLE */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<TwistWithCovariance>): TwistWithCovariance {
-    const message = { covariance: [] }
+    const message = { covariance: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<TwistWithCovariance>(this, message, value)
+      reflectionMergePartial<TwistWithCovariance>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2216,10 +2216,10 @@ class TwistWithCovariance$Type extends MessageType<TwistWithCovariance> {
     options: BinaryReadOptions,
     target?: TwistWithCovariance,
   ): TwistWithCovariance {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Twist twist */ 1:
           message.twist = Twist.internalBinaryRead(
@@ -2227,37 +2227,37 @@ class TwistWithCovariance$Type extends MessageType<TwistWithCovariance> {
             reader.uint32(),
             options,
             message.twist,
-          )
-          break
+          );
+          break;
         case /* repeated double covariance */ 2:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.covariance.push(reader.double())
+              message.covariance.push(reader.double());
             }
           } else {
-            message.covariance.push(reader.double())
+            message.covariance.push(reader.double());
           }
-          break
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2271,31 +2271,31 @@ class TwistWithCovariance$Type extends MessageType<TwistWithCovariance> {
         message.twist,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated double covariance = 2; */
     if (message.covariance.length > 0) {
-      writer.tag(2, WireType.LengthDelimited).fork()
+      writer.tag(2, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.covariance.length; i++) {
-        writer.double(message.covariance[i])
+        writer.double(message.covariance[i]);
       }
-      writer.join()
+      writer.join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.TwistWithCovariance
  */
-export const TwistWithCovariance = new TwistWithCovariance$Type()
+export const TwistWithCovariance = new TwistWithCovariance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Map$Type extends MessageType<Map> {
   constructor() {
@@ -2311,7 +2311,7 @@ class Map$Type extends MessageType<Map> {
       { no: 4, name: 'width', kind: 'scalar', T: 5 /* ScalarType.INT32 */ },
       { no: 5, name: 'height', kind: 'scalar', T: 5 /* ScalarType.INT32 */ },
       { no: 6, name: 'origin', kind: 'message', T: () => Pose },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Map>): Map {
@@ -2321,15 +2321,15 @@ class Map$Type extends MessageType<Map> {
       resolution: 0,
       width: 0,
       height: 0,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Map>(this, message, value)
+      reflectionMergePartial<Map>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2338,54 +2338,54 @@ class Map$Type extends MessageType<Map> {
     options: BinaryReadOptions,
     target?: Map,
   ): Map {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* bytes data */ 1:
-          message.data = reader.bytes()
-          break
+          message.data = reader.bytes();
+          break;
         case /* string name */ 2:
-          message.name = reader.string()
-          break
+          message.name = reader.string();
+          break;
         case /* double resolution */ 3:
-          message.resolution = reader.double()
-          break
+          message.resolution = reader.double();
+          break;
         case /* int32 width */ 4:
-          message.width = reader.int32()
-          break
+          message.width = reader.int32();
+          break;
         case /* int32 height */ 5:
-          message.height = reader.int32()
-          break
+          message.height = reader.int32();
+          break;
         case /* kachaka_api.Pose origin */ 6:
           message.origin = Pose.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.origin,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2395,23 +2395,23 @@ class Map$Type extends MessageType<Map> {
   ): IBinaryWriter {
     /* bytes data = 1; */
     if (message.data.length) {
-      writer.tag(1, WireType.LengthDelimited).bytes(message.data)
+      writer.tag(1, WireType.LengthDelimited).bytes(message.data);
     }
     /* string name = 2; */
     if (message.name !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.name)
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
     }
     /* double resolution = 3; */
     if (message.resolution !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.resolution)
+      writer.tag(3, WireType.Bit64).double(message.resolution);
     }
     /* int32 width = 4; */
     if (message.width !== 0) {
-      writer.tag(4, WireType.Varint).int32(message.width)
+      writer.tag(4, WireType.Varint).int32(message.width);
     }
     /* int32 height = 5; */
     if (message.height !== 0) {
-      writer.tag(5, WireType.Varint).int32(message.height)
+      writer.tag(5, WireType.Varint).int32(message.height);
     }
     /* kachaka_api.Pose origin = 6; */
     if (message.origin) {
@@ -2419,23 +2419,23 @@ class Map$Type extends MessageType<Map> {
         message.origin,
         writer.tag(6, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Map
  */
-export const Map = new Map$Type()
+export const Map = new Map$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Location$Type extends MessageType<Location> {
   constructor() {
@@ -2467,7 +2467,7 @@ class Location$Type extends MessageType<Location> {
         kind: 'scalar',
         T: 8 /* ScalarType.BOOL */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Location>): Location {
@@ -2478,15 +2478,15 @@ class Location$Type extends MessageType<Location> {
       undockShelfAligningToWall: false,
       undockShelfAvoidingObstacles: false,
       ignoreVoiceRecognition: false,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Location>(this, message, value)
+      reflectionMergePartial<Location>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2495,57 +2495,57 @@ class Location$Type extends MessageType<Location> {
     options: BinaryReadOptions,
     target?: Location,
   ): Location {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string id */ 1:
-          message.id = reader.string()
-          break
+          message.id = reader.string();
+          break;
         case /* string name */ 2:
-          message.name = reader.string()
-          break
+          message.name = reader.string();
+          break;
         case /* kachaka_api.Pose pose */ 3:
           message.pose = Pose.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.pose,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.LocationType type */ 4:
-          message.type = reader.int32()
-          break
+          message.type = reader.int32();
+          break;
         case /* bool undock_shelf_aligning_to_wall */ 5:
-          message.undockShelfAligningToWall = reader.bool()
-          break
+          message.undockShelfAligningToWall = reader.bool();
+          break;
         case /* bool undock_shelf_avoiding_obstacles */ 6:
-          message.undockShelfAvoidingObstacles = reader.bool()
-          break
+          message.undockShelfAvoidingObstacles = reader.bool();
+          break;
         case /* bool ignore_voice_recognition */ 7:
-          message.ignoreVoiceRecognition = reader.bool()
-          break
+          message.ignoreVoiceRecognition = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2555,11 +2555,11 @@ class Location$Type extends MessageType<Location> {
   ): IBinaryWriter {
     /* string id = 1; */
     if (message.id !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.id)
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
     }
     /* string name = 2; */
     if (message.name !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.name)
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
     }
     /* kachaka_api.Pose pose = 3; */
     if (message.pose) {
@@ -2567,39 +2567,39 @@ class Location$Type extends MessageType<Location> {
         message.pose,
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.LocationType type = 4; */
     if (message.type !== 0) {
-      writer.tag(4, WireType.Varint).int32(message.type)
+      writer.tag(4, WireType.Varint).int32(message.type);
     }
     /* bool undock_shelf_aligning_to_wall = 5; */
     if (message.undockShelfAligningToWall) {
-      writer.tag(5, WireType.Varint).bool(message.undockShelfAligningToWall)
+      writer.tag(5, WireType.Varint).bool(message.undockShelfAligningToWall);
     }
     /* bool undock_shelf_avoiding_obstacles = 6; */
     if (message.undockShelfAvoidingObstacles) {
-      writer.tag(6, WireType.Varint).bool(message.undockShelfAvoidingObstacles)
+      writer.tag(6, WireType.Varint).bool(message.undockShelfAvoidingObstacles);
     }
     /* bool ignore_voice_recognition = 7; */
     if (message.ignoreVoiceRecognition) {
-      writer.tag(7, WireType.Varint).bool(message.ignoreVoiceRecognition)
+      writer.tag(7, WireType.Varint).bool(message.ignoreVoiceRecognition);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Location
  */
-export const Location = new Location$Type()
+export const Location = new Location$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ShelfSize$Type extends MessageType<ShelfSize> {
   constructor() {
@@ -2607,19 +2607,19 @@ class ShelfSize$Type extends MessageType<ShelfSize> {
       { no: 1, name: 'width', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 2, name: 'depth', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 3, name: 'height', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<ShelfSize>): ShelfSize {
-    const message = { width: 0, depth: 0, height: 0 }
+    const message = { width: 0, depth: 0, height: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<ShelfSize>(this, message, value)
+      reflectionMergePartial<ShelfSize>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2628,40 +2628,40 @@ class ShelfSize$Type extends MessageType<ShelfSize> {
     options: BinaryReadOptions,
     target?: ShelfSize,
   ): ShelfSize {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double width */ 1:
-          message.width = reader.double()
-          break
+          message.width = reader.double();
+          break;
         case /* double depth */ 2:
-          message.depth = reader.double()
-          break
+          message.depth = reader.double();
+          break;
         case /* double height */ 3:
-          message.height = reader.double()
-          break
+          message.height = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2671,50 +2671,50 @@ class ShelfSize$Type extends MessageType<ShelfSize> {
   ): IBinaryWriter {
     /* double width = 1; */
     if (message.width !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.width)
+      writer.tag(1, WireType.Bit64).double(message.width);
     }
     /* double depth = 2; */
     if (message.depth !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.depth)
+      writer.tag(2, WireType.Bit64).double(message.depth);
     }
     /* double height = 3; */
     if (message.height !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.height)
+      writer.tag(3, WireType.Bit64).double(message.height);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.ShelfSize
  */
-export const ShelfSize = new ShelfSize$Type()
+export const ShelfSize = new ShelfSize$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RecognizableName$Type extends MessageType<RecognizableName> {
   constructor() {
     super('kachaka_api.RecognizableName', [
       { no: 1, name: 'name', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
       { no: 2, name: 'deletable', kind: 'scalar', T: 8 /* ScalarType.BOOL */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RecognizableName>): RecognizableName {
-    const message = { name: '', deletable: false }
+    const message = { name: '', deletable: false };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RecognizableName>(this, message, value)
+      reflectionMergePartial<RecognizableName>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2723,37 +2723,37 @@ class RecognizableName$Type extends MessageType<RecognizableName> {
     options: BinaryReadOptions,
     target?: RecognizableName,
   ): RecognizableName {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string name */ 1:
-          message.name = reader.string()
-          break
+          message.name = reader.string();
+          break;
         case /* bool deletable */ 2:
-          message.deletable = reader.bool()
-          break
+          message.deletable = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2763,27 +2763,27 @@ class RecognizableName$Type extends MessageType<RecognizableName> {
   ): IBinaryWriter {
     /* string name = 1; */
     if (message.name !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.name)
+      writer.tag(1, WireType.LengthDelimited).string(message.name);
     }
     /* bool deletable = 2; */
     if (message.deletable) {
-      writer.tag(2, WireType.Varint).bool(message.deletable)
+      writer.tag(2, WireType.Varint).bool(message.deletable);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RecognizableName
  */
-export const RecognizableName = new RecognizableName$Type()
+export const RecognizableName = new RecognizableName$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Shelf$Type extends MessageType<Shelf> {
   constructor() {
@@ -2831,7 +2831,7 @@ class Shelf$Type extends MessageType<Shelf> {
         kind: 'scalar',
         T: 8 /* ScalarType.BOOL */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Shelf>): Shelf {
@@ -2843,15 +2843,15 @@ class Shelf$Type extends MessageType<Shelf> {
       homeLocationId: '',
       speedMode: 0,
       ignoreVoiceRecognition: false,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Shelf>(this, message, value)
+      reflectionMergePartial<Shelf>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -2860,36 +2860,36 @@ class Shelf$Type extends MessageType<Shelf> {
     options: BinaryReadOptions,
     target?: Shelf,
   ): Shelf {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string id */ 1:
-          message.id = reader.string()
-          break
+          message.id = reader.string();
+          break;
         case /* string name */ 2:
-          message.name = reader.string()
-          break
+          message.name = reader.string();
+          break;
         case /* kachaka_api.Pose pose */ 3:
           message.pose = Pose.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.pose,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.ShelfSize size */ 4:
           message.size = ShelfSize.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.size,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.ShelfAppearance appearance */ 5:
-          message.appearance = reader.int32()
-          break
+          message.appearance = reader.int32();
+          break;
         case /* repeated kachaka_api.RecognizableName recognizable_names */ 7:
           message.recognizableNames.push(
             RecognizableName.internalBinaryRead(
@@ -2897,37 +2897,37 @@ class Shelf$Type extends MessageType<Shelf> {
               reader.uint32(),
               options,
             ),
-          )
-          break
+          );
+          break;
         case /* string home_location_id */ 8:
-          message.homeLocationId = reader.string()
-          break
+          message.homeLocationId = reader.string();
+          break;
         case /* kachaka_api.ShelfSpeedMode speed_mode */ 9:
-          message.speedMode = reader.int32()
-          break
+          message.speedMode = reader.int32();
+          break;
         case /* bool ignore_voice_recognition */ 10:
-          message.ignoreVoiceRecognition = reader.bool()
-          break
+          message.ignoreVoiceRecognition = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -2937,11 +2937,11 @@ class Shelf$Type extends MessageType<Shelf> {
   ): IBinaryWriter {
     /* string id = 1; */
     if (message.id !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.id)
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
     }
     /* string name = 2; */
     if (message.name !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.name)
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
     }
     /* kachaka_api.Pose pose = 3; */
     if (message.pose) {
@@ -2949,7 +2949,7 @@ class Shelf$Type extends MessageType<Shelf> {
         message.pose,
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.ShelfSize size = 4; */
     if (message.size) {
@@ -2957,11 +2957,11 @@ class Shelf$Type extends MessageType<Shelf> {
         message.size,
         writer.tag(4, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.ShelfAppearance appearance = 5; */
     if (message.appearance !== 0) {
-      writer.tag(5, WireType.Varint).int32(message.appearance)
+      writer.tag(5, WireType.Varint).int32(message.appearance);
     }
     /* repeated kachaka_api.RecognizableName recognizable_names = 7; */
     for (let i = 0; i < message.recognizableNames.length; i++) {
@@ -2969,35 +2969,35 @@ class Shelf$Type extends MessageType<Shelf> {
         message.recognizableNames[i],
         writer.tag(7, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string home_location_id = 8; */
     if (message.homeLocationId !== '') {
-      writer.tag(8, WireType.LengthDelimited).string(message.homeLocationId)
+      writer.tag(8, WireType.LengthDelimited).string(message.homeLocationId);
     }
     /* kachaka_api.ShelfSpeedMode speed_mode = 9; */
     if (message.speedMode !== 0) {
-      writer.tag(9, WireType.Varint).int32(message.speedMode)
+      writer.tag(9, WireType.Varint).int32(message.speedMode);
     }
     /* bool ignore_voice_recognition = 10; */
     if (message.ignoreVoiceRecognition) {
-      writer.tag(10, WireType.Varint).bool(message.ignoreVoiceRecognition)
+      writer.tag(10, WireType.Varint).bool(message.ignoreVoiceRecognition);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Shelf
  */
-export const Shelf = new Shelf$Type()
+export const Shelf = new Shelf$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosImu$Type extends MessageType<RosImu> {
   constructor() {
@@ -3027,7 +3027,7 @@ class RosImu$Type extends MessageType<RosImu> {
         repeat: 1 /* RepeatType.PACKED */,
         T: 1 /* ScalarType.DOUBLE */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosImu>): RosImu {
@@ -3035,15 +3035,15 @@ class RosImu$Type extends MessageType<RosImu> {
       orientationCovariance: [],
       angularVelocityCovariance: [],
       linearAccelerationCovariance: [],
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosImu>(this, message, value)
+      reflectionMergePartial<RosImu>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -3052,10 +3052,10 @@ class RosImu$Type extends MessageType<RosImu> {
     options: BinaryReadOptions,
     target?: RosImu,
   ): RosImu {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -3063,79 +3063,79 @@ class RosImu$Type extends MessageType<RosImu> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Quaternion orientation */ 2:
           message.orientation = Quaternion.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.orientation,
-          )
-          break
+          );
+          break;
         case /* repeated double orientation_covariance */ 3:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.orientationCovariance.push(reader.double())
+              message.orientationCovariance.push(reader.double());
             }
           } else {
-            message.orientationCovariance.push(reader.double())
+            message.orientationCovariance.push(reader.double());
           }
-          break
+          break;
         case /* kachaka_api.Vector3 angular_velocity */ 4:
           message.angularVelocity = Vector3.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.angularVelocity,
-          )
-          break
+          );
+          break;
         case /* repeated double angular_velocity_covariance */ 5:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.angularVelocityCovariance.push(reader.double())
+              message.angularVelocityCovariance.push(reader.double());
             }
           } else {
-            message.angularVelocityCovariance.push(reader.double())
+            message.angularVelocityCovariance.push(reader.double());
           }
-          break
+          break;
         case /* kachaka_api.Vector3 linear_acceleration */ 6:
           message.linearAcceleration = Vector3.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.linearAcceleration,
-          )
-          break
+          );
+          break;
         case /* repeated double linear_acceleration_covariance */ 7:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.linearAccelerationCovariance.push(reader.double())
+              message.linearAccelerationCovariance.push(reader.double());
             }
           } else {
-            message.linearAccelerationCovariance.push(reader.double())
+            message.linearAccelerationCovariance.push(reader.double());
           }
-          break
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -3149,7 +3149,7 @@ class RosImu$Type extends MessageType<RosImu> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Quaternion orientation = 2; */
     if (message.orientation) {
@@ -3157,15 +3157,15 @@ class RosImu$Type extends MessageType<RosImu> {
         message.orientation,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated double orientation_covariance = 3; */
     if (message.orientationCovariance.length > 0) {
-      writer.tag(3, WireType.LengthDelimited).fork()
+      writer.tag(3, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.orientationCovariance.length; i++) {
-        writer.double(message.orientationCovariance[i])
+        writer.double(message.orientationCovariance[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* kachaka_api.Vector3 angular_velocity = 4; */
     if (message.angularVelocity) {
@@ -3173,15 +3173,15 @@ class RosImu$Type extends MessageType<RosImu> {
         message.angularVelocity,
         writer.tag(4, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated double angular_velocity_covariance = 5; */
     if (message.angularVelocityCovariance.length > 0) {
-      writer.tag(5, WireType.LengthDelimited).fork()
+      writer.tag(5, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.angularVelocityCovariance.length; i++) {
-        writer.double(message.angularVelocityCovariance[i])
+        writer.double(message.angularVelocityCovariance[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* kachaka_api.Vector3 linear_acceleration = 6; */
     if (message.linearAcceleration) {
@@ -3189,31 +3189,31 @@ class RosImu$Type extends MessageType<RosImu> {
         message.linearAcceleration,
         writer.tag(6, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated double linear_acceleration_covariance = 7; */
     if (message.linearAccelerationCovariance.length > 0) {
-      writer.tag(7, WireType.LengthDelimited).fork()
+      writer.tag(7, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.linearAccelerationCovariance.length; i++) {
-        writer.double(message.linearAccelerationCovariance[i])
+        writer.double(message.linearAccelerationCovariance[i]);
       }
-      writer.join()
+      writer.join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosImu
  */
-export const RosImu = new RosImu$Type()
+export const RosImu = new RosImu$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosOdometry$Type extends MessageType<RosOdometry> {
   constructor() {
@@ -3227,19 +3227,19 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
       },
       { no: 3, name: 'pose', kind: 'message', T: () => Pose3dWithCovariance },
       { no: 4, name: 'twist', kind: 'message', T: () => TwistWithCovariance },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosOdometry>): RosOdometry {
-    const message = { childFrameId: '' }
+    const message = { childFrameId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosOdometry>(this, message, value)
+      reflectionMergePartial<RosOdometry>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -3248,10 +3248,10 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
     options: BinaryReadOptions,
     target?: RosOdometry,
   ): RosOdometry {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -3259,47 +3259,47 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* string child_frame_id */ 2:
-          message.childFrameId = reader.string()
-          break
+          message.childFrameId = reader.string();
+          break;
         case /* kachaka_api.Pose3dWithCovariance pose */ 3:
           message.pose = Pose3dWithCovariance.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.pose,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.TwistWithCovariance twist */ 4:
           message.twist = TwistWithCovariance.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.twist,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -3313,11 +3313,11 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string child_frame_id = 2; */
     if (message.childFrameId !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.childFrameId)
+      writer.tag(2, WireType.LengthDelimited).string(message.childFrameId);
     }
     /* kachaka_api.Pose3dWithCovariance pose = 3; */
     if (message.pose) {
@@ -3325,7 +3325,7 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
         message.pose,
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.TwistWithCovariance twist = 4; */
     if (message.twist) {
@@ -3333,23 +3333,23 @@ class RosOdometry$Type extends MessageType<RosOdometry> {
         message.twist,
         writer.tag(4, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosOdometry
  */
-export const RosOdometry = new RosOdometry$Type()
+export const RosOdometry = new RosOdometry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosLaserScan$Type extends MessageType<RosLaserScan> {
   constructor() {
@@ -3411,7 +3411,7 @@ class RosLaserScan$Type extends MessageType<RosLaserScan> {
         repeat: 1 /* RepeatType.PACKED */,
         T: 1 /* ScalarType.DOUBLE */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosLaserScan>): RosLaserScan {
@@ -3425,15 +3425,15 @@ class RosLaserScan$Type extends MessageType<RosLaserScan> {
       rangeMax: 0,
       ranges: [],
       intensities: [],
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosLaserScan>(this, message, value)
+      reflectionMergePartial<RosLaserScan>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -3442,10 +3442,10 @@ class RosLaserScan$Type extends MessageType<RosLaserScan> {
     options: BinaryReadOptions,
     target?: RosLaserScan,
   ): RosLaserScan {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -3453,67 +3453,67 @@ class RosLaserScan$Type extends MessageType<RosLaserScan> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* double angle_min */ 2:
-          message.angleMin = reader.double()
-          break
+          message.angleMin = reader.double();
+          break;
         case /* double angle_max */ 3:
-          message.angleMax = reader.double()
-          break
+          message.angleMax = reader.double();
+          break;
         case /* double angle_increment */ 4:
-          message.angleIncrement = reader.double()
-          break
+          message.angleIncrement = reader.double();
+          break;
         case /* double time_increment */ 5:
-          message.timeIncrement = reader.double()
-          break
+          message.timeIncrement = reader.double();
+          break;
         case /* double scan_time */ 6:
-          message.scanTime = reader.double()
-          break
+          message.scanTime = reader.double();
+          break;
         case /* double range_min */ 7:
-          message.rangeMin = reader.double()
-          break
+          message.rangeMin = reader.double();
+          break;
         case /* double range_max */ 8:
-          message.rangeMax = reader.double()
-          break
+          message.rangeMax = reader.double();
+          break;
         case /* repeated double ranges */ 9:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.ranges.push(reader.double())
+              message.ranges.push(reader.double());
             }
           } else {
-            message.ranges.push(reader.double())
+            message.ranges.push(reader.double());
           }
-          break
+          break;
         case /* repeated double intensities */ 10:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.intensities.push(reader.double())
+              message.intensities.push(reader.double());
             }
           } else {
-            message.intensities.push(reader.double())
+            message.intensities.push(reader.double());
           }
-          break
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -3527,67 +3527,67 @@ class RosLaserScan$Type extends MessageType<RosLaserScan> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* double angle_min = 2; */
     if (message.angleMin !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.angleMin)
+      writer.tag(2, WireType.Bit64).double(message.angleMin);
     }
     /* double angle_max = 3; */
     if (message.angleMax !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.angleMax)
+      writer.tag(3, WireType.Bit64).double(message.angleMax);
     }
     /* double angle_increment = 4; */
     if (message.angleIncrement !== 0) {
-      writer.tag(4, WireType.Bit64).double(message.angleIncrement)
+      writer.tag(4, WireType.Bit64).double(message.angleIncrement);
     }
     /* double time_increment = 5; */
     if (message.timeIncrement !== 0) {
-      writer.tag(5, WireType.Bit64).double(message.timeIncrement)
+      writer.tag(5, WireType.Bit64).double(message.timeIncrement);
     }
     /* double scan_time = 6; */
     if (message.scanTime !== 0) {
-      writer.tag(6, WireType.Bit64).double(message.scanTime)
+      writer.tag(6, WireType.Bit64).double(message.scanTime);
     }
     /* double range_min = 7; */
     if (message.rangeMin !== 0) {
-      writer.tag(7, WireType.Bit64).double(message.rangeMin)
+      writer.tag(7, WireType.Bit64).double(message.rangeMin);
     }
     /* double range_max = 8; */
     if (message.rangeMax !== 0) {
-      writer.tag(8, WireType.Bit64).double(message.rangeMax)
+      writer.tag(8, WireType.Bit64).double(message.rangeMax);
     }
     /* repeated double ranges = 9; */
     if (message.ranges.length > 0) {
-      writer.tag(9, WireType.LengthDelimited).fork()
+      writer.tag(9, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.ranges.length; i++) {
-        writer.double(message.ranges[i])
+        writer.double(message.ranges[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* repeated double intensities = 10; */
     if (message.intensities.length > 0) {
-      writer.tag(10, WireType.LengthDelimited).fork()
+      writer.tag(10, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.intensities.length; i++) {
-        writer.double(message.intensities[i])
+        writer.double(message.intensities[i]);
       }
-      writer.join()
+      writer.join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosLaserScan
  */
-export const RosLaserScan = new RosLaserScan$Type()
+export const RosLaserScan = new RosLaserScan$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RegionOfInterest$Type extends MessageType<RegionOfInterest> {
   constructor() {
@@ -3607,7 +3607,7 @@ class RegionOfInterest$Type extends MessageType<RegionOfInterest> {
       { no: 3, name: 'height', kind: 'scalar', T: 13 /* ScalarType.UINT32 */ },
       { no: 4, name: 'width', kind: 'scalar', T: 13 /* ScalarType.UINT32 */ },
       { no: 5, name: 'do_rectify', kind: 'scalar', T: 8 /* ScalarType.BOOL */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RegionOfInterest>): RegionOfInterest {
@@ -3617,15 +3617,15 @@ class RegionOfInterest$Type extends MessageType<RegionOfInterest> {
       height: 0,
       width: 0,
       doRectify: false,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RegionOfInterest>(this, message, value)
+      reflectionMergePartial<RegionOfInterest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -3634,46 +3634,46 @@ class RegionOfInterest$Type extends MessageType<RegionOfInterest> {
     options: BinaryReadOptions,
     target?: RegionOfInterest,
   ): RegionOfInterest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* uint32 x_offset */ 1:
-          message.xOffset = reader.uint32()
-          break
+          message.xOffset = reader.uint32();
+          break;
         case /* uint32 y_offset */ 2:
-          message.yOffset = reader.uint32()
-          break
+          message.yOffset = reader.uint32();
+          break;
         case /* uint32 height */ 3:
-          message.height = reader.uint32()
-          break
+          message.height = reader.uint32();
+          break;
         case /* uint32 width */ 4:
-          message.width = reader.uint32()
-          break
+          message.width = reader.uint32();
+          break;
         case /* bool do_rectify */ 5:
-          message.doRectify = reader.bool()
-          break
+          message.doRectify = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -3683,39 +3683,39 @@ class RegionOfInterest$Type extends MessageType<RegionOfInterest> {
   ): IBinaryWriter {
     /* uint32 x_offset = 1; */
     if (message.xOffset !== 0) {
-      writer.tag(1, WireType.Varint).uint32(message.xOffset)
+      writer.tag(1, WireType.Varint).uint32(message.xOffset);
     }
     /* uint32 y_offset = 2; */
     if (message.yOffset !== 0) {
-      writer.tag(2, WireType.Varint).uint32(message.yOffset)
+      writer.tag(2, WireType.Varint).uint32(message.yOffset);
     }
     /* uint32 height = 3; */
     if (message.height !== 0) {
-      writer.tag(3, WireType.Varint).uint32(message.height)
+      writer.tag(3, WireType.Varint).uint32(message.height);
     }
     /* uint32 width = 4; */
     if (message.width !== 0) {
-      writer.tag(4, WireType.Varint).uint32(message.width)
+      writer.tag(4, WireType.Varint).uint32(message.width);
     }
     /* bool do_rectify = 5; */
     if (message.doRectify) {
-      writer.tag(5, WireType.Varint).bool(message.doRectify)
+      writer.tag(5, WireType.Varint).bool(message.doRectify);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RegionOfInterest
  */
-export const RegionOfInterest = new RegionOfInterest$Type()
+export const RegionOfInterest = new RegionOfInterest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
   constructor() {
@@ -3774,7 +3774,7 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
         T: 13 /* ScalarType.UINT32 */,
       },
       { no: 11, name: 'roi', kind: 'message', T: () => RegionOfInterest },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosCameraInfo>): RosCameraInfo {
@@ -3788,15 +3788,15 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
       p: [],
       binningX: 0,
       binningY: 0,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosCameraInfo>(this, message, value)
+      reflectionMergePartial<RosCameraInfo>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -3805,10 +3805,10 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
     options: BinaryReadOptions,
     target?: RosCameraInfo,
   ): RosCameraInfo {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -3816,87 +3816,87 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* uint32 height */ 2:
-          message.height = reader.uint32()
-          break
+          message.height = reader.uint32();
+          break;
         case /* uint32 width */ 3:
-          message.width = reader.uint32()
-          break
+          message.width = reader.uint32();
+          break;
         case /* string distortion_model */ 4:
-          message.distortionModel = reader.string()
-          break
+          message.distortionModel = reader.string();
+          break;
         case /* repeated double D = 5 [json_name = "D"]; */ 5:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.d.push(reader.double())
+              message.d.push(reader.double());
             }
           } else {
-            message.d.push(reader.double())
+            message.d.push(reader.double());
           }
-          break
+          break;
         case /* repeated double K = 6 [json_name = "K"]; */ 6:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.k.push(reader.double())
+              message.k.push(reader.double());
             }
           } else {
-            message.k.push(reader.double())
+            message.k.push(reader.double());
           }
-          break
+          break;
         case /* repeated double R = 7 [json_name = "R"]; */ 7:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.r.push(reader.double())
+              message.r.push(reader.double());
             }
           } else {
-            message.r.push(reader.double())
+            message.r.push(reader.double());
           }
-          break
+          break;
         case /* repeated double P = 8 [json_name = "P"]; */ 8:
           if (wireType === WireType.LengthDelimited) {
             for (let e = reader.int32() + reader.pos; reader.pos < e; ) {
-              message.p.push(reader.double())
+              message.p.push(reader.double());
             }
           } else {
-            message.p.push(reader.double())
+            message.p.push(reader.double());
           }
-          break
+          break;
         case /* uint32 binning_x */ 9:
-          message.binningX = reader.uint32()
-          break
+          message.binningX = reader.uint32();
+          break;
         case /* uint32 binning_y */ 10:
-          message.binningY = reader.uint32()
-          break
+          message.binningY = reader.uint32();
+          break;
         case /* kachaka_api.RegionOfInterest roi */ 11:
           message.roi = RegionOfInterest.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.roi,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -3910,59 +3910,59 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* uint32 height = 2; */
     if (message.height !== 0) {
-      writer.tag(2, WireType.Varint).uint32(message.height)
+      writer.tag(2, WireType.Varint).uint32(message.height);
     }
     /* uint32 width = 3; */
     if (message.width !== 0) {
-      writer.tag(3, WireType.Varint).uint32(message.width)
+      writer.tag(3, WireType.Varint).uint32(message.width);
     }
     /* string distortion_model = 4; */
     if (message.distortionModel !== '') {
-      writer.tag(4, WireType.LengthDelimited).string(message.distortionModel)
+      writer.tag(4, WireType.LengthDelimited).string(message.distortionModel);
     }
     /* repeated double D = 5 [json_name = "D"]; */
     if (message.d.length > 0) {
-      writer.tag(5, WireType.LengthDelimited).fork()
+      writer.tag(5, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.d.length; i++) {
-        writer.double(message.d[i])
+        writer.double(message.d[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* repeated double K = 6 [json_name = "K"]; */
     if (message.k.length > 0) {
-      writer.tag(6, WireType.LengthDelimited).fork()
+      writer.tag(6, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.k.length; i++) {
-        writer.double(message.k[i])
+        writer.double(message.k[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* repeated double R = 7 [json_name = "R"]; */
     if (message.r.length > 0) {
-      writer.tag(7, WireType.LengthDelimited).fork()
+      writer.tag(7, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.r.length; i++) {
-        writer.double(message.r[i])
+        writer.double(message.r[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* repeated double P = 8 [json_name = "P"]; */
     if (message.p.length > 0) {
-      writer.tag(8, WireType.LengthDelimited).fork()
+      writer.tag(8, WireType.LengthDelimited).fork();
       for (let i = 0; i < message.p.length; i++) {
-        writer.double(message.p[i])
+        writer.double(message.p[i]);
       }
-      writer.join()
+      writer.join();
     }
     /* uint32 binning_x = 9; */
     if (message.binningX !== 0) {
-      writer.tag(9, WireType.Varint).uint32(message.binningX)
+      writer.tag(9, WireType.Varint).uint32(message.binningX);
     }
     /* uint32 binning_y = 10; */
     if (message.binningY !== 0) {
-      writer.tag(10, WireType.Varint).uint32(message.binningY)
+      writer.tag(10, WireType.Varint).uint32(message.binningY);
     }
     /* kachaka_api.RegionOfInterest roi = 11; */
     if (message.roi) {
@@ -3970,23 +3970,23 @@ class RosCameraInfo$Type extends MessageType<RosCameraInfo> {
         message.roi,
         writer.tag(11, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosCameraInfo
  */
-export const RosCameraInfo = new RosCameraInfo$Type()
+export const RosCameraInfo = new RosCameraInfo$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosImage$Type extends MessageType<RosImage> {
   constructor() {
@@ -4003,7 +4003,7 @@ class RosImage$Type extends MessageType<RosImage> {
       },
       { no: 6, name: 'step', kind: 'scalar', T: 13 /* ScalarType.UINT32 */ },
       { no: 7, name: 'data', kind: 'scalar', T: 12 /* ScalarType.BYTES */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosImage>): RosImage {
@@ -4014,15 +4014,15 @@ class RosImage$Type extends MessageType<RosImage> {
       isBigendian: false,
       step: 0,
       data: new Uint8Array(0),
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosImage>(this, message, value)
+      reflectionMergePartial<RosImage>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4031,10 +4031,10 @@ class RosImage$Type extends MessageType<RosImage> {
     options: BinaryReadOptions,
     target?: RosImage,
   ): RosImage {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -4042,46 +4042,46 @@ class RosImage$Type extends MessageType<RosImage> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* uint32 height */ 2:
-          message.height = reader.uint32()
-          break
+          message.height = reader.uint32();
+          break;
         case /* uint32 width */ 3:
-          message.width = reader.uint32()
-          break
+          message.width = reader.uint32();
+          break;
         case /* string encoding */ 4:
-          message.encoding = reader.string()
-          break
+          message.encoding = reader.string();
+          break;
         case /* bool is_bigendian */ 5:
-          message.isBigendian = reader.bool()
-          break
+          message.isBigendian = reader.bool();
+          break;
         case /* uint32 step */ 6:
-          message.step = reader.uint32()
-          break
+          message.step = reader.uint32();
+          break;
         case /* bytes data */ 7:
-          message.data = reader.bytes()
-          break
+          message.data = reader.bytes();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4095,47 +4095,47 @@ class RosImage$Type extends MessageType<RosImage> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* uint32 height = 2; */
     if (message.height !== 0) {
-      writer.tag(2, WireType.Varint).uint32(message.height)
+      writer.tag(2, WireType.Varint).uint32(message.height);
     }
     /* uint32 width = 3; */
     if (message.width !== 0) {
-      writer.tag(3, WireType.Varint).uint32(message.width)
+      writer.tag(3, WireType.Varint).uint32(message.width);
     }
     /* string encoding = 4; */
     if (message.encoding !== '') {
-      writer.tag(4, WireType.LengthDelimited).string(message.encoding)
+      writer.tag(4, WireType.LengthDelimited).string(message.encoding);
     }
     /* bool is_bigendian = 5; */
     if (message.isBigendian) {
-      writer.tag(5, WireType.Varint).bool(message.isBigendian)
+      writer.tag(5, WireType.Varint).bool(message.isBigendian);
     }
     /* uint32 step = 6; */
     if (message.step !== 0) {
-      writer.tag(6, WireType.Varint).uint32(message.step)
+      writer.tag(6, WireType.Varint).uint32(message.step);
     }
     /* bytes data = 7; */
     if (message.data.length) {
-      writer.tag(7, WireType.LengthDelimited).bytes(message.data)
+      writer.tag(7, WireType.LengthDelimited).bytes(message.data);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosImage
  */
-export const RosImage = new RosImage$Type()
+export const RosImage = new RosImage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RosCompressedImage$Type extends MessageType<RosCompressedImage> {
   constructor() {
@@ -4143,19 +4143,19 @@ class RosCompressedImage$Type extends MessageType<RosCompressedImage> {
       { no: 1, name: 'header', kind: 'message', T: () => RosHeader },
       { no: 2, name: 'format', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
       { no: 3, name: 'data', kind: 'scalar', T: 12 /* ScalarType.BYTES */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<RosCompressedImage>): RosCompressedImage {
-    const message = { format: '', data: new Uint8Array(0) }
+    const message = { format: '', data: new Uint8Array(0) };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<RosCompressedImage>(this, message, value)
+      reflectionMergePartial<RosCompressedImage>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4164,10 +4164,10 @@ class RosCompressedImage$Type extends MessageType<RosCompressedImage> {
     options: BinaryReadOptions,
     target?: RosCompressedImage,
   ): RosCompressedImage {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.RosHeader header */ 1:
           message.header = RosHeader.internalBinaryRead(
@@ -4175,34 +4175,34 @@ class RosCompressedImage$Type extends MessageType<RosCompressedImage> {
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* string format */ 2:
-          message.format = reader.string()
-          break
+          message.format = reader.string();
+          break;
         case /* bytes data */ 3:
-          message.data = reader.bytes()
-          break
+          message.data = reader.bytes();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4216,31 +4216,31 @@ class RosCompressedImage$Type extends MessageType<RosCompressedImage> {
         message.header,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string format = 2; */
     if (message.format !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.format)
+      writer.tag(2, WireType.LengthDelimited).string(message.format);
     }
     /* bytes data = 3; */
     if (message.data.length) {
-      writer.tag(3, WireType.LengthDelimited).bytes(message.data)
+      writer.tag(3, WireType.LengthDelimited).bytes(message.data);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.RosCompressedImage
  */
-export const RosCompressedImage = new RosCompressedImage$Type()
+export const RosCompressedImage = new RosCompressedImage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ObjectDetection$Type extends MessageType<ObjectDetection> {
   constructor() {
@@ -4254,19 +4254,19 @@ class ObjectDetection$Type extends MessageType<ObjectDetection> {
         kind: 'scalar',
         T: 1 /* ScalarType.DOUBLE */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<ObjectDetection>): ObjectDetection {
-    const message = { label: 0, score: 0, distanceMedian: 0 }
+    const message = { label: 0, score: 0, distanceMedian: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<ObjectDetection>(this, message, value)
+      reflectionMergePartial<ObjectDetection>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4275,48 +4275,48 @@ class ObjectDetection$Type extends MessageType<ObjectDetection> {
     options: BinaryReadOptions,
     target?: ObjectDetection,
   ): ObjectDetection {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* uint32 label */ 1:
-          message.label = reader.uint32()
-          break
+          message.label = reader.uint32();
+          break;
         case /* kachaka_api.RegionOfInterest roi */ 2:
           message.roi = RegionOfInterest.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.roi,
-          )
-          break
+          );
+          break;
         case /* float score */ 3:
-          message.score = reader.float()
-          break
+          message.score = reader.float();
+          break;
         case /* double distance_median */ 4:
-          message.distanceMedian = reader.double()
-          break
+          message.distanceMedian = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4326,7 +4326,7 @@ class ObjectDetection$Type extends MessageType<ObjectDetection> {
   ): IBinaryWriter {
     /* uint32 label = 1; */
     if (message.label !== 0) {
-      writer.tag(1, WireType.Varint).uint32(message.label)
+      writer.tag(1, WireType.Varint).uint32(message.label);
     }
     /* kachaka_api.RegionOfInterest roi = 2; */
     if (message.roi) {
@@ -4334,31 +4334,31 @@ class ObjectDetection$Type extends MessageType<ObjectDetection> {
         message.roi,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* float score = 3; */
     if (message.score !== 0) {
-      writer.tag(3, WireType.Bit32).float(message.score)
+      writer.tag(3, WireType.Bit32).float(message.score);
     }
     /* double distance_median = 4; */
     if (message.distanceMedian !== 0) {
-      writer.tag(4, WireType.Bit64).double(message.distanceMedian)
+      writer.tag(4, WireType.Bit64).double(message.distanceMedian);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.ObjectDetection
  */
-export const ObjectDetection = new ObjectDetection$Type()
+export const ObjectDetection = new ObjectDetection$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Command$Type extends MessageType<Command> {
   constructor() {
@@ -4419,19 +4419,19 @@ class Command$Type extends MessageType<Command> {
         oneof: 'command',
         T: () => MoveToPoseCommand,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<Command>): Command {
-    const message = { command: { oneofKind: undefined } }
+    const message = { command: { oneofKind: undefined } };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<Command>(this, message, value)
+      reflectionMergePartial<Command>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4440,10 +4440,10 @@ class Command$Type extends MessageType<Command> {
     options: BinaryReadOptions,
     target?: Command,
   ): Command {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.MoveShelfCommand move_shelf_command */ 1:
           message.command = {
@@ -4454,8 +4454,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).moveShelfCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.ReturnShelfCommand return_shelf_command */ 2:
           message.command = {
             oneofKind: 'returnShelfCommand',
@@ -4465,8 +4465,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).returnShelfCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.UndockShelfCommand undock_shelf_command */ 5:
           message.command = {
             oneofKind: 'undockShelfCommand',
@@ -4476,8 +4476,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).undockShelfCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.MoveToLocationCommand move_to_location_command */ 7:
           message.command = {
             oneofKind: 'moveToLocationCommand',
@@ -4487,8 +4487,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).moveToLocationCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.ReturnHomeCommand return_home_command */ 8:
           message.command = {
             oneofKind: 'returnHomeCommand',
@@ -4498,8 +4498,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).returnHomeCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.DockShelfCommand dock_shelf_command */ 9:
           message.command = {
             oneofKind: 'dockShelfCommand',
@@ -4509,8 +4509,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).dockShelfCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.SpeakCommand speak_command */ 12:
           message.command = {
             oneofKind: 'speakCommand',
@@ -4520,8 +4520,8 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).speakCommand,
             ),
-          }
-          break
+          };
+          break;
         case /* kachaka_api.MoveToPoseCommand move_to_pose_command */ 13:
           message.command = {
             oneofKind: 'moveToPoseCommand',
@@ -4531,28 +4531,28 @@ class Command$Type extends MessageType<Command> {
               options,
               (message.command as any).moveToPoseCommand,
             ),
-          }
-          break
+          };
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4566,7 +4566,7 @@ class Command$Type extends MessageType<Command> {
         message.command.moveShelfCommand,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.ReturnShelfCommand return_shelf_command = 2; */
     if (message.command.oneofKind === 'returnShelfCommand') {
@@ -4574,7 +4574,7 @@ class Command$Type extends MessageType<Command> {
         message.command.returnShelfCommand,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.UndockShelfCommand undock_shelf_command = 5; */
     if (message.command.oneofKind === 'undockShelfCommand') {
@@ -4582,7 +4582,7 @@ class Command$Type extends MessageType<Command> {
         message.command.undockShelfCommand,
         writer.tag(5, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.MoveToLocationCommand move_to_location_command = 7; */
     if (message.command.oneofKind === 'moveToLocationCommand') {
@@ -4590,7 +4590,7 @@ class Command$Type extends MessageType<Command> {
         message.command.moveToLocationCommand,
         writer.tag(7, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.ReturnHomeCommand return_home_command = 8; */
     if (message.command.oneofKind === 'returnHomeCommand') {
@@ -4598,7 +4598,7 @@ class Command$Type extends MessageType<Command> {
         message.command.returnHomeCommand,
         writer.tag(8, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.DockShelfCommand dock_shelf_command = 9; */
     if (message.command.oneofKind === 'dockShelfCommand') {
@@ -4606,7 +4606,7 @@ class Command$Type extends MessageType<Command> {
         message.command.dockShelfCommand,
         writer.tag(9, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.SpeakCommand speak_command = 12; */
     if (message.command.oneofKind === 'speakCommand') {
@@ -4614,7 +4614,7 @@ class Command$Type extends MessageType<Command> {
         message.command.speakCommand,
         writer.tag(12, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.MoveToPoseCommand move_to_pose_command = 13; */
     if (message.command.oneofKind === 'moveToPoseCommand') {
@@ -4622,23 +4622,23 @@ class Command$Type extends MessageType<Command> {
         message.command.moveToPoseCommand,
         writer.tag(13, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.Command
  */
-export const Command = new Command$Type()
+export const Command = new Command$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MoveShelfCommand$Type extends MessageType<MoveShelfCommand> {
   constructor() {
@@ -4655,19 +4655,19 @@ class MoveShelfCommand$Type extends MessageType<MoveShelfCommand> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<MoveShelfCommand>): MoveShelfCommand {
-    const message = { targetShelfId: '', destinationLocationId: '' }
+    const message = { targetShelfId: '', destinationLocationId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<MoveShelfCommand>(this, message, value)
+      reflectionMergePartial<MoveShelfCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4676,37 +4676,37 @@ class MoveShelfCommand$Type extends MessageType<MoveShelfCommand> {
     options: BinaryReadOptions,
     target?: MoveShelfCommand,
   ): MoveShelfCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string target_shelf_id */ 1:
-          message.targetShelfId = reader.string()
-          break
+          message.targetShelfId = reader.string();
+          break;
         case /* string destination_location_id */ 2:
-          message.destinationLocationId = reader.string()
-          break
+          message.destinationLocationId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4716,29 +4716,29 @@ class MoveShelfCommand$Type extends MessageType<MoveShelfCommand> {
   ): IBinaryWriter {
     /* string target_shelf_id = 1; */
     if (message.targetShelfId !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId)
+      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId);
     }
     /* string destination_location_id = 2; */
     if (message.destinationLocationId !== '') {
       writer
         .tag(2, WireType.LengthDelimited)
-        .string(message.destinationLocationId)
+        .string(message.destinationLocationId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.MoveShelfCommand
  */
-export const MoveShelfCommand = new MoveShelfCommand$Type()
+export const MoveShelfCommand = new MoveShelfCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ReturnShelfCommand$Type extends MessageType<ReturnShelfCommand> {
   constructor() {
@@ -4749,19 +4749,19 @@ class ReturnShelfCommand$Type extends MessageType<ReturnShelfCommand> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<ReturnShelfCommand>): ReturnShelfCommand {
-    const message = { targetShelfId: '' }
+    const message = { targetShelfId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<ReturnShelfCommand>(this, message, value)
+      reflectionMergePartial<ReturnShelfCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4770,34 +4770,34 @@ class ReturnShelfCommand$Type extends MessageType<ReturnShelfCommand> {
     options: BinaryReadOptions,
     target?: ReturnShelfCommand,
   ): ReturnShelfCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string target_shelf_id */ 1:
-          message.targetShelfId = reader.string()
-          break
+          message.targetShelfId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4807,23 +4807,23 @@ class ReturnShelfCommand$Type extends MessageType<ReturnShelfCommand> {
   ): IBinaryWriter {
     /* string target_shelf_id = 1; */
     if (message.targetShelfId !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId)
+      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.ReturnShelfCommand
  */
-export const ReturnShelfCommand = new ReturnShelfCommand$Type()
+export const ReturnShelfCommand = new ReturnShelfCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UndockShelfCommand$Type extends MessageType<UndockShelfCommand> {
   constructor() {
@@ -4834,19 +4834,19 @@ class UndockShelfCommand$Type extends MessageType<UndockShelfCommand> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<UndockShelfCommand>): UndockShelfCommand {
-    const message = { targetShelfId: '' }
+    const message = { targetShelfId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<UndockShelfCommand>(this, message, value)
+      reflectionMergePartial<UndockShelfCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4855,34 +4855,34 @@ class UndockShelfCommand$Type extends MessageType<UndockShelfCommand> {
     options: BinaryReadOptions,
     target?: UndockShelfCommand,
   ): UndockShelfCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string target_shelf_id */ 1:
-          message.targetShelfId = reader.string()
-          break
+          message.targetShelfId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4892,23 +4892,23 @@ class UndockShelfCommand$Type extends MessageType<UndockShelfCommand> {
   ): IBinaryWriter {
     /* string target_shelf_id = 1; */
     if (message.targetShelfId !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId)
+      writer.tag(1, WireType.LengthDelimited).string(message.targetShelfId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.UndockShelfCommand
  */
-export const UndockShelfCommand = new UndockShelfCommand$Type()
+export const UndockShelfCommand = new UndockShelfCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MoveToLocationCommand$Type extends MessageType<MoveToLocationCommand> {
   constructor() {
@@ -4919,19 +4919,19 @@ class MoveToLocationCommand$Type extends MessageType<MoveToLocationCommand> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<MoveToLocationCommand>): MoveToLocationCommand {
-    const message = { targetLocationId: '' }
+    const message = { targetLocationId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<MoveToLocationCommand>(this, message, value)
+      reflectionMergePartial<MoveToLocationCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -4940,34 +4940,34 @@ class MoveToLocationCommand$Type extends MessageType<MoveToLocationCommand> {
     options: BinaryReadOptions,
     target?: MoveToLocationCommand,
   ): MoveToLocationCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string target_location_id */ 1:
-          message.targetLocationId = reader.string()
-          break
+          message.targetLocationId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -4977,39 +4977,39 @@ class MoveToLocationCommand$Type extends MessageType<MoveToLocationCommand> {
   ): IBinaryWriter {
     /* string target_location_id = 1; */
     if (message.targetLocationId !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.targetLocationId)
+      writer.tag(1, WireType.LengthDelimited).string(message.targetLocationId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.MoveToLocationCommand
  */
-export const MoveToLocationCommand = new MoveToLocationCommand$Type()
+export const MoveToLocationCommand = new MoveToLocationCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ReturnHomeCommand$Type extends MessageType<ReturnHomeCommand> {
   constructor() {
-    super('kachaka_api.ReturnHomeCommand', [])
+    super('kachaka_api.ReturnHomeCommand', []);
   }
 
   create(value?: PartialMessage<ReturnHomeCommand>): ReturnHomeCommand {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<ReturnHomeCommand>(this, message, value)
+      reflectionMergePartial<ReturnHomeCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5018,7 +5018,7 @@ class ReturnHomeCommand$Type extends MessageType<ReturnHomeCommand> {
     options: BinaryReadOptions,
     target?: ReturnHomeCommand,
   ): ReturnHomeCommand {
-    return target ?? this.create()
+    return target ?? this.create();
   }
 
   internalBinaryWrite(
@@ -5026,37 +5026,37 @@ class ReturnHomeCommand$Type extends MessageType<ReturnHomeCommand> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.ReturnHomeCommand
  */
-export const ReturnHomeCommand = new ReturnHomeCommand$Type()
+export const ReturnHomeCommand = new ReturnHomeCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class DockShelfCommand$Type extends MessageType<DockShelfCommand> {
   constructor() {
-    super('kachaka_api.DockShelfCommand', [])
+    super('kachaka_api.DockShelfCommand', []);
   }
 
   create(value?: PartialMessage<DockShelfCommand>): DockShelfCommand {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<DockShelfCommand>(this, message, value)
+      reflectionMergePartial<DockShelfCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5065,7 +5065,7 @@ class DockShelfCommand$Type extends MessageType<DockShelfCommand> {
     options: BinaryReadOptions,
     target?: DockShelfCommand,
   ): DockShelfCommand {
-    return target ?? this.create()
+    return target ?? this.create();
   }
 
   internalBinaryWrite(
@@ -5073,39 +5073,39 @@ class DockShelfCommand$Type extends MessageType<DockShelfCommand> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.DockShelfCommand
  */
-export const DockShelfCommand = new DockShelfCommand$Type()
+export const DockShelfCommand = new DockShelfCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SpeakCommand$Type extends MessageType<SpeakCommand> {
   constructor() {
     super('kachaka_api.SpeakCommand', [
       { no: 1, name: 'text', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<SpeakCommand>): SpeakCommand {
-    const message = { text: '' }
+    const message = { text: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<SpeakCommand>(this, message, value)
+      reflectionMergePartial<SpeakCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5114,34 +5114,34 @@ class SpeakCommand$Type extends MessageType<SpeakCommand> {
     options: BinaryReadOptions,
     target?: SpeakCommand,
   ): SpeakCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string text */ 1:
-          message.text = reader.string()
-          break
+          message.text = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5151,23 +5151,23 @@ class SpeakCommand$Type extends MessageType<SpeakCommand> {
   ): IBinaryWriter {
     /* string text = 1; */
     if (message.text !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.text)
+      writer.tag(1, WireType.LengthDelimited).string(message.text);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SpeakCommand
  */
-export const SpeakCommand = new SpeakCommand$Type()
+export const SpeakCommand = new SpeakCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MoveToPoseCommand$Type extends MessageType<MoveToPoseCommand> {
   constructor() {
@@ -5175,19 +5175,19 @@ class MoveToPoseCommand$Type extends MessageType<MoveToPoseCommand> {
       { no: 1, name: 'x', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 2, name: 'y', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 3, name: 'yaw', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<MoveToPoseCommand>): MoveToPoseCommand {
-    const message = { x: 0, y: 0, yaw: 0 }
+    const message = { x: 0, y: 0, yaw: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<MoveToPoseCommand>(this, message, value)
+      reflectionMergePartial<MoveToPoseCommand>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5196,40 +5196,40 @@ class MoveToPoseCommand$Type extends MessageType<MoveToPoseCommand> {
     options: BinaryReadOptions,
     target?: MoveToPoseCommand,
   ): MoveToPoseCommand {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double x */ 1:
-          message.x = reader.double()
-          break
+          message.x = reader.double();
+          break;
         case /* double y */ 2:
-          message.y = reader.double()
-          break
+          message.y = reader.double();
+          break;
         case /* double yaw */ 3:
-          message.yaw = reader.double()
-          break
+          message.yaw = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5239,47 +5239,47 @@ class MoveToPoseCommand$Type extends MessageType<MoveToPoseCommand> {
   ): IBinaryWriter {
     /* double x = 1; */
     if (message.x !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.x)
+      writer.tag(1, WireType.Bit64).double(message.x);
     }
     /* double y = 2; */
     if (message.y !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.y)
+      writer.tag(2, WireType.Bit64).double(message.y);
     }
     /* double yaw = 3; */
     if (message.yaw !== 0) {
-      writer.tag(3, WireType.Bit64).double(message.yaw)
+      writer.tag(3, WireType.Bit64).double(message.yaw);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.MoveToPoseCommand
  */
-export const MoveToPoseCommand = new MoveToPoseCommand$Type()
+export const MoveToPoseCommand = new MoveToPoseCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class EmptyRequest$Type extends MessageType<EmptyRequest> {
   constructor() {
-    super('kachaka_api.EmptyRequest', [])
+    super('kachaka_api.EmptyRequest', []);
   }
 
   create(value?: PartialMessage<EmptyRequest>): EmptyRequest {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<EmptyRequest>(this, message, value)
+      reflectionMergePartial<EmptyRequest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5288,7 +5288,7 @@ class EmptyRequest$Type extends MessageType<EmptyRequest> {
     options: BinaryReadOptions,
     target?: EmptyRequest,
   ): EmptyRequest {
-    return target ?? this.create()
+    return target ?? this.create();
   }
 
   internalBinaryWrite(
@@ -5296,39 +5296,39 @@ class EmptyRequest$Type extends MessageType<EmptyRequest> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.EmptyRequest
  */
-export const EmptyRequest = new EmptyRequest$Type()
+export const EmptyRequest = new EmptyRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRequest$Type extends MessageType<GetRequest> {
   constructor() {
     super('kachaka_api.GetRequest', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetRequest>): GetRequest {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRequest>(this, message, value)
+      reflectionMergePartial<GetRequest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5337,10 +5337,10 @@ class GetRequest$Type extends MessageType<GetRequest> {
     options: BinaryReadOptions,
     target?: GetRequest,
   ): GetRequest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5348,28 +5348,28 @@ class GetRequest$Type extends MessageType<GetRequest> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5383,23 +5383,23 @@ class GetRequest$Type extends MessageType<GetRequest> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRequest
  */
-export const GetRequest = new GetRequest$Type()
+export const GetRequest = new GetRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRobotSerialNumberResponse$Type extends MessageType<GetRobotSerialNumberResponse> {
   constructor() {
@@ -5411,21 +5411,25 @@ class GetRobotSerialNumberResponse$Type extends MessageType<GetRobotSerialNumber
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetRobotSerialNumberResponse>,
   ): GetRobotSerialNumberResponse {
-    const message = { serialNumber: '' }
+    const message = { serialNumber: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRobotSerialNumberResponse>(this, message, value)
+      reflectionMergePartial<GetRobotSerialNumberResponse>(
+        this,
+        message,
+        value,
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5434,10 +5438,10 @@ class GetRobotSerialNumberResponse$Type extends MessageType<GetRobotSerialNumber
     options: BinaryReadOptions,
     target?: GetRobotSerialNumberResponse,
   ): GetRobotSerialNumberResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5445,31 +5449,31 @@ class GetRobotSerialNumberResponse$Type extends MessageType<GetRobotSerialNumber
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* string serial_number */ 2:
-          message.serialNumber = reader.string()
-          break
+          message.serialNumber = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5483,49 +5487,49 @@ class GetRobotSerialNumberResponse$Type extends MessageType<GetRobotSerialNumber
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string serial_number = 2; */
     if (message.serialNumber !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.serialNumber)
+      writer.tag(2, WireType.LengthDelimited).string(message.serialNumber);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRobotSerialNumberResponse
  */
 export const GetRobotSerialNumberResponse =
-  new GetRobotSerialNumberResponse$Type()
+  new GetRobotSerialNumberResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRobotVersionResponse$Type extends MessageType<GetRobotVersionResponse> {
   constructor() {
     super('kachaka_api.GetRobotVersionResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'version', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetRobotVersionResponse>,
   ): GetRobotVersionResponse {
-    const message = { version: '' }
+    const message = { version: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRobotVersionResponse>(this, message, value)
+      reflectionMergePartial<GetRobotVersionResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5534,10 +5538,10 @@ class GetRobotVersionResponse$Type extends MessageType<GetRobotVersionResponse> 
     options: BinaryReadOptions,
     target?: GetRobotVersionResponse,
   ): GetRobotVersionResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5545,31 +5549,31 @@ class GetRobotVersionResponse$Type extends MessageType<GetRobotVersionResponse> 
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* string version */ 2:
-          message.version = reader.string()
-          break
+          message.version = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5583,46 +5587,46 @@ class GetRobotVersionResponse$Type extends MessageType<GetRobotVersionResponse> 
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string version = 2; */
     if (message.version !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.version)
+      writer.tag(2, WireType.LengthDelimited).string(message.version);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRobotVersionResponse
  */
-export const GetRobotVersionResponse = new GetRobotVersionResponse$Type()
+export const GetRobotVersionResponse = new GetRobotVersionResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRobotPoseResponse$Type extends MessageType<GetRobotPoseResponse> {
   constructor() {
     super('kachaka_api.GetRobotPoseResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'pose', kind: 'message', T: () => Pose },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetRobotPoseResponse>): GetRobotPoseResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRobotPoseResponse>(this, message, value)
+      reflectionMergePartial<GetRobotPoseResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5631,10 +5635,10 @@ class GetRobotPoseResponse$Type extends MessageType<GetRobotPoseResponse> {
     options: BinaryReadOptions,
     target?: GetRobotPoseResponse,
   ): GetRobotPoseResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5642,36 +5646,36 @@ class GetRobotPoseResponse$Type extends MessageType<GetRobotPoseResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Pose pose */ 2:
           message.pose = Pose.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.pose,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5685,7 +5689,7 @@ class GetRobotPoseResponse$Type extends MessageType<GetRobotPoseResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Pose pose = 2; */
     if (message.pose) {
@@ -5693,42 +5697,42 @@ class GetRobotPoseResponse$Type extends MessageType<GetRobotPoseResponse> {
         message.pose,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRobotPoseResponse
  */
-export const GetRobotPoseResponse = new GetRobotPoseResponse$Type()
+export const GetRobotPoseResponse = new GetRobotPoseResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetPngMapResponse$Type extends MessageType<GetPngMapResponse> {
   constructor() {
     super('kachaka_api.GetPngMapResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'map', kind: 'message', T: () => Map },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetPngMapResponse>): GetPngMapResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetPngMapResponse>(this, message, value)
+      reflectionMergePartial<GetPngMapResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5737,10 +5741,10 @@ class GetPngMapResponse$Type extends MessageType<GetPngMapResponse> {
     options: BinaryReadOptions,
     target?: GetPngMapResponse,
   ): GetPngMapResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5748,36 +5752,36 @@ class GetPngMapResponse$Type extends MessageType<GetPngMapResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Map map */ 2:
           message.map = Map.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.map,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5791,7 +5795,7 @@ class GetPngMapResponse$Type extends MessageType<GetPngMapResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Map map = 2; */
     if (message.map) {
@@ -5799,23 +5803,23 @@ class GetPngMapResponse$Type extends MessageType<GetPngMapResponse> {
         message.map,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetPngMapResponse
  */
-export const GetPngMapResponse = new GetPngMapResponse$Type()
+export const GetPngMapResponse = new GetPngMapResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResponse> {
   constructor() {
@@ -5829,21 +5833,21 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
         repeat: 1 /* RepeatType.PACKED */,
         T: () => ObjectDetection,
       },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetObjectDetectionResponse>,
   ): GetObjectDetectionResponse {
-    const message = { objects: [] }
+    const message = { objects: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetObjectDetectionResponse>(this, message, value)
+      reflectionMergePartial<GetObjectDetectionResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5852,10 +5856,10 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
     options: BinaryReadOptions,
     target?: GetObjectDetectionResponse,
   ): GetObjectDetectionResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5863,16 +5867,16 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosHeader header */ 2:
           message.header = RosHeader.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.header,
-          )
-          break
+          );
+          break;
         case /* repeated kachaka_api.ObjectDetection objects */ 3:
           message.objects.push(
             ObjectDetection.internalBinaryRead(
@@ -5880,28 +5884,28 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
               reader.uint32(),
               options,
             ),
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -5915,7 +5919,7 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosHeader header = 2; */
     if (message.header) {
@@ -5923,7 +5927,7 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
         message.header,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated kachaka_api.ObjectDetection objects = 3; */
     for (let i = 0; i < message.objects.length; i++) {
@@ -5931,42 +5935,42 @@ class GetObjectDetectionResponse$Type extends MessageType<GetObjectDetectionResp
         message.objects[i],
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetObjectDetectionResponse
  */
-export const GetObjectDetectionResponse = new GetObjectDetectionResponse$Type()
+export const GetObjectDetectionResponse = new GetObjectDetectionResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRosImuResponse$Type extends MessageType<GetRosImuResponse> {
   constructor() {
     super('kachaka_api.GetRosImuResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'imu', kind: 'message', T: () => RosImu },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetRosImuResponse>): GetRosImuResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRosImuResponse>(this, message, value)
+      reflectionMergePartial<GetRosImuResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -5975,10 +5979,10 @@ class GetRosImuResponse$Type extends MessageType<GetRosImuResponse> {
     options: BinaryReadOptions,
     target?: GetRosImuResponse,
   ): GetRosImuResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -5986,36 +5990,36 @@ class GetRosImuResponse$Type extends MessageType<GetRosImuResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosImu imu */ 2:
           message.imu = RosImu.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.imu,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6029,7 +6033,7 @@ class GetRosImuResponse$Type extends MessageType<GetRosImuResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosImu imu = 2; */
     if (message.imu) {
@@ -6037,44 +6041,44 @@ class GetRosImuResponse$Type extends MessageType<GetRosImuResponse> {
         message.imu,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRosImuResponse
  */
-export const GetRosImuResponse = new GetRosImuResponse$Type()
+export const GetRosImuResponse = new GetRosImuResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRosOdometryResponse$Type extends MessageType<GetRosOdometryResponse> {
   constructor() {
     super('kachaka_api.GetRosOdometryResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'odometry', kind: 'message', T: () => RosOdometry },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetRosOdometryResponse>,
   ): GetRosOdometryResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRosOdometryResponse>(this, message, value)
+      reflectionMergePartial<GetRosOdometryResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6083,10 +6087,10 @@ class GetRosOdometryResponse$Type extends MessageType<GetRosOdometryResponse> {
     options: BinaryReadOptions,
     target?: GetRosOdometryResponse,
   ): GetRosOdometryResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6094,36 +6098,36 @@ class GetRosOdometryResponse$Type extends MessageType<GetRosOdometryResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosOdometry odometry */ 2:
           message.odometry = RosOdometry.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.odometry,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6137,7 +6141,7 @@ class GetRosOdometryResponse$Type extends MessageType<GetRosOdometryResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosOdometry odometry = 2; */
     if (message.odometry) {
@@ -6145,44 +6149,44 @@ class GetRosOdometryResponse$Type extends MessageType<GetRosOdometryResponse> {
         message.odometry,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRosOdometryResponse
  */
-export const GetRosOdometryResponse = new GetRosOdometryResponse$Type()
+export const GetRosOdometryResponse = new GetRosOdometryResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetRosLaserScanResponse$Type extends MessageType<GetRosLaserScanResponse> {
   constructor() {
     super('kachaka_api.GetRosLaserScanResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'scan', kind: 'message', T: () => RosLaserScan },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetRosLaserScanResponse>,
   ): GetRosLaserScanResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetRosLaserScanResponse>(this, message, value)
+      reflectionMergePartial<GetRosLaserScanResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6191,10 +6195,10 @@ class GetRosLaserScanResponse$Type extends MessageType<GetRosLaserScanResponse> 
     options: BinaryReadOptions,
     target?: GetRosLaserScanResponse,
   ): GetRosLaserScanResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6202,36 +6206,36 @@ class GetRosLaserScanResponse$Type extends MessageType<GetRosLaserScanResponse> 
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosLaserScan scan */ 2:
           message.scan = RosLaserScan.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.scan,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6245,7 +6249,7 @@ class GetRosLaserScanResponse$Type extends MessageType<GetRosLaserScanResponse> 
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosLaserScan scan = 2; */
     if (message.scan) {
@@ -6253,48 +6257,48 @@ class GetRosLaserScanResponse$Type extends MessageType<GetRosLaserScanResponse> 
         message.scan,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetRosLaserScanResponse
  */
-export const GetRosLaserScanResponse = new GetRosLaserScanResponse$Type()
+export const GetRosLaserScanResponse = new GetRosLaserScanResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetFrontCameraRosCameraInfoResponse$Type extends MessageType<GetFrontCameraRosCameraInfoResponse> {
   constructor() {
     super('kachaka_api.GetFrontCameraRosCameraInfoResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'camera_info', kind: 'message', T: () => RosCameraInfo },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetFrontCameraRosCameraInfoResponse>,
   ): GetFrontCameraRosCameraInfoResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<GetFrontCameraRosCameraInfoResponse>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6303,10 +6307,10 @@ class GetFrontCameraRosCameraInfoResponse$Type extends MessageType<GetFrontCamer
     options: BinaryReadOptions,
     target?: GetFrontCameraRosCameraInfoResponse,
   ): GetFrontCameraRosCameraInfoResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6314,36 +6318,36 @@ class GetFrontCameraRosCameraInfoResponse$Type extends MessageType<GetFrontCamer
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosCameraInfo camera_info */ 2:
           message.cameraInfo = RosCameraInfo.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.cameraInfo,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6357,7 +6361,7 @@ class GetFrontCameraRosCameraInfoResponse$Type extends MessageType<GetFrontCamer
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosCameraInfo camera_info = 2; */
     if (message.cameraInfo) {
@@ -6365,49 +6369,49 @@ class GetFrontCameraRosCameraInfoResponse$Type extends MessageType<GetFrontCamer
         message.cameraInfo,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetFrontCameraRosCameraInfoResponse
  */
 export const GetFrontCameraRosCameraInfoResponse =
-  new GetFrontCameraRosCameraInfoResponse$Type()
+  new GetFrontCameraRosCameraInfoResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetFrontCameraRosImageResponse$Type extends MessageType<GetFrontCameraRosImageResponse> {
   constructor() {
     super('kachaka_api.GetFrontCameraRosImageResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'image', kind: 'message', T: () => RosImage },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetFrontCameraRosImageResponse>,
   ): GetFrontCameraRosImageResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<GetFrontCameraRosImageResponse>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6416,10 +6420,10 @@ class GetFrontCameraRosImageResponse$Type extends MessageType<GetFrontCameraRosI
     options: BinaryReadOptions,
     target?: GetFrontCameraRosImageResponse,
   ): GetFrontCameraRosImageResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6427,36 +6431,36 @@ class GetFrontCameraRosImageResponse$Type extends MessageType<GetFrontCameraRosI
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosImage image */ 2:
           message.image = RosImage.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.image,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6470,7 +6474,7 @@ class GetFrontCameraRosImageResponse$Type extends MessageType<GetFrontCameraRosI
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosImage image = 2; */
     if (message.image) {
@@ -6478,49 +6482,49 @@ class GetFrontCameraRosImageResponse$Type extends MessageType<GetFrontCameraRosI
         message.image,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetFrontCameraRosImageResponse
  */
 export const GetFrontCameraRosImageResponse =
-  new GetFrontCameraRosImageResponse$Type()
+  new GetFrontCameraRosImageResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetFrontCameraRosCompressedImageResponse$Type extends MessageType<GetFrontCameraRosCompressedImageResponse> {
   constructor() {
     super('kachaka_api.GetFrontCameraRosCompressedImageResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'image', kind: 'message', T: () => RosCompressedImage },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetFrontCameraRosCompressedImageResponse>,
   ): GetFrontCameraRosCompressedImageResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<GetFrontCameraRosCompressedImageResponse>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6529,10 +6533,10 @@ class GetFrontCameraRosCompressedImageResponse$Type extends MessageType<GetFront
     options: BinaryReadOptions,
     target?: GetFrontCameraRosCompressedImageResponse,
   ): GetFrontCameraRosCompressedImageResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6540,36 +6544,36 @@ class GetFrontCameraRosCompressedImageResponse$Type extends MessageType<GetFront
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.RosCompressedImage image */ 2:
           message.image = RosCompressedImage.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.image,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6583,7 +6587,7 @@ class GetFrontCameraRosCompressedImageResponse$Type extends MessageType<GetFront
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.RosCompressedImage image = 2; */
     if (message.image) {
@@ -6591,24 +6595,24 @@ class GetFrontCameraRosCompressedImageResponse$Type extends MessageType<GetFront
         message.image,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetFrontCameraRosCompressedImageResponse
  */
 export const GetFrontCameraRosCompressedImageResponse =
-  new GetFrontCameraRosCompressedImageResponse$Type()
+  new GetFrontCameraRosCompressedImageResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StartCommandRequest$Type extends MessageType<StartCommandRequest> {
   constructor() {
@@ -6622,19 +6626,19 @@ class StartCommandRequest$Type extends MessageType<StartCommandRequest> {
         T: 9 /* ScalarType.STRING */,
       },
       { no: 4, name: 'title', kind: 'scalar', T: 9 /* ScalarType.STRING */ },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<StartCommandRequest>): StartCommandRequest {
-    const message = { cancelAll: false, ttsOnSuccess: '', title: '' }
+    const message = { cancelAll: false, ttsOnSuccess: '', title: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<StartCommandRequest>(this, message, value)
+      reflectionMergePartial<StartCommandRequest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6643,10 +6647,10 @@ class StartCommandRequest$Type extends MessageType<StartCommandRequest> {
     options: BinaryReadOptions,
     target?: StartCommandRequest,
   ): StartCommandRequest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Command command */ 1:
           message.command = Command.internalBinaryRead(
@@ -6654,37 +6658,37 @@ class StartCommandRequest$Type extends MessageType<StartCommandRequest> {
             reader.uint32(),
             options,
             message.command,
-          )
-          break
+          );
+          break;
         case /* bool cancel_all */ 2:
-          message.cancelAll = reader.bool()
-          break
+          message.cancelAll = reader.bool();
+          break;
         case /* string tts_on_success */ 3:
-          message.ttsOnSuccess = reader.string()
-          break
+          message.ttsOnSuccess = reader.string();
+          break;
         case /* string title */ 4:
-          message.title = reader.string()
-          break
+          message.title = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6698,35 +6702,35 @@ class StartCommandRequest$Type extends MessageType<StartCommandRequest> {
         message.command,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* bool cancel_all = 2; */
     if (message.cancelAll) {
-      writer.tag(2, WireType.Varint).bool(message.cancelAll)
+      writer.tag(2, WireType.Varint).bool(message.cancelAll);
     }
     /* string tts_on_success = 3; */
     if (message.ttsOnSuccess !== '') {
-      writer.tag(3, WireType.LengthDelimited).string(message.ttsOnSuccess)
+      writer.tag(3, WireType.LengthDelimited).string(message.ttsOnSuccess);
     }
     /* string title = 4; */
     if (message.title !== '') {
-      writer.tag(4, WireType.LengthDelimited).string(message.title)
+      writer.tag(4, WireType.LengthDelimited).string(message.title);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.StartCommandRequest
  */
-export const StartCommandRequest = new StartCommandRequest$Type()
+export const StartCommandRequest = new StartCommandRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StartCommandResponse$Type extends MessageType<StartCommandResponse> {
   constructor() {
@@ -6738,19 +6742,19 @@ class StartCommandResponse$Type extends MessageType<StartCommandResponse> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<StartCommandResponse>): StartCommandResponse {
-    const message = { commandId: '' }
+    const message = { commandId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<StartCommandResponse>(this, message, value)
+      reflectionMergePartial<StartCommandResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6759,10 +6763,10 @@ class StartCommandResponse$Type extends MessageType<StartCommandResponse> {
     options: BinaryReadOptions,
     target?: StartCommandResponse,
   ): StartCommandResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Result result */ 1:
           message.result = Result.internalBinaryRead(
@@ -6770,31 +6774,31 @@ class StartCommandResponse$Type extends MessageType<StartCommandResponse> {
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         case /* string command_id */ 2:
-          message.commandId = reader.string()
-          break
+          message.commandId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6808,46 +6812,46 @@ class StartCommandResponse$Type extends MessageType<StartCommandResponse> {
         message.result,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string command_id = 2; */
     if (message.commandId !== '') {
-      writer.tag(2, WireType.LengthDelimited).string(message.commandId)
+      writer.tag(2, WireType.LengthDelimited).string(message.commandId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.StartCommandResponse
  */
-export const StartCommandResponse = new StartCommandResponse$Type()
+export const StartCommandResponse = new StartCommandResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CancelCommandResponse$Type extends MessageType<CancelCommandResponse> {
   constructor() {
     super('kachaka_api.CancelCommandResponse', [
       { no: 1, name: 'result', kind: 'message', T: () => Result },
       { no: 2, name: 'command', kind: 'message', T: () => Command },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<CancelCommandResponse>): CancelCommandResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<CancelCommandResponse>(this, message, value)
+      reflectionMergePartial<CancelCommandResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6856,10 +6860,10 @@ class CancelCommandResponse$Type extends MessageType<CancelCommandResponse> {
     options: BinaryReadOptions,
     target?: CancelCommandResponse,
   ): CancelCommandResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Result result */ 1:
           message.result = Result.internalBinaryRead(
@@ -6867,36 +6871,36 @@ class CancelCommandResponse$Type extends MessageType<CancelCommandResponse> {
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Command command */ 2:
           message.command = Command.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.command,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -6910,7 +6914,7 @@ class CancelCommandResponse$Type extends MessageType<CancelCommandResponse> {
         message.result,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Command command = 2; */
     if (message.command) {
@@ -6918,23 +6922,23 @@ class CancelCommandResponse$Type extends MessageType<CancelCommandResponse> {
         message.command,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.CancelCommandResponse
  */
-export const CancelCommandResponse = new CancelCommandResponse$Type()
+export const CancelCommandResponse = new CancelCommandResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> {
   constructor() {
@@ -6947,21 +6951,21 @@ class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> 
         T: () => ['kachaka_api.CommandState', CommandState, 'COMMAND_STATE_'],
       },
       { no: 3, name: 'command', kind: 'message', T: () => Command },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetCommandStateResponse>,
   ): GetCommandStateResponse {
-    const message = { state: 0 }
+    const message = { state: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetCommandStateResponse>(this, message, value)
+      reflectionMergePartial<GetCommandStateResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -6970,10 +6974,10 @@ class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> 
     options: BinaryReadOptions,
     target?: GetCommandStateResponse,
   ): GetCommandStateResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -6981,39 +6985,39 @@ class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> 
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.CommandState state */ 2:
-          message.state = reader.int32()
-          break
+          message.state = reader.int32();
+          break;
         case /* kachaka_api.Command command */ 3:
           message.command = Command.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.command,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7027,11 +7031,11 @@ class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> 
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.CommandState state = 2; */
     if (message.state !== 0) {
-      writer.tag(2, WireType.Varint).int32(message.state)
+      writer.tag(2, WireType.Varint).int32(message.state);
     }
     /* kachaka_api.Command command = 3; */
     if (message.command) {
@@ -7039,23 +7043,23 @@ class GetCommandStateResponse$Type extends MessageType<GetCommandStateResponse> 
         message.command,
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetCommandStateResponse
  */
-export const GetCommandStateResponse = new GetCommandStateResponse$Type()
+export const GetCommandStateResponse = new GetCommandStateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResultResponse> {
   constructor() {
@@ -7063,21 +7067,25 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'result', kind: 'message', T: () => Result },
       { no: 3, name: 'command', kind: 'message', T: () => Command },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetLastCommandResultResponse>,
   ): GetLastCommandResultResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetLastCommandResultResponse>(this, message, value)
+      reflectionMergePartial<GetLastCommandResultResponse>(
+        this,
+        message,
+        value,
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7086,10 +7094,10 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
     options: BinaryReadOptions,
     target?: GetLastCommandResultResponse,
   ): GetLastCommandResultResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -7097,44 +7105,44 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Result result */ 2:
           message.result = Result.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         case /* kachaka_api.Command command */ 3:
           message.command = Command.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.command,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7148,7 +7156,7 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Result result = 2; */
     if (message.result) {
@@ -7156,7 +7164,7 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
         message.result,
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* kachaka_api.Command command = 3; */
     if (message.command) {
@@ -7164,24 +7172,24 @@ class GetLastCommandResultResponse$Type extends MessageType<GetLastCommandResult
         message.command,
         writer.tag(3, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetLastCommandResultResponse
  */
 export const GetLastCommandResultResponse =
-  new GetLastCommandResultResponse$Type()
+  new GetLastCommandResultResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
   constructor() {
@@ -7200,19 +7208,19 @@ class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
         kind: 'scalar',
         T: 9 /* ScalarType.STRING */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetLocationsResponse>): GetLocationsResponse {
-    const message = { locations: [], defaultLocationId: '' }
+    const message = { locations: [], defaultLocationId: '' };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetLocationsResponse>(this, message, value)
+      reflectionMergePartial<GetLocationsResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7221,10 +7229,10 @@ class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
     options: BinaryReadOptions,
     target?: GetLocationsResponse,
   ): GetLocationsResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -7232,36 +7240,36 @@ class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* repeated kachaka_api.Location locations */ 2:
           message.locations.push(
             Location.internalBinaryRead(reader, reader.uint32(), options),
-          )
-          break
+          );
+          break;
         case /* string default_location_id */ 3:
-          message.defaultLocationId = reader.string()
-          break
+          message.defaultLocationId = reader.string();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7275,7 +7283,7 @@ class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated kachaka_api.Location locations = 2; */
     for (let i = 0; i < message.locations.length; i++) {
@@ -7283,27 +7291,27 @@ class GetLocationsResponse$Type extends MessageType<GetLocationsResponse> {
         message.locations[i],
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* string default_location_id = 3; */
     if (message.defaultLocationId !== '') {
-      writer.tag(3, WireType.LengthDelimited).string(message.defaultLocationId)
+      writer.tag(3, WireType.LengthDelimited).string(message.defaultLocationId);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetLocationsResponse
  */
-export const GetLocationsResponse = new GetLocationsResponse$Type()
+export const GetLocationsResponse = new GetLocationsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
   constructor() {
@@ -7316,19 +7324,19 @@ class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
         repeat: 1 /* RepeatType.PACKED */,
         T: () => Shelf,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<GetShelvesResponse>): GetShelvesResponse {
-    const message = { shelves: [] }
+    const message = { shelves: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetShelvesResponse>(this, message, value)
+      reflectionMergePartial<GetShelvesResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7337,10 +7345,10 @@ class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
     options: BinaryReadOptions,
     target?: GetShelvesResponse,
   ): GetShelvesResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -7348,33 +7356,33 @@ class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* repeated kachaka_api.Shelf shelves */ 2:
           message.shelves.push(
             Shelf.internalBinaryRead(reader, reader.uint32(), options),
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7388,7 +7396,7 @@ class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated kachaka_api.Shelf shelves = 2; */
     for (let i = 0; i < message.shelves.length; i++) {
@@ -7396,43 +7404,43 @@ class GetShelvesResponse$Type extends MessageType<GetShelvesResponse> {
         message.shelves[i],
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetShelvesResponse
  */
-export const GetShelvesResponse = new GetShelvesResponse$Type()
+export const GetShelvesResponse = new GetShelvesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetAutoHomingEnabledRequest$Type extends MessageType<SetAutoHomingEnabledRequest> {
   constructor() {
     super('kachaka_api.SetAutoHomingEnabledRequest', [
       { no: 1, name: 'enable', kind: 'scalar', T: 8 /* ScalarType.BOOL */ },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetAutoHomingEnabledRequest>,
   ): SetAutoHomingEnabledRequest {
-    const message = { enable: false }
+    const message = { enable: false };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<SetAutoHomingEnabledRequest>(this, message, value)
+      reflectionMergePartial<SetAutoHomingEnabledRequest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7441,34 +7449,34 @@ class SetAutoHomingEnabledRequest$Type extends MessageType<SetAutoHomingEnabledR
     options: BinaryReadOptions,
     target?: SetAutoHomingEnabledRequest,
   ): SetAutoHomingEnabledRequest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* bool enable */ 1:
-          message.enable = reader.bool()
-          break
+          message.enable = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7478,44 +7486,48 @@ class SetAutoHomingEnabledRequest$Type extends MessageType<SetAutoHomingEnabledR
   ): IBinaryWriter {
     /* bool enable = 1; */
     if (message.enable) {
-      writer.tag(1, WireType.Varint).bool(message.enable)
+      writer.tag(1, WireType.Varint).bool(message.enable);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetAutoHomingEnabledRequest
  */
 export const SetAutoHomingEnabledRequest =
-  new SetAutoHomingEnabledRequest$Type()
+  new SetAutoHomingEnabledRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetAutoHomingEnabledResponse$Type extends MessageType<SetAutoHomingEnabledResponse> {
   constructor() {
     super('kachaka_api.SetAutoHomingEnabledResponse', [
       { no: 1, name: 'result', kind: 'message', T: () => Result },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetAutoHomingEnabledResponse>,
   ): SetAutoHomingEnabledResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<SetAutoHomingEnabledResponse>(this, message, value)
+      reflectionMergePartial<SetAutoHomingEnabledResponse>(
+        this,
+        message,
+        value,
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7524,10 +7536,10 @@ class SetAutoHomingEnabledResponse$Type extends MessageType<SetAutoHomingEnabled
     options: BinaryReadOptions,
     target?: SetAutoHomingEnabledResponse,
   ): SetAutoHomingEnabledResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Result result */ 1:
           message.result = Result.internalBinaryRead(
@@ -7535,28 +7547,28 @@ class SetAutoHomingEnabledResponse$Type extends MessageType<SetAutoHomingEnabled
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7570,45 +7582,49 @@ class SetAutoHomingEnabledResponse$Type extends MessageType<SetAutoHomingEnabled
         message.result,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetAutoHomingEnabledResponse
  */
 export const SetAutoHomingEnabledResponse =
-  new SetAutoHomingEnabledResponse$Type()
+  new SetAutoHomingEnabledResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetAutoHomingEnabledResponse$Type extends MessageType<GetAutoHomingEnabledResponse> {
   constructor() {
     super('kachaka_api.GetAutoHomingEnabledResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'enabled', kind: 'scalar', T: 8 /* ScalarType.BOOL */ },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetAutoHomingEnabledResponse>,
   ): GetAutoHomingEnabledResponse {
-    const message = { enabled: false }
+    const message = { enabled: false };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetAutoHomingEnabledResponse>(this, message, value)
+      reflectionMergePartial<GetAutoHomingEnabledResponse>(
+        this,
+        message,
+        value,
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7617,10 +7633,10 @@ class GetAutoHomingEnabledResponse$Type extends MessageType<GetAutoHomingEnabled
     options: BinaryReadOptions,
     target?: GetAutoHomingEnabledResponse,
   ): GetAutoHomingEnabledResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -7628,31 +7644,31 @@ class GetAutoHomingEnabledResponse$Type extends MessageType<GetAutoHomingEnabled
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* bool enabled */ 2:
-          message.enabled = reader.bool()
-          break
+          message.enabled = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7666,28 +7682,28 @@ class GetAutoHomingEnabledResponse$Type extends MessageType<GetAutoHomingEnabled
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* bool enabled = 2; */
     if (message.enabled) {
-      writer.tag(2, WireType.Varint).bool(message.enabled)
+      writer.tag(2, WireType.Varint).bool(message.enabled);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetAutoHomingEnabledResponse
  */
 export const GetAutoHomingEnabledResponse =
-  new GetAutoHomingEnabledResponse$Type()
+  new GetAutoHomingEnabledResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetManualControlEnabledRequest$Type extends MessageType<SetManualControlEnabledRequest> {
   constructor() {
@@ -7699,25 +7715,25 @@ class SetManualControlEnabledRequest$Type extends MessageType<SetManualControlEn
         kind: 'scalar',
         T: 8 /* ScalarType.BOOL */,
       },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetManualControlEnabledRequest>,
   ): SetManualControlEnabledRequest {
-    const message = { enable: false, useShelfRegistration: false }
+    const message = { enable: false, useShelfRegistration: false };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<SetManualControlEnabledRequest>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7726,37 +7742,37 @@ class SetManualControlEnabledRequest$Type extends MessageType<SetManualControlEn
     options: BinaryReadOptions,
     target?: SetManualControlEnabledRequest,
   ): SetManualControlEnabledRequest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* bool enable */ 1:
-          message.enable = reader.bool()
-          break
+          message.enable = reader.bool();
+          break;
         case /* bool use_shelf_registration */ 2:
-          message.useShelfRegistration = reader.bool()
-          break
+          message.useShelfRegistration = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7766,52 +7782,52 @@ class SetManualControlEnabledRequest$Type extends MessageType<SetManualControlEn
   ): IBinaryWriter {
     /* bool enable = 1; */
     if (message.enable) {
-      writer.tag(1, WireType.Varint).bool(message.enable)
+      writer.tag(1, WireType.Varint).bool(message.enable);
     }
     /* bool use_shelf_registration = 2; */
     if (message.useShelfRegistration) {
-      writer.tag(2, WireType.Varint).bool(message.useShelfRegistration)
+      writer.tag(2, WireType.Varint).bool(message.useShelfRegistration);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetManualControlEnabledRequest
  */
 export const SetManualControlEnabledRequest =
-  new SetManualControlEnabledRequest$Type()
+  new SetManualControlEnabledRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetManualControlEnabledResponse$Type extends MessageType<SetManualControlEnabledResponse> {
   constructor() {
     super('kachaka_api.SetManualControlEnabledResponse', [
       { no: 1, name: 'result', kind: 'message', T: () => Result },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetManualControlEnabledResponse>,
   ): SetManualControlEnabledResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<SetManualControlEnabledResponse>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7820,10 +7836,10 @@ class SetManualControlEnabledResponse$Type extends MessageType<SetManualControlE
     options: BinaryReadOptions,
     target?: SetManualControlEnabledResponse,
   ): SetManualControlEnabledResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Result result */ 1:
           message.result = Result.internalBinaryRead(
@@ -7831,28 +7847,28 @@ class SetManualControlEnabledResponse$Type extends MessageType<SetManualControlE
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7866,49 +7882,49 @@ class SetManualControlEnabledResponse$Type extends MessageType<SetManualControlE
         message.result,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetManualControlEnabledResponse
  */
 export const SetManualControlEnabledResponse =
-  new SetManualControlEnabledResponse$Type()
+  new SetManualControlEnabledResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetManualControlEnabledResponse$Type extends MessageType<GetManualControlEnabledResponse> {
   constructor() {
     super('kachaka_api.GetManualControlEnabledResponse', [
       { no: 1, name: 'metadata', kind: 'message', T: () => Metadata },
       { no: 2, name: 'enabled', kind: 'scalar', T: 8 /* ScalarType.BOOL */ },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetManualControlEnabledResponse>,
   ): GetManualControlEnabledResponse {
-    const message = { enabled: false }
+    const message = { enabled: false };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
       reflectionMergePartial<GetManualControlEnabledResponse>(
         this,
         message,
         value,
-      )
+      );
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -7917,10 +7933,10 @@ class GetManualControlEnabledResponse$Type extends MessageType<GetManualControlE
     options: BinaryReadOptions,
     target?: GetManualControlEnabledResponse,
   ): GetManualControlEnabledResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -7928,31 +7944,31 @@ class GetManualControlEnabledResponse$Type extends MessageType<GetManualControlE
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* bool enabled */ 2:
-          message.enabled = reader.bool()
-          break
+          message.enabled = reader.bool();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -7966,49 +7982,49 @@ class GetManualControlEnabledResponse$Type extends MessageType<GetManualControlE
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* bool enabled = 2; */
     if (message.enabled) {
-      writer.tag(2, WireType.Varint).bool(message.enabled)
+      writer.tag(2, WireType.Varint).bool(message.enabled);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetManualControlEnabledResponse
  */
 export const GetManualControlEnabledResponse =
-  new GetManualControlEnabledResponse$Type()
+  new GetManualControlEnabledResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetRobotVelocityRequest$Type extends MessageType<SetRobotVelocityRequest> {
   constructor() {
     super('kachaka_api.SetRobotVelocityRequest', [
       { no: 1, name: 'linear', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
       { no: 2, name: 'angular', kind: 'scalar', T: 1 /* ScalarType.DOUBLE */ },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetRobotVelocityRequest>,
   ): SetRobotVelocityRequest {
-    const message = { linear: 0, angular: 0 }
+    const message = { linear: 0, angular: 0 };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<SetRobotVelocityRequest>(this, message, value)
+      reflectionMergePartial<SetRobotVelocityRequest>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -8017,37 +8033,37 @@ class SetRobotVelocityRequest$Type extends MessageType<SetRobotVelocityRequest> 
     options: BinaryReadOptions,
     target?: SetRobotVelocityRequest,
   ): SetRobotVelocityRequest {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* double linear */ 1:
-          message.linear = reader.double()
-          break
+          message.linear = reader.double();
+          break;
         case /* double angular */ 2:
-          message.angular = reader.double()
-          break
+          message.angular = reader.double();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -8057,47 +8073,47 @@ class SetRobotVelocityRequest$Type extends MessageType<SetRobotVelocityRequest> 
   ): IBinaryWriter {
     /* double linear = 1; */
     if (message.linear !== 0) {
-      writer.tag(1, WireType.Bit64).double(message.linear)
+      writer.tag(1, WireType.Bit64).double(message.linear);
     }
     /* double angular = 2; */
     if (message.angular !== 0) {
-      writer.tag(2, WireType.Bit64).double(message.angular)
+      writer.tag(2, WireType.Bit64).double(message.angular);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetRobotVelocityRequest
  */
-export const SetRobotVelocityRequest = new SetRobotVelocityRequest$Type()
+export const SetRobotVelocityRequest = new SetRobotVelocityRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SetRobotVelocityResponse$Type extends MessageType<SetRobotVelocityResponse> {
   constructor() {
     super('kachaka_api.SetRobotVelocityResponse', [
       { no: 1, name: 'result', kind: 'message', T: () => Result },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<SetRobotVelocityResponse>,
   ): SetRobotVelocityResponse {
-    const message = {}
+    const message = {};
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<SetRobotVelocityResponse>(this, message, value)
+      reflectionMergePartial<SetRobotVelocityResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -8106,10 +8122,10 @@ class SetRobotVelocityResponse$Type extends MessageType<SetRobotVelocityResponse
     options: BinaryReadOptions,
     target?: SetRobotVelocityResponse,
   ): SetRobotVelocityResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Result result */ 1:
           message.result = Result.internalBinaryRead(
@@ -8117,28 +8133,28 @@ class SetRobotVelocityResponse$Type extends MessageType<SetRobotVelocityResponse
             reader.uint32(),
             options,
             message.result,
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -8152,23 +8168,23 @@ class SetRobotVelocityResponse$Type extends MessageType<SetRobotVelocityResponse
         message.result,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.SetRobotVelocityResponse
  */
-export const SetRobotVelocityResponse = new SetRobotVelocityResponse$Type()
+export const SetRobotVelocityResponse = new SetRobotVelocityResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class History$Type extends MessageType<History> {
   constructor() {
@@ -8189,7 +8205,7 @@ class History$Type extends MessageType<History> {
         T: 3 /* ScalarType.INT64 */,
         L: 0 /* LongType.BIGINT */,
       },
-    ])
+    ]);
   }
 
   create(value?: PartialMessage<History>): History {
@@ -8198,15 +8214,15 @@ class History$Type extends MessageType<History> {
       success: false,
       errorCode: 0,
       commandExecutedTime: 0n,
-    }
+    };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<History>(this, message, value)
+      reflectionMergePartial<History>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -8215,51 +8231,51 @@ class History$Type extends MessageType<History> {
     options: BinaryReadOptions,
     target?: History,
   ): History {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* string id */ 1:
-          message.id = reader.string()
-          break
+          message.id = reader.string();
+          break;
         case /* kachaka_api.Command command */ 4:
           message.command = Command.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
             message.command,
-          )
-          break
+          );
+          break;
         case /* bool success */ 5:
-          message.success = reader.bool()
-          break
+          message.success = reader.bool();
+          break;
         case /* int32 error_code */ 6:
-          message.errorCode = reader.int32()
-          break
+          message.errorCode = reader.int32();
+          break;
         case /* int64 command_executed_time */ 7:
-          message.commandExecutedTime = reader.int64().toBigInt()
-          break
+          message.commandExecutedTime = reader.int64().toBigInt();
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -8269,7 +8285,7 @@ class History$Type extends MessageType<History> {
   ): IBinaryWriter {
     /* string id = 1; */
     if (message.id !== '') {
-      writer.tag(1, WireType.LengthDelimited).string(message.id)
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
     }
     /* kachaka_api.Command command = 4; */
     if (message.command) {
@@ -8277,35 +8293,35 @@ class History$Type extends MessageType<History> {
         message.command,
         writer.tag(4, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* bool success = 5; */
     if (message.success) {
-      writer.tag(5, WireType.Varint).bool(message.success)
+      writer.tag(5, WireType.Varint).bool(message.success);
     }
     /* int32 error_code = 6; */
     if (message.errorCode !== 0) {
-      writer.tag(6, WireType.Varint).int32(message.errorCode)
+      writer.tag(6, WireType.Varint).int32(message.errorCode);
     }
     /* int64 command_executed_time = 7; */
     if (message.commandExecutedTime !== 0n) {
-      writer.tag(7, WireType.Varint).int64(message.commandExecutedTime)
+      writer.tag(7, WireType.Varint).int64(message.commandExecutedTime);
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.History
  */
-export const History = new History$Type()
+export const History = new History$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
   constructor() {
@@ -8318,21 +8334,21 @@ class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
         repeat: 1 /* RepeatType.PACKED */,
         T: () => History,
       },
-    ])
+    ]);
   }
 
   create(
     value?: PartialMessage<GetHistoryListResponse>,
   ): GetHistoryListResponse {
-    const message = { histories: [] }
+    const message = { histories: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
-    })
+    });
     if (value !== undefined) {
-      reflectionMergePartial<GetHistoryListResponse>(this, message, value)
+      reflectionMergePartial<GetHistoryListResponse>(this, message, value);
     }
-    return message
+    return message;
   }
 
   internalBinaryRead(
@@ -8341,10 +8357,10 @@ class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
     options: BinaryReadOptions,
     target?: GetHistoryListResponse,
   ): GetHistoryListResponse {
-    const message = target ?? this.create()
-    const end = reader.pos + length
+    const message = target ?? this.create();
+    const end = reader.pos + length;
     while (reader.pos < end) {
-      const [fieldNo, wireType] = reader.tag()
+      const [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
         case /* kachaka_api.Metadata metadata */ 1:
           message.metadata = Metadata.internalBinaryRead(
@@ -8352,33 +8368,33 @@ class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
             reader.uint32(),
             options,
             message.metadata,
-          )
-          break
+          );
+          break;
         case /* repeated kachaka_api.History histories */ 2:
           message.histories.push(
             History.internalBinaryRead(reader, reader.uint32(), options),
-          )
-          break
+          );
+          break;
         default:
-          const u = options.readUnknownField
+          const u = options.readUnknownField;
           if (u === 'throw') {
             throw new globalThis.Error(
               `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            )
+            );
           }
-          const d = reader.skip(wireType)
+          const d = reader.skip(wireType);
           if (u !== false) {
-            ;(u === true ? UnknownFieldHandler.onRead : u)(
+            (u === true ? UnknownFieldHandler.onRead : u)(
               this.typeName,
               message,
               fieldNo,
               wireType,
               d,
-            )
+            );
           }
       }
     }
-    return message
+    return message;
   }
 
   internalBinaryWrite(
@@ -8392,7 +8408,7 @@ class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
         message.metadata,
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
     /* repeated kachaka_api.History histories = 2; */
     for (let i = 0; i < message.histories.length; i++) {
@@ -8400,23 +8416,23 @@ class GetHistoryListResponse$Type extends MessageType<GetHistoryListResponse> {
         message.histories[i],
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
-      ).join()
+      ).join();
     }
-    const u = options.writeUnknownFields
+    const u = options.writeUnknownFields;
     if (u !== false) {
-      ;(u == true ? UnknownFieldHandler.onWrite : u)(
+      (u == true ? UnknownFieldHandler.onWrite : u)(
         this.typeName,
         message,
         writer,
-      )
+      );
     }
-    return writer
+    return writer;
   }
 }
 /**
  * @generated MessageType for protobuf message kachaka_api.GetHistoryListResponse
  */
-export const GetHistoryListResponse = new GetHistoryListResponse$Type()
+export const GetHistoryListResponse = new GetHistoryListResponse$Type();
 /**
  * @generated ServiceType for protobuf service kachaka_api.KachakaApi
  */
@@ -8534,4 +8550,4 @@ export const KachakaApi = new ServiceType('kachaka_api.KachakaApi', [
     I: GetRequest,
     O: GetHistoryListResponse,
   },
-])
+]);

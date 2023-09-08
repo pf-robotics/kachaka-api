@@ -24,6 +24,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [
         'error',
         { varsIgnorePattern: '^_*' }
-    ]
+    ],
+    'semi': ['error', 'always'],
+    'semi-spacing': ['error', {'after': true, 'before': false}],
+    'semi-style': ['error', 'last'],
+    'no-extra-semi': 'error',
+    'no-unexpected-multiline': 'error',
+    'no-unreachable': 'error'
   },
 }

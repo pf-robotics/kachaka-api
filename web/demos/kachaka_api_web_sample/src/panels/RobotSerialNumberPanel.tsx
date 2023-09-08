@@ -1,17 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
-import { useRobotSerialNumber } from '../kachakaApi'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
+import { useRobotSerialNumber } from '../kachakaApi';
 
 export function RobotSerialNumberPanel({
   kachakaApiClient,
 }: {
-  kachakaApiClient: KachakaApiClient
+  kachakaApiClient: KachakaApiClient;
 }) {
-  const robotSerialNumber = useRobotSerialNumber(kachakaApiClient)
+  const robotSerialNumber = useRobotSerialNumber(kachakaApiClient);
 
   return (
     <Box sx={{ paddingTop: 2, textAlign: 'center' }}>
@@ -22,5 +22,5 @@ export function RobotSerialNumberPanel({
         color="primary"
       />
     </Box>
-  )
+  );
 }

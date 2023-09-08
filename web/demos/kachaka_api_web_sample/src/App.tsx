@@ -1,45 +1,45 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Fab from '@mui/material/Fab'
-import Grid from '@mui/material/Grid'
-import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import AddIcon from '@mui/icons-material/Add'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
 
-import { v4 as uuidV4 } from 'uuid'
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport'
+import { v4 as uuidV4 } from 'uuid';
+import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 
-import { KachakaApiClient } from './protos/kachaka-api.client'
-import { KachakaApiPanel } from './KachakaApiPanel'
-import { useLocations, useShelves } from './kachakaApi'
+import { KachakaApiClient } from './protos/kachaka-api.client';
+import { KachakaApiPanel } from './KachakaApiPanel';
+import { useLocations, useShelves } from './kachakaApi';
 
-const defaultTheme = createTheme()
+const defaultTheme = createTheme();
 
 function App(): JSX.Element {
   const kachakaApiClient = new KachakaApiClient(
     new GrpcWebFetchTransport({
       baseUrl: 'http://localhost:50000',
     }),
-  )
-  const locations = useLocations(kachakaApiClient)
-  const shelves = useShelves(kachakaApiClient)
+  );
+  const locations = useLocations(kachakaApiClient);
+  const shelves = useShelves(kachakaApiClient);
 
-  const [panelIds, setPanelIds] = useState<string[]>([uuidV4()])
+  const [panelIds, setPanelIds] = useState<string[]>([uuidV4()]);
 
   const handleAddPanel = useCallback(() => {
-    setPanelIds([...panelIds, uuidV4()])
-  }, [panelIds])
+    setPanelIds([...panelIds, uuidV4()]);
+  }, [panelIds]);
   const handleClosePanel = useCallback(
     (targetPanelId: string) => {
-      setPanelIds(panelIds.filter((panelId) => panelId !== targetPanelId))
+      setPanelIds(panelIds.filter((panelId) => panelId !== targetPanelId));
     },
     [panelIds],
-  )
+  );
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -69,7 +69,7 @@ function App(): JSX.Element {
                   key={panelId}
                   kachakaApiClient={kachakaApiClient}
                   handleClose={() => {
-                    handleClosePanel(panelId)
+                    handleClosePanel(panelId);
                   }}
                   locations={locations}
                   shelves={shelves}
@@ -85,7 +85,7 @@ function App(): JSX.Element {
         </Box>
       </Box>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

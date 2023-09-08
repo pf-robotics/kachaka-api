@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import Paper from '@mui/material/Paper'
+import Paper from '@mui/material/Paper';
 import {
   LinearProgress,
   Table,
@@ -9,36 +9,36 @@ import {
   TableContainer,
   TableRow,
   Typography,
-} from '@mui/material'
+} from '@mui/material';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
 import {
   type Command,
   type Location,
   type Shelf,
   CommandState,
-} from '../protos/kachaka-api'
-import { useCommandState, useLastCommandResult } from '../kachakaApi'
+} from '../protos/kachaka-api';
+import { useCommandState, useLastCommandResult } from '../kachakaApi';
 
 function resolveLocation(
   locations: Location[] | undefined,
   locationId: string,
 ) {
   if (!locations) {
-    return locationId
+    return locationId;
   }
   const targetLocation = locations.find(
     (location) => location.id === locationId,
-  )
-  return targetLocation ? targetLocation.name : locationId
+  );
+  return targetLocation ? targetLocation.name : locationId;
 }
 
 function resolveShelf(shelves: Shelf[] | undefined, shelfId: string) {
   if (!shelves) {
-    return shelfId
+    return shelfId;
   }
-  const targetShelf = shelves.find((shelf) => shelf.id === shelfId)
-  return targetShelf ? targetShelf.name : shelfId
+  const targetShelf = shelves.find((shelf) => shelf.id === shelfId);
+  return targetShelf ? targetShelf.name : shelfId;
 }
 
 function CommandDescriptionRows({
@@ -46,9 +46,9 @@ function CommandDescriptionRows({
   locations,
   shelves,
 }: {
-  command: Command
-  locations: Location[] | undefined
-  shelves: Shelf[] | undefined
+  command: Command;
+  locations: Location[] | undefined;
+  shelves: Shelf[] | undefined;
 }) {
   switch (command.command.oneofKind) {
     case 'moveShelfCommand':
@@ -73,7 +73,7 @@ function CommandDescriptionRows({
             </TableCell>
           </TableRow>
         </>
-      )
+      );
     case 'returnShelfCommand':
       return (
         <>
@@ -87,9 +87,9 @@ function CommandDescriptionRows({
             </TableCell>
           </TableRow>
         </>
-      )
+      );
     case 'undockShelfCommand':
-      return <></>
+      return <></>;
     case 'moveToLocationCommand':
       return (
         <>
@@ -103,11 +103,11 @@ function CommandDescriptionRows({
             </TableCell>
           </TableRow>
         </>
-      )
+      );
     case 'returnHomeCommand':
-      return <></>
+      return <></>;
     case 'dockShelfCommand':
-      return <></>
+      return <></>;
     case 'speakCommand':
       return (
         <>
@@ -116,7 +116,7 @@ function CommandDescriptionRows({
             <TableCell>{command.command.speakCommand.text}</TableCell>
           </TableRow>
         </>
-      )
+      );
     case 'moveToPoseCommand':
       return (
         <>
@@ -131,7 +131,7 @@ function CommandDescriptionRows({
             </TableCell>
           </TableRow>
         </>
-      )
+      );
   }
 }
 
@@ -140,9 +140,9 @@ function CommandDescriptionTable({
   locations,
   shelves,
 }: {
-  command: Command
-  locations: Location[] | undefined
-  shelves: Shelf[] | undefined
+  command: Command;
+  locations: Location[] | undefined;
+  shelves: Shelf[] | undefined;
 }) {
   return (
     <TableContainer>
@@ -160,7 +160,7 @@ function CommandDescriptionTable({
         </TableBody>
       </Table>
     </TableContainer>
-  )
+  );
 }
 
 export function CommandStatePanel({
@@ -168,13 +168,13 @@ export function CommandStatePanel({
   locations,
   shelves,
 }: {
-  kachakaApiClient: KachakaApiClient
-  locations: Location[] | undefined
-  shelves: Shelf[] | undefined
+  kachakaApiClient: KachakaApiClient;
+  locations: Location[] | undefined;
+  shelves: Shelf[] | undefined;
 }) {
-  const [state, currentCommand] = useCommandState(kachakaApiClient)
+  const [state, currentCommand] = useCommandState(kachakaApiClient);
   const [_lastCommandResult, lastCommand] =
-    useLastCommandResult(kachakaApiClient)
+    useLastCommandResult(kachakaApiClient);
 
   return (
     <Paper
@@ -207,5 +207,5 @@ export function CommandStatePanel({
         <Typography>no command information</Typography>
       )}
     </Paper>
-  )
+  );
 }

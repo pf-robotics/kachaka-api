@@ -1,38 +1,38 @@
-import React from 'react'
+import React from 'react';
 
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import { type KachakaApiClient } from '../protos/kachaka-api.client'
+import { type KachakaApiClient } from '../protos/kachaka-api.client';
 import {
   useManualControlEnabled,
   useSetManualControlEnabled,
   useSetRobotVelocity,
-} from '../kachakaApi'
+} from '../kachakaApi';
 
 export function ManualControlPanel({
   kachakaApiClient,
 }: {
-  kachakaApiClient: KachakaApiClient
+  kachakaApiClient: KachakaApiClient;
 }) {
-  const manualControlEnabled = useManualControlEnabled(kachakaApiClient)
-  const setManualControlEnabled = useSetManualControlEnabled(kachakaApiClient)
-  const setRobotVelocity = useSetRobotVelocity(kachakaApiClient)
+  const manualControlEnabled = useManualControlEnabled(kachakaApiClient);
+  const setManualControlEnabled = useSetManualControlEnabled(kachakaApiClient);
+  const setRobotVelocity = useSetRobotVelocity(kachakaApiClient);
 
   function VelocityCommandButton({
     icon,
     v,
     omega,
   }: {
-    icon: JSX.Element
-    v: number
-    omega: number
+    icon: JSX.Element;
+    v: number;
+    omega: number;
   }) {
     return (
       <Button
@@ -40,12 +40,12 @@ export function ManualControlPanel({
         disabled={!manualControlEnabled}
         sx={{ height: '100%' }}
         onClick={() => {
-          setRobotVelocity(v, omega)
+          setRobotVelocity(v, omega);
         }}
       >
         {icon}
       </Button>
-    )
+    );
   }
 
   return (
@@ -64,7 +64,7 @@ export function ManualControlPanel({
         disabled={manualControlEnabled}
         sx={{ mr: 1 }}
         onClick={() => {
-          setManualControlEnabled(true)
+          setManualControlEnabled(true);
         }}
       >
         ON
@@ -73,7 +73,7 @@ export function ManualControlPanel({
         variant="outlined"
         disabled={!manualControlEnabled}
         onClick={() => {
-          setManualControlEnabled(false)
+          setManualControlEnabled(false);
         }}
       >
         OFF
@@ -124,5 +124,5 @@ export function ManualControlPanel({
         </Grid>
       </Grid>
     </Box>
-  )
+  );
 }

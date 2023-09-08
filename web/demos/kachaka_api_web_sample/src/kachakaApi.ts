@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react';
 
-import { type UnaryCall } from '@protobuf-ts/runtime-rpc'
+import { type UnaryCall } from '@protobuf-ts/runtime-rpc';
 
-import { type KachakaApiClient } from './protos/kachaka-api.client'
+import { type KachakaApiClient } from './protos/kachaka-api.client';
 // eslint-disable-next-line import/no-duplicates
-import { type GetRequest, type Metadata } from './protos/kachaka-api'
+import { type GetRequest, type Metadata } from './protos/kachaka-api';
 // eslint-disable-next-line import/no-duplicates
-import type * as pb from './protos/kachaka-api'
+import type * as pb from './protos/kachaka-api';
 
 function buildGetRequest(cursor: bigint): GetRequest {
   return {
     metadata: {
       cursor,
     },
-  }
+  };
 }
 
 interface GetKachakaStateResponse {
-  metadata?: Metadata
+  metadata?: Metadata;
 }
 
 function useKachakaState<
@@ -28,28 +28,28 @@ function useKachakaState<
   rpc: (request: GetRequest) => UnaryCall<GetRequest, ResponseType>,
   filter: (response: ResponseType) => StateType | undefined,
 ): StateType | undefined {
-  const [state, setState] = useState<StateType | undefined>(undefined)
-  const [cursor, setCursor] = useState(BigInt(0))
+  const [state, setState] = useState<StateType | undefined>(undefined);
+  const [cursor, setCursor] = useState(BigInt(0));
 
   useEffect(() => {
     const f = async () => {
       try {
         const response = (await rpc(buildGetRequest(cursor)).response) as
           | ResponseType
-          | undefined
+          | undefined;
         if (!response) {
-          return
+          return;
         }
-        setState(filter(response))
-        setCursor(response.metadata!.cursor)
+        setState(filter(response));
+        setCursor(response.metadata!.cursor);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
-    f()
-  }, [client, cursor, rpc, filter])
+    };
+    f();
+  }, [client, cursor, rpc, filter]);
 
-  return state
+  return state;
 }
 
 export function useRobotSerialNumber(client: KachakaApiClient) {
@@ -57,7 +57,7 @@ export function useRobotSerialNumber(client: KachakaApiClient) {
     client,
     (request) => client.getRobotSerialNumber(request),
     (response) => response.serialNumber,
-  )
+  );
 }
 
 export function useRobotVersion(client: KachakaApiClient) {
@@ -65,7 +65,7 @@ export function useRobotVersion(client: KachakaApiClient) {
     client,
     (request) => client.getRobotVersion(request),
     (response) => response.version,
-  )
+  );
 }
 
 export function useRobotPose(client: KachakaApiClient) {
@@ -73,10 +73,10 @@ export function useRobotPose(client: KachakaApiClient) {
     client,
     (request) => client.getRobotPose(request),
     (response) => {
-      const pose = response.pose
-      return pose && [pose.x, pose.y, pose.theta]
+      const pose = response.pose;
+      return pose && [pose.x, pose.y, pose.theta];
     },
-  )
+  );
 }
 
 export function useMap(client: KachakaApiClient) {
@@ -84,7 +84,7 @@ export function useMap(client: KachakaApiClient) {
     client,
     (request) => client.getPngMap(request),
     (response) => response.map,
-  )
+  );
 }
 
 export function useObjectDetection(client: KachakaApiClient) {
@@ -92,7 +92,7 @@ export function useObjectDetection(client: KachakaApiClient) {
     client,
     (request) => client.getObjectDetection(request),
     (response) => response.objects,
-  )
+  );
 }
 
 export function useImu(client: KachakaApiClient) {
@@ -100,7 +100,7 @@ export function useImu(client: KachakaApiClient) {
     client,
     (request) => client.getRosImu(request),
     (response) => response.imu,
-  )
+  );
 }
 
 export function useOdometry(client: KachakaApiClient) {
@@ -108,7 +108,7 @@ export function useOdometry(client: KachakaApiClient) {
     client,
     (request) => client.getRosOdometry(request),
     (response) => response.odometry,
-  )
+  );
 }
 
 export function useLaserScan(client: KachakaApiClient) {
@@ -116,7 +116,7 @@ export function useLaserScan(client: KachakaApiClient) {
     client,
     (request) => client.getRosLaserScan(request),
     (response) => response.scan,
-  )
+  );
 }
 
 export function useFrontCameraInfo(client: KachakaApiClient) {
@@ -127,7 +127,7 @@ export function useFrontCameraInfo(client: KachakaApiClient) {
     client,
     (request) => client.getFrontCameraRosCameraInfo(request),
     (response) => response.cameraInfo,
-  )
+  );
 }
 
 export function useFrontCameraImage(client: KachakaApiClient) {
@@ -135,7 +135,7 @@ export function useFrontCameraImage(client: KachakaApiClient) {
     client,
     (request) => client.getFrontCameraRosImage(request),
     (response) => response.image,
-  )
+  );
 }
 
 export function useStartCommand(
@@ -156,20 +156,20 @@ export function useStartCommand(
             cancelAll,
             title,
             ttsOnSuccess: ttsOnSuccess ?? '',
-          }).response
-          const result = response?.result
+          }).response;
+          const result = response?.result;
           if (resultCallcack && result) {
-            resultCallcack(result)
+            resultCallcack(result);
           }
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
-      }
-      f()
+      };
+      f();
     },
     [client, resultCallcack],
-  )
-  return callback
+  );
+  return callback;
 }
 
 export function useCancelCommand(
@@ -179,18 +179,18 @@ export function useCancelCommand(
   const callback = useCallback(() => {
     const f = async () => {
       try {
-        const response = await client.cancelCommand({}).response
-        const result = response?.result
+        const response = await client.cancelCommand({}).response;
+        const result = response?.result;
         if (resultCallcack && result) {
-          resultCallcack(result)
+          resultCallcack(result);
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
-    f()
-  }, [client, resultCallcack])
-  return callback
+    };
+    f();
+  }, [client, resultCallcack]);
+  return callback;
 }
 
 export function useCommandState(client: KachakaApiClient) {
@@ -203,7 +203,7 @@ export function useCommandState(client: KachakaApiClient) {
       (request) => client.getCommandState(request),
       (response) => [response.state, response.command],
     ) ?? [undefined, undefined]
-  )
+  );
 }
 
 export function useLastCommandResult(client: KachakaApiClient) {
@@ -213,7 +213,7 @@ export function useLastCommandResult(client: KachakaApiClient) {
       (request) => client.getLastCommandResult(request),
       (response) => [response.result, response.command],
     ) ?? [undefined, undefined]
-  )
+  );
 }
 
 export function useLocations(client: KachakaApiClient) {
@@ -221,7 +221,7 @@ export function useLocations(client: KachakaApiClient) {
     client,
     (request) => client.getLocations(request),
     (response) => response.locations,
-  )
+  );
 }
 
 export function useShelves(client: KachakaApiClient) {
@@ -229,7 +229,7 @@ export function useShelves(client: KachakaApiClient) {
     client,
     (request) => client.getShelves(request),
     (response) => response.shelves,
-  )
+  );
 }
 
 export function useSetAutoHomingEnabled(
@@ -241,20 +241,20 @@ export function useSetAutoHomingEnabled(
       const f = async () => {
         try {
           const response = await client.setAutoHomingEnabled({ enable })
-            .response
-          const result = response?.result
+            .response;
+          const result = response?.result;
           if (resultCallcack && result) {
-            resultCallcack(result)
+            resultCallcack(result);
           }
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
-      }
-      f()
+      };
+      f();
     },
     [client, resultCallcack],
-  )
-  return callback
+  );
+  return callback;
 }
 
 export function useAutoHomingEnabled(client: KachakaApiClient) {
@@ -262,7 +262,7 @@ export function useAutoHomingEnabled(client: KachakaApiClient) {
     client,
     (request) => client.getAutoHomingEnabled(request),
     (response) => response.enabled,
-  )
+  );
 }
 
 export function useSetManualControlEnabled(
@@ -276,20 +276,20 @@ export function useSetManualControlEnabled(
           const response = await client.setManualControlEnabled({
             enable,
             useShelfRegistration: false,
-          }).response
-          const result = response?.result
+          }).response;
+          const result = response?.result;
           if (resultCallcack && result) {
-            resultCallcack(result)
+            resultCallcack(result);
           }
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
-      }
-      f()
+      };
+      f();
     },
     [client, resultCallcack],
-  )
-  return callback
+  );
+  return callback;
 }
 
 export function useManualControlEnabled(client: KachakaApiClient) {
@@ -297,7 +297,7 @@ export function useManualControlEnabled(client: KachakaApiClient) {
     client,
     (request) => client.getManualControlEnabled(request),
     (response) => response.enabled,
-  )
+  );
 }
 
 export function useSetRobotVelocity(
@@ -311,20 +311,20 @@ export function useSetRobotVelocity(
           const response = await client.setRobotVelocity({
             linear: v,
             angular: omega,
-          }).response
-          const result = response?.result
+          }).response;
+          const result = response?.result;
           if (resultCallcack && result) {
-            resultCallcack(result)
+            resultCallcack(result);
           }
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
-      }
-      f()
+      };
+      f();
     },
     [client, resultCallcack],
-  )
-  return callback
+  );
+  return callback;
 }
 
 export function useHistoryList(client: KachakaApiClient) {
@@ -332,5 +332,5 @@ export function useHistoryList(client: KachakaApiClient) {
     client,
     (request) => client.getHistoryList(request),
     (response) => response.histories,
-  )
+  );
 }
