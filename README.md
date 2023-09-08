@@ -37,7 +37,7 @@
   - [Playgroundのリソース制限](#playgroundのリソース制限)
 - [Web サンプル](#web)
   - [プロキシサーバ](#プロキシサーバ)
-  - [Webアプリサンプル](#Webアプリサンプル)
+  - [Webサンプル(React + TypeScript)](#webサンプル-react--typescript)
 
 
 ## 用語
@@ -612,7 +612,7 @@ $ ./tools/web_proxy/start_proxy_remote.sh <カチャカのIPアドレス>
 * プロキシサーバーは、webアプリからアクセスでき、またカチャカにアクセスできるネットワーク接続を備えた場所であればどこで起動しても構いません。
 * このスクリプトでは、`localhost:50000`にプロキシサーバを立てる例を示しています。
 
-### Webサンプル
+### Webサンプル (React + TypeScript)
 
 ![](docs/images/web_sample_capture.png)
 
