@@ -627,6 +627,8 @@ $ npm run dev
 
 * npmの環境がない方は、適宜インストール作業を行って下さい。
 * 以下にインストール方法の例を示します。
+  * aptでインストールされるnpmは古い可能性があります。nで最新のstableをインストールすることを推奨します。
+  * サンプルは nodejs v18.17.1、npm 9.6.7 で動作を確認しています。
 ```
 $ sudo apt install nodejs npm
 $ sudo npm install -g n
