@@ -195,6 +195,13 @@ message RosImage {
   bytes data = 7;
 }
 
+message RosTransformStamped {
+  RosHeader header = 1;
+  string child_frame_id = 2;
+  Vector3 translation = 3;
+  Quaternion rotation = 4;
+}
+
 message RosCompressedImage {
   RosHeader header = 1;
   string format = 2;
@@ -409,6 +416,15 @@ message SetRobotVelocityResponse {
   Result result = 1;
 }
 
+message GetStaticTransformResponse {
+  Metadata metadata = 1;
+  repeated RosTransformStamped transforms = 2;
+}
+
+message GetDynamicTransformResponse {
+  repeated RosTransformStamped transforms = 1;
+}
+
 // History
 message History {
   string id = 1;
@@ -448,4 +464,6 @@ service KachakaApi {
   rpc GetManualControlEnabled (GetRequest) returns (GetManualControlEnabledResponse);
   rpc SetRobotVelocity (SetRobotVelocityRequest) returns (SetRobotVelocityResponse);
   rpc GetHistoryList (GetRequest) returns (GetHistoryListResponse);
+  rpc GetStaticTransform (GetRequest) returns (GetStaticTransformResponse);
+  rpc GetDynamicTransform (EmptyRequest) returns (stream GetDynamicTransformResponse);
 }
