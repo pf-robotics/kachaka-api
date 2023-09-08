@@ -56,9 +56,7 @@ export function useRobotSerialNumber(client: KachakaApiClient) {
   return useKachakaState<pb.GetRobotSerialNumberResponse, string>(
     client,
     (request) => client.getRobotSerialNumber(request),
-    (response) => {
-      return response.serialNumber
-    },
+    (response) => response.serialNumber,
   )
 }
 
