@@ -32,6 +32,7 @@ ament_auto_add_library(
   gen-src/kachaka-api.pb.cc
   src/component/auto_homing_component.cpp
   src/component/camera_component.cpp
+  src/component/dynamic_tf_component.cpp
   src/component/goal_pose_component.cpp
   src/component/imu_component.cpp
   src/component/kachaka_command_component.cpp
@@ -42,9 +43,10 @@ ament_auto_add_library(
   src/component/object_detection_component.cpp
   src/component/odometry_component.cpp
   src/component/robot_info_component.cpp
-  src/component/tf_component.cpp
+  src/component/static_tf_component.cpp
   src/converter/kachaka_command.cpp
   src/converter/ros_header.cpp
+  src/dynamic_tf_bridge.cpp
   src/stub_util.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${GRPC_LIBRARIES} ${OpenCV_LIBS})
@@ -122,13 +124,6 @@ rclcpp_components_register_node(
 rclcpp_components_register_node(
   ${PROJECT_NAME}
   PLUGIN
-  "kachaka::grpc_ros2_bridge::TfComponent"
-  EXECUTABLE
-  tf)
-
-rclcpp_components_register_node(
-  ${PROJECT_NAME}
-  PLUGIN
   "kachaka::grpc_ros2_bridge::ObjectDetectionComponent"
   EXECUTABLE
   object_detection)
@@ -139,6 +134,20 @@ rclcpp_components_register_node(
   "kachaka::grpc_ros2_bridge::OdometryComponent"
   EXECUTABLE
   odometry)
+
+rclcpp_components_register_node(
+  ${PROJECT_NAME}
+  PLUGIN
+  "kachaka::grpc_ros2_bridge::StaticTfComponent"
+  EXECUTABLE
+  static_tf)
+
+rclcpp_components_register_node(
+  ${PROJECT_NAME}
+  PLUGIN
+  "kachaka::grpc_ros2_bridge::DynamicTfComponent"
+  EXECUTABLE
+  dynamic_tf)
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
