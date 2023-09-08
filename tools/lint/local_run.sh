@@ -31,6 +31,8 @@ if [[ "$FORMAT" -eq 1 ]]; then
     nbqa isort "${ipynb_files[@]}"
 else
     ./tools/update_kachaka_api_base.py "${TMP_DIR}"/base.py
+    black -l 80 "${TMP_DIR}"/base.py
+    isort "${TMP_DIR}"/base.py
     diff -u python/kachaka_api/base.py "${TMP_DIR}"/base.py || {
         echo
         echo Failed to check kachaka_api/base.py
