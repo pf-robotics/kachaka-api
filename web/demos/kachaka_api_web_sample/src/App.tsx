@@ -21,25 +21,24 @@ import { useLocations, useShelves } from './kachakaApi';
 const defaultTheme = createTheme();
 
 function App(): JSX.Element {
-  const kachakaApiClient = new KachakaApiClient(
-    new GrpcWebFetchTransport({
-      baseUrl: 'http://localhost:50000',
-    }),
+  const [kachakaApiClient] = useState(
+    new KachakaApiClient(
+      new GrpcWebFetchTransport({
+        baseUrl: 'http://localhost:50000',
+      }),
+    ),
   );
   const locations = useLocations(kachakaApiClient);
   const shelves = useShelves(kachakaApiClient);
 
-  const [panelIds, setPanelIds] = useState<string[]>([uuidV4()]);
+  const [panelIds, setPanelIds] = useState<string[]>(() => [uuidV4()]);
 
   const handleAddPanel = useCallback(() => {
-    setPanelIds([...panelIds, uuidV4()]);
-  }, [panelIds]);
-  const handleClosePanel = useCallback(
-    (targetPanelId: string) => {
-      setPanelIds(panelIds.filter((panelId) => panelId !== targetPanelId));
-    },
-    [panelIds],
-  );
+    setPanelIds((prev) => [...prev, uuidV4()]);
+  }, []);
+  const handleClosePanel = useCallback((targetPanelId: string) => {
+    setPanelIds((prev) => prev.filter((panelId) => panelId !== targetPanelId));
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
