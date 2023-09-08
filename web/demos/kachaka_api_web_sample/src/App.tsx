@@ -78,9 +78,7 @@ function App(): JSX.Element {
               <Grid item xs={12} md={12} lg={12} sx={{ p: 4 }}>
                 <Fab
                   color="primary"
-                  onClick={() => {
-                    handleAddPanel()
-                  }}
+                  onClick={handleAddPanel}
                 >
                   <AddIcon />
                 </Fab>
