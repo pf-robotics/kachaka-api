@@ -79,22 +79,20 @@ function LocationSelect({
     }
   };
   return (
-    <>
-      <Select
-        variant="outlined"
-        value={locationId}
-        onChange={(event) => {
-          handleChange(event);
-        }}
-        fullWidth
-      >
-        {locations?.map((location) => (
-          <MenuItem key={location.id} value={location.id}>
-            {location.name} ({location.id})
-          </MenuItem>
-        ))}
-      </Select>
-    </>
+    <Select
+      variant="outlined"
+      value={locationId}
+      onChange={(event) => {
+        handleChange(event);
+      }}
+      fullWidth
+    >
+      {locations?.map((location) => (
+        <MenuItem key={location.id} value={location.id}>
+          {location.name} ({location.id})
+        </MenuItem>
+      ))}
+    </Select>
   );
 }
 
@@ -115,22 +113,20 @@ function ShelfSelect({
     }
   };
   return (
-    <>
-      <Select
-        variant="outlined"
-        value={shelfId}
-        onChange={(event) => {
-          handleChange(event);
-        }}
-        fullWidth
-      >
-        {shelves?.map((shelf) => (
-          <MenuItem key={shelf.id} value={shelf.id}>
-            {shelf.name} ({shelf.id})
-          </MenuItem>
-        ))}
-      </Select>
-    </>
+    <Select
+      variant="outlined"
+      value={shelfId}
+      onChange={(event) => {
+        handleChange(event);
+      }}
+      fullWidth
+    >
+      {shelves?.map((shelf) => (
+        <MenuItem key={shelf.id} value={shelf.id}>
+          {shelf.name} ({shelf.id})
+        </MenuItem>
+      ))}
+    </Select>
   );
 }
 
