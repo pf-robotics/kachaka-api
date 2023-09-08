@@ -64,9 +64,7 @@ export function useRobotVersion(client: KachakaApiClient) {
   return useKachakaState<pb.GetRobotVersionResponse, string>(
     client,
     (request) => client.getRobotVersion(request),
-    (response) => {
-      return response.version
-    },
+    (response) => response.version,
   )
 }
 
