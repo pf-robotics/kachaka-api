@@ -182,6 +182,14 @@ Verify password: <新しいパスワード>
 
 ![jupyter-clone-sample](docs/images/jupyter-clone-sample.png)
 
+### 依存ライブラリのインストール
+
+ダウンロード後初回の一回だけ、下記の手順を実行する必要があります。
+
+* 左側のファイル一覧からkachaka-api → python → demosフォルダを選択します。
+* install_libraries.ipynbをダブルクリックすると、右側にソースコードが表示されます。
+* 上部メニューの「▶▶」ボタンを押して実行します。
+
 ### サンプルコードの実行方法
 
 * 左側のファイル一覧からkachaka-api → python → demosフォルダを選択します。
