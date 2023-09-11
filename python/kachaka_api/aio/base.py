@@ -30,7 +30,7 @@ def kachaka_command(func):
         cancel_all=True,
         tts_on_success="",
         title="",
-        wait_for_completion=False,
+        wait_for_completion=True,
         **kwargs,
     ) -> pb2.Result:
         request = pb2.StartCommandRequest(
