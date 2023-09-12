@@ -13,36 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from functools import wraps
-
 import grpc
 from google._upb._message import RepeatedCompositeContainer
 
 from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
 from .util.layout import ShelfLocationResolver
-
-
-def kachaka_command(func):
-    @wraps(func)
-    def start_command(
-        self,
-        *args,
-        cancel_all=True,
-        tts_on_success="",
-        title="",
-        **kwargs,
-    ) -> pb2.Result:
-        request = pb2.StartCommandRequest(
-            command=func(self, *args, **kwargs),
-            cancel_all=cancel_all,
-            tts_on_success=tts_on_success,
-            title=title,
-        )
-        response: pb2.StartCommandResponse = self.stub.StartCommand(request)
-        return response.result
-
-    return start_command
 
 
 class KachakaApiClientBase:
@@ -123,61 +99,160 @@ class KachakaApiClientBase:
         )
         return response.image
 
-    @kachaka_command
-    def start_command(self, command: pb2.Command) -> pb2.Command:
-        return command
+    def start_command(
+        self,
+        command: pb2.Command,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        request = pb2.StartCommandRequest(
+            command=command,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+        response: pb2.StartCommandResponse = self.stub.StartCommand(request)
+        return response.result
 
-    @kachaka_command
     def move_shelf(
-        self, shelf_name_or_id: str, location_name_or_id: str
-    ) -> pb2.Command:
+        self,
+        shelf_name_or_id: str,
+        location_name_or_id: str,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
-        return pb2.Command(
-            move_shelf_command=pb2.MoveShelfCommand(
-                target_shelf_id=shelf_id,
-                destination_location_id=location_id,
-            )
+        return self.start_command(
+            pb2.Command(
+                move_shelf_command=pb2.MoveShelfCommand(
+                    target_shelf_id=shelf_id,
+                    destination_location_id=location_id,
+                )
+            ),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
         )
 
-    @kachaka_command
-    def return_shelf(self, shelf_name_or_id: str = "") -> pb2.Command:
+    def return_shelf(
+        self,
+        shelf_name_or_id: str = "",
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
         shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
-        return pb2.Command(
-            return_shelf_command=pb2.ReturnShelfCommand(
-                target_shelf_id=shelf_id
-            )
+        return self.start_command(
+            pb2.Command(
+                return_shelf_command=pb2.ReturnShelfCommand(
+                    target_shelf_id=shelf_id
+                )
+            ),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
         )
 
-    @kachaka_command
-    def undock_shelf(self) -> pb2.Command:
-        return pb2.Command(undock_shelf_command=pb2.UndockShelfCommand())
+    def undock_shelf(
+        self,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(undock_shelf_command=pb2.UndockShelfCommand()),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
 
-    @kachaka_command
-    def move_to_location(self, location_name_or_id: str) -> pb2.Command:
+    def move_to_location(
+        self,
+        location_name_or_id: str,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
         location_id = self.resolver.get_location_id_by_name(location_name_or_id)
-        return pb2.Command(
-            move_to_location_command=pb2.MoveToLocationCommand(
-                target_location_id=location_id
-            )
+        return self.start_command(
+            pb2.Command(
+                move_to_location_command=pb2.MoveToLocationCommand(
+                    target_location_id=location_id
+                )
+            ),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
         )
 
-    @kachaka_command
-    def return_home(self) -> pb2.Command:
-        return pb2.Command(return_home_command=pb2.ReturnHomeCommand())
+    def return_home(
+        self,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(return_home_command=pb2.ReturnHomeCommand()),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
 
-    @kachaka_command
-    def dock_shelf(self) -> pb2.Command:
-        return pb2.Command(dock_shelf_command=pb2.DockShelfCommand())
+    def dock_shelf(
+        self,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(dock_shelf_command=pb2.DockShelfCommand()),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
 
-    @kachaka_command
-    def speak(self, text: str) -> pb2.Command:
-        return pb2.Command(speak_command=pb2.SpeakCommand(text=text))
+    def speak(
+        self,
+        text: str,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(speak_command=pb2.SpeakCommand(text=text)),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
 
-    @kachaka_command
-    def move_to_pose(self, x: float, y: float, yaw: float) -> pb2.Command:
-        return pb2.Command(
-            move_to_pose_command=pb2.MoveToPoseCommand(x=x, y=y, yaw=yaw)
+    def move_to_pose(
+        self,
+        x: float,
+        y: float,
+        yaw: float,
+        *,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(
+                move_to_pose_command=pb2.MoveToPoseCommand(x=x, y=y, yaw=yaw)
+            ),
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
         )
 
     def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
