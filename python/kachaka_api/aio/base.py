@@ -118,7 +118,7 @@ class KachakaApiClientBase:
         response: pb2.StartCommandResponse = await self.stub.StartCommand(
             request
         )
-        if not wait_for_completion:
+        if not response.result.success or not wait_for_completion:
             return response.result
         metadata = pb2.Metadata(cursor=0)
         while True:
