@@ -114,20 +114,27 @@ class KachakaApiClientBase:
             tts_on_success=tts_on_success,
             title=title,
         )
+        # Get the cursor position before start_command
+        command_state_metadata = pb2.Metadata(cursor=0)
+        command_state_metadata.cursor = (
+            self.stub.GetCommandState(
+                pb2.GetRequest(metadata=command_state_metadata)
+            )
+        ).metadata.cursor
         response: pb2.StartCommandResponse = self.stub.StartCommand(request)
         if not response.result.success or not wait_for_completion:
             return response.result
-        metadata = pb2.Metadata(cursor=0)
-        metadata.cursor = (
-            self.stub.GetCommandState(pb2.GetRequest(metadata=metadata))
-        ).metadata.cursor
         while True:
             command_state_response: pb2.GetCommandStateResponse = (
-                self.stub.GetCommandState(pb2.GetRequest(metadata=metadata))
+                self.stub.GetCommandState(
+                    pb2.GetRequest(metadata=command_state_metadata)
+                )
             )
             if command_state_response.state == pb2.COMMAND_STATE_PENDING:
                 break
-            metadata.cursor = command_state_response.metadata.cursor
+            command_state_metadata.cursor = (
+                command_state_response.metadata.cursor
+            )
         return (self.get_last_command_result())[0]
 
     def move_shelf(
