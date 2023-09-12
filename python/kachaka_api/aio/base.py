@@ -10,8 +10,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from functools import wraps
 
 import grpc
@@ -25,12 +23,11 @@ from ..util.layout import ShelfLocationResolver
 def kachaka_command(func):
     @wraps(func)
     async def start_command(
-        self: KachakaApiClientBase,
+        self,
         *args,
         cancel_all=True,
         tts_on_success="",
         title="",
-        wait_for_completion=False,
         **kwargs,
     ) -> pb2.Result:
         request = pb2.StartCommandRequest(
@@ -42,22 +39,7 @@ def kachaka_command(func):
         response: pb2.StartCommandResponse = await self.stub.StartCommand(
             request
         )
-        if not wait_for_completion:
-            return response.result
-        metadata = pb2.Metadata(cursor=0)
-        while True:
-            history_list_response: pb2.GetHistoryListResponse = (
-                await self.stub.GetHistoryList(
-                    pb2.GetRequest(metadata=metadata)
-                )
-            )
-            for history in history_list_response.histories:
-                if history.id == response.command_id:
-                    return pb2.Result(
-                        success=history.success,
-                        error_code=history.error_code,
-                    )
-            metadata.cursor = history_list_response.metadata.cursor
+        return response.result
 
     return start_command
 
