@@ -104,6 +104,7 @@ class KachakaApiClientBase:
         self,
         command: pb2.Command,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
@@ -117,13 +118,29 @@ class KachakaApiClientBase:
         response: pb2.StartCommandResponse = await self.stub.StartCommand(
             request
         )
-        return response.result
+        if not response.result.success or not wait_for_completion:
+            return response.result
+        metadata = pb2.Metadata(cursor=0)
+        while True:
+            history_list_response: pb2.GetHistoryListResponse = (
+                await self.stub.GetHistoryList(
+                    pb2.GetRequest(metadata=metadata)
+                )
+            )
+            for history in history_list_response.histories:
+                if history.id == response.command_id:
+                    return pb2.Result(
+                        success=history.success,
+                        error_code=history.error_code,
+                    )
+            metadata.cursor = history_list_response.metadata.cursor
 
     async def move_shelf(
         self,
         shelf_name_or_id: str,
         location_name_or_id: str,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
@@ -137,6 +154,7 @@ class KachakaApiClientBase:
                     destination_location_id=location_id,
                 )
             ),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -146,6 +164,7 @@ class KachakaApiClientBase:
         self,
         shelf_name_or_id: str = "",
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
@@ -157,6 +176,7 @@ class KachakaApiClientBase:
                     target_shelf_id=shelf_id
                 )
             ),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -165,12 +185,14 @@ class KachakaApiClientBase:
     async def undock_shelf(
         self,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(undock_shelf_command=pb2.UndockShelfCommand()),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -180,6 +202,7 @@ class KachakaApiClientBase:
         self,
         location_name_or_id: str,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
@@ -191,6 +214,7 @@ class KachakaApiClientBase:
                     target_location_id=location_id
                 )
             ),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -199,12 +223,14 @@ class KachakaApiClientBase:
     async def return_home(
         self,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(return_home_command=pb2.ReturnHomeCommand()),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -213,12 +239,14 @@ class KachakaApiClientBase:
     async def dock_shelf(
         self,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(dock_shelf_command=pb2.DockShelfCommand()),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -228,12 +256,14 @@ class KachakaApiClientBase:
         self,
         text: str,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
         return await self.start_command(
             pb2.Command(speak_command=pb2.SpeakCommand(text=text)),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
@@ -245,6 +275,7 @@ class KachakaApiClientBase:
         y: float,
         yaw: float,
         *,
+        wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
         title: str = "",
@@ -253,6 +284,7 @@ class KachakaApiClientBase:
             pb2.Command(
                 move_to_pose_command=pb2.MoveToPoseCommand(x=x, y=y, yaw=yaw)
             ),
+            wait_for_completion=wait_for_completion,
             cancel_all=cancel_all,
             tts_on_success=tts_on_success,
             title=title,
