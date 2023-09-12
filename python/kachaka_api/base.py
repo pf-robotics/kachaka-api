@@ -118,17 +118,17 @@ class KachakaApiClientBase:
         if not response.result.success or not wait_for_completion:
             return response.result
         metadata = pb2.Metadata(cursor=0)
+        metadata.cursor = (
+            self.stub.GetCommandState(pb2.GetRequest(metadata=metadata))
+        ).metadata.cursor
         while True:
-            history_list_response: pb2.GetHistoryListResponse = (
-                self.stub.GetHistoryList(pb2.GetRequest(metadata=metadata))
+            command_state_response: pb2.GetCommandStateResponse = (
+                self.stub.GetCommandState(pb2.GetRequest(metadata=metadata))
             )
-            for history in history_list_response.histories:
-                if history.id == response.command_id:
-                    return pb2.Result(
-                        success=history.success,
-                        error_code=history.error_code,
-                    )
-            metadata.cursor = history_list_response.metadata.cursor
+            if command_state_response.state == pb2.COMMAND_STATE_PENDING:
+                break
+            metadata.cursor = command_state_response.metadata.cursor
+        return (self.get_last_command_result())[0]
 
     def move_shelf(
         self,
