@@ -130,6 +130,16 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetHistoryListResponse.FromString,
                 )
+        self.GetStaticTransform = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetStaticTransform',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetStaticTransformResponse.FromString,
+                )
+        self.GetDynamicTransform = channel.unary_stream(
+                '/kachaka_api.KachakaApi/GetDynamicTransform',
+                request_serializer=kachaka__api__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetDynamicTransformResponse.FromString,
+                )
 
 
 class KachakaApiServicer(object):
@@ -274,6 +284,18 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetStaticTransform(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetDynamicTransform(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KachakaApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -391,6 +413,16 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetHistoryList,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetHistoryListResponse.SerializeToString,
+            ),
+            'GetStaticTransform': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStaticTransform,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetStaticTransformResponse.SerializeToString,
+            ),
+            'GetDynamicTransform': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetDynamicTransform,
+                    request_deserializer=kachaka__api__pb2.EmptyRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetDynamicTransformResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -791,5 +823,39 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetHistoryList',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetHistoryListResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetStaticTransform(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetStaticTransform',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetStaticTransformResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetDynamicTransform(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/kachaka_api.KachakaApi/GetDynamicTransform',
+            kachaka__api__pb2.EmptyRequest.SerializeToString,
+            kachaka__api__pb2.GetDynamicTransformResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

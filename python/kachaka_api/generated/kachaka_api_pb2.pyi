@@ -335,6 +335,18 @@ class RosImage(_message.Message):
     data: bytes
     def __init__(self, header: _Optional[_Union[RosHeader, _Mapping]] = ..., height: _Optional[int] = ..., width: _Optional[int] = ..., encoding: _Optional[str] = ..., is_bigendian: bool = ..., step: _Optional[int] = ..., data: _Optional[bytes] = ...) -> None: ...
 
+class RosTransformStamped(_message.Message):
+    __slots__ = ["header", "child_frame_id", "translation", "rotation"]
+    HEADER_FIELD_NUMBER: _ClassVar[int]
+    CHILD_FRAME_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSLATION_FIELD_NUMBER: _ClassVar[int]
+    ROTATION_FIELD_NUMBER: _ClassVar[int]
+    header: RosHeader
+    child_frame_id: str
+    translation: Vector3
+    rotation: Quaternion
+    def __init__(self, header: _Optional[_Union[RosHeader, _Mapping]] = ..., child_frame_id: _Optional[str] = ..., translation: _Optional[_Union[Vector3, _Mapping]] = ..., rotation: _Optional[_Union[Quaternion, _Mapping]] = ...) -> None: ...
+
 class RosCompressedImage(_message.Message):
     __slots__ = ["header", "format", "data"]
     HEADER_FIELD_NUMBER: _ClassVar[int]
@@ -648,6 +660,20 @@ class SetRobotVelocityResponse(_message.Message):
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: Result
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class GetStaticTransformResponse(_message.Message):
+    __slots__ = ["metadata", "transforms"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    TRANSFORMS_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    transforms: _containers.RepeatedCompositeFieldContainer[RosTransformStamped]
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., transforms: _Optional[_Iterable[_Union[RosTransformStamped, _Mapping]]] = ...) -> None: ...
+
+class GetDynamicTransformResponse(_message.Message):
+    __slots__ = ["transforms"]
+    TRANSFORMS_FIELD_NUMBER: _ClassVar[int]
+    transforms: _containers.RepeatedCompositeFieldContainer[RosTransformStamped]
+    def __init__(self, transforms: _Optional[_Iterable[_Union[RosTransformStamped, _Mapping]]] = ...) -> None: ...
 
 class History(_message.Message):
     __slots__ = ["id", "command", "success", "error_code", "command_executed_time"]
