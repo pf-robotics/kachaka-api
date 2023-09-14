@@ -4,10 +4,9 @@
   <name>kachaka_bringup</name>
   <version>1.0.12</version>
   <description>Bringup scripts and configurations for the Nav2 stack</description>
-  <maintainer email="michael.jeronimo@intel.com">Michael Jeronimo</maintainer>
-  <maintainer email="stevenmacenski@gmail.com">Steve Macenski</maintainer>
-  <maintainer email="carlos.a.orduno@intel.com">Carlos Orduno</maintainer>
-  <license>Apache-2.0</license>
+  <maintainer email="support@kachaka.life">Kachaka Customer Support</maintainer>
+  <license>Apache License 2.0</license>
+  <author email="support@kachaka.life">Kachaka Customer Support</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <build_depend>nav2_common</build_depend>
