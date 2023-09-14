@@ -384,7 +384,7 @@ class KachakaApiClientBase:
         )
         return response.enabled
 
-    async def set_robot_velocity(
+    async def _impl_set_robot_velocity(
         self, linear: float, angular: float
     ) -> pb2.Result:
         request = pb2.SetRobotVelocityRequest(
@@ -395,6 +395,19 @@ class KachakaApiClientBase:
             await self.stub.SetRobotVelocity(request)
         )
         return response.result
+
+    async def set_robot_velocity(
+        self, linear: float, angular: float
+    ) -> pb2.Result:
+        result = await self._impl_set_robot_velocity(linear, angular)
+        if result.success:
+            return result
+        await self.set_manual_control_enabled(True)
+        return await self._impl_set_robot_velocity(linear, angular)
+
+    async def set_robot_stop(self):
+        await self.set_robot_velocity(0, 0)
+        await self.set_manual_control_enabled(False)
 
     async def get_history_list(
         self,
