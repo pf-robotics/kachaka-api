@@ -375,7 +375,9 @@ class KachakaApiClientBase:
         )
         return response.enabled
 
-    def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
+    def _impl_set_robot_velocity(
+        self, linear: float, angular: float
+    ) -> pb2.Result:
         request = pb2.SetRobotVelocityRequest(
             linear=linear / MAX_LINEAR_VELOCITY,
             angular=angular / MAX_ANGULAR_VELOCITY,
@@ -384,6 +386,17 @@ class KachakaApiClientBase:
             request
         )
         return response.result
+
+    def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
+        result = self._impl_set_robot_velocity(linear, angular)
+        if result.success:
+            return result
+        self.set_manual_control_enabled(True)
+        return self._impl_set_robot_velocity(linear, angular)
+
+    def set_robot_stop(self):
+        self.set_robot_velocity(0, 0)
+        self.set_manual_control_enabled(False)
 
     def get_history_list(
         self,
