@@ -20,6 +20,9 @@ from .generated import kachaka_api_pb2 as pb2
 from .generated.kachaka_api_pb2_grpc import KachakaApiStub
 from .util.layout import ShelfLocationResolver
 
+MAX_LINEAR_VELOCITY = 0.3
+MAX_ANGULAR_VELOCITY = 1.57
+
 
 class KachakaApiClientBase:
     def __init__(self, target: str = "100.94.1.1:26400"):
@@ -373,7 +376,10 @@ class KachakaApiClientBase:
         return response.enabled
 
     def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
-        request = pb2.SetRobotVelocityRequest(linear=linear, angular=angular)
+        request = pb2.SetRobotVelocityRequest(
+            linear=linear / MAX_LINEAR_VELOCITY,
+            angular=angular / MAX_ANGULAR_VELOCITY,
+        )
         response: pb2.SetRobotVelocityResponse = self.stub.SetRobotVelocity(
             request
         )
