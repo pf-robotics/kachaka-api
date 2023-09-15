@@ -214,7 +214,7 @@ Verify password: <新しいパスワード>
 
 ### 使用方法
 
-[python/demos/kachaka_api_client.ipynb](python/demos/kachaka_api_client.ipynb) で各APIを動作させながら試すことができます。
+[docs/kachaka_api_client.ipynb](docs/kachaka_api_client.ipynb) で各APIを動作させながら試すことができます。
 
 ### カチャカAPIライブラリのサンプルコード
 
@@ -226,7 +226,7 @@ Verify password: <新しいパスワード>
 gRPCの呼び出しを非同期にしたライブラリも提供しています。必要に応じてご利用ください。  
 同期ライブラリの機能に加えてcallback登録をサポートしています。  
 callback機能については[sample_llm_speak.py](python/demos/sample_llm_speak.py)をご参照ください。  
-使用方法を非同期版に書き換えたものはこちらです。[python/demos/kachaka_api_client_async.ipynb](python/demos/kachaka_api_client_async.ipynb)
+使用方法を非同期版に書き換えたものはこちらです。[docs/kachaka_api_client_async.ipynb](docs/kachaka_api_client_async.ipynb)
 
 ## gRPC
 
@@ -268,16 +268,12 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 
 ### gRPC サンプルコード一覧
 
-* [get_locations.py](python/demos/get_locations.py) ... 目的地一覧の取得
-* [move_to_location.py](python/demos/move_to_location.py) ... 目的地への自律移動指令
-* [set_auto_homing_enabled.py](python/demos/set_auto_homing_enabled.py) ... 自動で充電ドックに戻る機能のOn/Off
-* [smart_speaker.py](python/demos/smart_speaker.py) ... スマートスピーカー連携（[マニュアル](python/demos/README_SMART_SPEAKER.md)）
-* [time_signal.py](python/demos/time_signal.py) ... 1分間隔の時報
+[python/demos/grpc](python/demos/grpc) にgrpcを利用したサンプルコードがあります。
 
 ### gRPC サンプルコードの実行方法
 
 * 目的地一覧を取得する(GetLocations)を実行する例
-    * ソースコード: [python/demos/get_locations.py](python/demos/get_locations.py)
+    * ソースコード: [python/demos/grpc/get_locations.py](python/demos/grpc/get_locations.py)
 
 実行
 
@@ -287,7 +283,7 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 ```
 cd ~
 source venv/bin/activate
-cd ~/kachaka-api/python/demos
+cd ~/kachaka-api/python/demos/grpc
 python get_locations.py <カチャカのIPアドレス>:26400
 ```
 
@@ -296,7 +292,7 @@ python get_locations.py <カチャカのIPアドレス>:26400
         * Playground内から実行する場合は、IPアドレスは100.94.1.1とします。
 
 ```
-cd ~/kachaka-api/python/demos
+cd ~/kachaka-api/python/demos/grpc
 python3 get_locations.py 100.94.1.1:26400
 ```
 
