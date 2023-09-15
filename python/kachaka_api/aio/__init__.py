@@ -84,16 +84,16 @@ class TupleResponseHandler(ResponseHandler[T, U], Generic[T, U, P]):
         self, callback: Callable[P, Awaitable[None]] | None
     ) -> None:
         if callback is None:
-            self.callback = None
+            self._callback = None
             return
-        if self.callback is not None:
+        if self._callback is not None:
             raise RuntimeError("Callback is already set")
 
         def extract_tuple_and_run(args: U) -> Awaitable[None]:
             assert isinstance(args, tuple)
             return callback(*args)
 
-        self.callback = extract_tuple_and_run
+        self._callback = extract_tuple_and_run
         asyncio.create_task(self._run())
 
 
