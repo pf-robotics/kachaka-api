@@ -268,12 +268,12 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 
 ### gRPC サンプルコード一覧
 
-[python/demos/grpc](python/demos/grpc) にgrpcを利用したサンプルコードがあります。
+[python/demos/grpc_samples](python/demos/grpc_samples) にgrpcを利用したサンプルコードがあります。
 
 ### gRPC サンプルコードの実行方法
 
 * 目的地一覧を取得する(GetLocations)を実行する例
-    * ソースコード: [python/demos/grpc/get_locations.py](python/demos/grpc/get_locations.py)
+    * ソースコード: [python/demos/grpc_samples/get_locations.py](python/demos/grpc_samples/get_locations.py)
 
 実行
 
@@ -283,7 +283,7 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 ```
 cd ~
 source venv/bin/activate
-cd ~/kachaka-api/python/demos/grpc
+cd ~/kachaka-api/python/demos/grpc_samples
 python get_locations.py <カチャカのIPアドレス>:26400
 ```
 
@@ -292,7 +292,7 @@ python get_locations.py <カチャカのIPアドレス>:26400
         * Playground内から実行する場合は、IPアドレスは100.94.1.1とします。
 
 ```
-cd ~/kachaka-api/python/demos/grpc
+cd ~/kachaka-api/python/demos/grpc_samples
 python3 get_locations.py 100.94.1.1:26400
 ```
 
