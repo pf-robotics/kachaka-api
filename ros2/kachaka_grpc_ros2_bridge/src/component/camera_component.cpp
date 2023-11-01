@@ -39,6 +39,9 @@ class CameraComponent : public rclcpp::Node {
     // camera_info
     front_camera_info_publisher_ =
         create_publisher<sensor_msgs::msg::CameraInfo>("~/camera_info", qos);
+    front_camera_info_compressed_publisher_ =
+        create_publisher<sensor_msgs::msg::CameraInfo>(
+            "~/image_raw/camera_info", qos);
     using namespace std::placeholders;
     front_camera_info_bridge_ = std::make_unique<
         GrpcBridge<kachaka_api::GetRequest,
@@ -59,7 +62,8 @@ class CameraComponent : public rclcpp::Node {
                sensor_msgs::msg::Image* ros2_msg) {
           ConvertToRos2Image(grpc_msg.image(), ros2_msg);
           if (front_camera_info_publisher_->get_subscription_count() > 0) {
-            PublishFrontCameraInfo(grpc_msg.image().header());
+            PublishFrontCameraInfo(front_camera_info_publisher_,
+                                   grpc_msg.image().header());
           }
           return true;
         });
@@ -79,8 +83,10 @@ class CameraComponent : public rclcpp::Node {
                    response,
                sensor_msgs::msg::CompressedImage* ros2_msg) {
           ConvertToRos2CompressedImage(response.image(), ros2_msg);
-          if (front_camera_info_publisher_->get_subscription_count() > 0) {
-            PublishFrontCameraInfo(response.image().header());
+          if (front_camera_info_compressed_publisher_
+                  ->get_subscription_count() > 0) {
+            PublishFrontCameraInfo(front_camera_info_compressed_publisher_,
+                                   response.image().header());
           }
           return true;
         });
@@ -96,14 +102,16 @@ class CameraComponent : public rclcpp::Node {
   CameraComponent& operator=(const CameraComponent&) = delete;
 
  private:
-  void PublishFrontCameraInfo(const kachaka_api::RosHeader& header) {
+  void PublishFrontCameraInfo(
+      rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr& publisher,
+      const kachaka_api::RosHeader& header) {
     if (!front_camera_info_) {
       front_camera_info_ = GetCameraInfo(front_camera_info_last_cursor_);
     }
     if (front_camera_info_) {
       converter::ConvertGrpcHeaderToRos2Header(header,
                                                &front_camera_info_->header);
-      front_camera_info_publisher_->publish(*front_camera_info_);
+      publisher->publish(*front_camera_info_);
     }
   }
 
@@ -200,6 +208,8 @@ class CameraComponent : public rclcpp::Node {
   std::optional<sensor_msgs::msg::CameraInfo> front_camera_info_;
   rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr
       front_camera_info_publisher_;
+  rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr
+      front_camera_info_compressed_publisher_;
 };
 
 }  // namespace kachaka::grpc_ros2_bridge
