@@ -10,8 +10,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma once
+
 #include <atomic>
 #include <memory>
+#include <utility>
 
 #include <cv_bridge/cv_bridge.h>
 #include <grpcpp/grpcpp.h>
@@ -22,96 +25,92 @@
 #include <sensor_msgs/msg/compressed_image.hpp>
 #include <sensor_msgs/msg/image.hpp>
 
-#include "../converter/ros_header.hpp"
-#include "../ros2_topic_bridge.hpp"
-#include "../stub_util.hpp"
+#include "converter/ros_header.hpp"
 #include "kachaka-api.grpc.pb.h"
+#include "ros2_topic_bridge.hpp"
+#include "stub_util.hpp"
 
 namespace kachaka::grpc_ros2_bridge {
 
-class CameraComponent : public rclcpp::Node {
+template <class GetCameraInfoResponse, class GetImageResponse,
+          class GetCompressedImageResponse>
+class CameraBridge {
  public:
-  explicit CameraComponent(const rclcpp::NodeOptions& options)
-      : Node("camera", options) {
-    stub_ = GetSharedStub(declare_parameter("server_uri", ""));
-
+  explicit CameraBridge(
+      std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node,
+      typename GrpcBridge<kachaka_api::GetRequest,
+                          GetCameraInfoResponse>::GrpcService
+          camera_info_service,
+      typename GrpcBridge<kachaka_api::GetRequest,
+                          GetImageResponse>::GrpcService image_service,
+      typename GrpcBridge<kachaka_api::GetRequest,
+                          GetCompressedImageResponse>::GrpcService
+          compressed_image_service)
+      : stub_(std::move(stub)), node_(node) {
     rclcpp::SensorDataQoS qos;
     // camera_info
-    front_camera_info_publisher_ =
-        create_publisher<sensor_msgs::msg::CameraInfo>("~/camera_info", qos);
-    front_camera_info_compressed_publisher_ =
-        create_publisher<sensor_msgs::msg::CameraInfo>(
+    camera_info_publisher_ =
+        node->create_publisher<sensor_msgs::msg::CameraInfo>("~/camera_info",
+                                                             qos);
+    camera_info_compressed_publisher_ =
+        node->create_publisher<sensor_msgs::msg::CameraInfo>(
             "~/image_raw/camera_info", qos);
     using namespace std::placeholders;
-    front_camera_info_bridge_ = std::make_unique<
-        GrpcBridge<kachaka_api::GetRequest,
-                   kachaka_api::GetFrontCameraRosCameraInfoResponse>>(
-        this,
-        std::bind(&kachaka_api::KachakaApi::Stub::GetFrontCameraRosCameraInfo,
-                  *stub_, _1, _2, _3));
+    camera_info_bridge_ = std::make_unique<
+        GrpcBridge<kachaka_api::GetRequest, GetCameraInfoResponse>>(
+        node, camera_info_service);
 
     // raw image
-    front_camera_bridge_ = std::make_unique<Ros2TopicBridge<
+    image_bridge_ = std::make_unique<Ros2TopicBridge<
         kachaka_api::GetFrontCameraRosImageResponse, sensor_msgs::msg::Image>>(
-        this,
-        std::bind(&kachaka_api::KachakaApi::Stub::GetFrontCameraRosImage,
-                  *stub_, _1, _2, _3),
-        "~/image_raw", qos);
-    front_camera_bridge_->SetConverter(
-        [this](const kachaka_api::GetFrontCameraRosImageResponse& grpc_msg,
-               sensor_msgs::msg::Image* ros2_msg) {
-          ConvertToRos2Image(grpc_msg.image(), ros2_msg);
-          if (front_camera_info_publisher_->get_subscription_count() > 0) {
-            PublishFrontCameraInfo(front_camera_info_publisher_,
+        node, image_service, "~/image_raw", qos);
+    image_bridge_->SetConverter([this](const GetImageResponse& grpc_msg,
+                                       sensor_msgs::msg::Image* ros2_msg) {
+      ConvertToRos2Image(grpc_msg.image(), ros2_msg);
+      if (camera_info_publisher_->get_subscription_count() > 0) {
+        PublishFrontCameraInfo(camera_info_publisher_,
+                               grpc_msg.image().header());
+      }
+      return true;
+    });
+    image_bridge_->StartAsync();
+
+    // compressed image
+    compressed_image_bridge_ = std::make_unique<
+        Ros2TopicBridge<kachaka_api::GetFrontCameraRosCompressedImageResponse,
+                        sensor_msgs::msg::CompressedImage>>(
+        node, compressed_image_service, "~/image_raw/compressed", qos);
+    compressed_image_bridge_->SetConverter(
+        [this](const GetCompressedImageResponse& grpc_msg,
+               sensor_msgs::msg::CompressedImage* ros2_msg) {
+          ConvertToRos2CompressedImage(grpc_msg.image(), ros2_msg);
+          if (camera_info_compressed_publisher_->get_subscription_count() > 0) {
+            PublishFrontCameraInfo(camera_info_compressed_publisher_,
                                    grpc_msg.image().header());
           }
           return true;
         });
-    front_camera_bridge_->StartAsync();
-
-    // compressed image
-    front_camera_compressed_bridge_ = std::make_unique<
-        Ros2TopicBridge<kachaka_api::GetFrontCameraRosCompressedImageResponse,
-                        sensor_msgs::msg::CompressedImage>>(
-        this,
-        std::bind(
-            &kachaka_api::KachakaApi::Stub::GetFrontCameraRosCompressedImage,
-            *stub_, _1, _2, _3),
-        "~/image_raw/compressed", qos);
-    front_camera_compressed_bridge_->SetConverter(
-        [this](const kachaka_api::GetFrontCameraRosCompressedImageResponse&
-                   response,
-               sensor_msgs::msg::CompressedImage* ros2_msg) {
-          ConvertToRos2CompressedImage(response.image(), ros2_msg);
-          if (front_camera_info_compressed_publisher_
-                  ->get_subscription_count() > 0) {
-            PublishFrontCameraInfo(front_camera_info_compressed_publisher_,
-                                   response.image().header());
-          }
-          return true;
-        });
-    front_camera_compressed_bridge_->StartAsync();
+    compressed_image_bridge_->StartAsync();
   }
 
-  ~CameraComponent() override {
-    front_camera_compressed_bridge_->StopAsync();
-    front_camera_bridge_->StopAsync();
+  ~CameraBridge() {
+    compressed_image_bridge_->StopAsync();
+    image_bridge_->StopAsync();
   }
 
-  CameraComponent(const CameraComponent&) = delete;
-  CameraComponent& operator=(const CameraComponent&) = delete;
+  CameraBridge(const CameraBridge&) = delete;
+  CameraBridge& operator=(const CameraBridge&) = delete;
 
  private:
   void PublishFrontCameraInfo(
       rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr& publisher,
       const kachaka_api::RosHeader& header) {
-    if (!front_camera_info_) {
-      front_camera_info_ = GetCameraInfo(front_camera_info_last_cursor_);
+    if (!camera_info_) {
+      camera_info_ = GetCameraInfo(camera_info_last_cursor_);
     }
-    if (front_camera_info_) {
-      converter::ConvertGrpcHeaderToRos2Header(header,
-                                               &front_camera_info_->header);
-      publisher->publish(*front_camera_info_);
+    if (camera_info_) {
+      converter::ConvertGrpcHeaderToRos2Header(header, &camera_info_->header);
+      publisher->publish(*camera_info_);
     }
   }
 
@@ -120,7 +119,7 @@ class CameraComponent : public rclcpp::Node {
     kachaka_api::GetRequest request;
     kachaka_api::GetFrontCameraRosCameraInfoResponse response;
     request.mutable_metadata()->set_cursor(cursor);
-    const auto status = front_camera_info_bridge_->CallSync(request, &response);
+    const auto status = camera_info_bridge_->CallSync(request, &response);
     if (!status.ok()) {
       return std::nullopt;
     }
@@ -135,7 +134,7 @@ class CameraComponent : public rclcpp::Node {
     }
     if (response.camera_info().k().size() !=
         static_cast<int>(camera_info.k.size())) {
-      RCLCPP_ERROR(get_logger(),
+      RCLCPP_ERROR(node_->get_logger(),
                    "size of camera_info.k is different from that of grpc!");
       return std::nullopt;
     }
@@ -144,7 +143,7 @@ class CameraComponent : public rclcpp::Node {
     }
     if (response.camera_info().r().size() !=
         static_cast<int>(camera_info.r.size())) {
-      RCLCPP_ERROR(get_logger(),
+      RCLCPP_ERROR(node_->get_logger(),
                    "size of camera_info.r is different from that of grpc!");
       return std::nullopt;
     }
@@ -153,7 +152,7 @@ class CameraComponent : public rclcpp::Node {
     }
     if (response.camera_info().p().size() !=
         static_cast<int>(camera_info.p.size())) {
-      RCLCPP_ERROR(get_logger(),
+      RCLCPP_ERROR(node_->get_logger(),
                    "size of camera_info.p is different from that of grpc!");
       return std::nullopt;
     }
@@ -194,24 +193,20 @@ class CameraComponent : public rclcpp::Node {
   }
 
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
-  std::unique_ptr<GrpcBridge<kachaka_api::GetRequest,
-                             kachaka_api::GetFrontCameraRosCameraInfoResponse>>
-      front_camera_info_bridge_{nullptr};
-  std::unique_ptr<Ros2TopicBridge<kachaka_api::GetFrontCameraRosImageResponse,
-                                  sensor_msgs::msg::Image>>
-      front_camera_bridge_{nullptr};
-  std::unique_ptr<
-      Ros2TopicBridge<kachaka_api::GetFrontCameraRosCompressedImageResponse,
-                      sensor_msgs::msg::CompressedImage>>
-      front_camera_compressed_bridge_{nullptr};
-  std::atomic_int64_t front_camera_info_last_cursor_{0};
-  std::optional<sensor_msgs::msg::CameraInfo> front_camera_info_;
+  rclcpp::Node* node_;
+  std::unique_ptr<GrpcBridge<kachaka_api::GetRequest, GetCameraInfoResponse>>
+      camera_info_bridge_{nullptr};
+  std::unique_ptr<Ros2TopicBridge<GetImageResponse, sensor_msgs::msg::Image>>
+      image_bridge_{nullptr};
+  std::unique_ptr<Ros2TopicBridge<GetCompressedImageResponse,
+                                  sensor_msgs::msg::CompressedImage>>
+      compressed_image_bridge_{nullptr};
+  std::atomic_int64_t camera_info_last_cursor_{0};
+  std::optional<sensor_msgs::msg::CameraInfo> camera_info_;
   rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr
-      front_camera_info_publisher_;
+      camera_info_publisher_;
   rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr
-      front_camera_info_compressed_publisher_;
+      camera_info_compressed_publisher_;
 };
 
 }  // namespace kachaka::grpc_ros2_bridge
-
-RCLCPP_COMPONENTS_REGISTER_NODE(kachaka::grpc_ros2_bridge::CameraComponent)

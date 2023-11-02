@@ -31,8 +31,8 @@ ament_auto_add_library(
   gen-src/kachaka-api.grpc.pb.cc
   gen-src/kachaka-api.pb.cc
   src/component/auto_homing_component.cpp
-  src/component/camera_component.cpp
   src/component/dynamic_tf_component.cpp
+  src/component/front_camera_component.cpp
   src/component/goal_pose_component.cpp
   src/component/imu_component.cpp
   src/component/kachaka_command_component.cpp
@@ -68,9 +68,9 @@ rclcpp_components_register_node(
 rclcpp_components_register_node(
   ${PROJECT_NAME}
   PLUGIN
-  "kachaka::grpc_ros2_bridge::CameraComponent"
+  "kachaka::grpc_ros2_bridge::FrontCameraComponent"
   EXECUTABLE
-  camera)
+  front_camera)
 
 rclcpp_components_register_node(
   ${PROJECT_NAME}
