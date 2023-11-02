@@ -25,7 +25,7 @@
                  value="false" />
     </composable_node>
     <composable_node pkg="kachaka_grpc_ros2_bridge"
-                     plugin="kachaka::grpc_ros2_bridge::CameraComponent"
+                     plugin="kachaka::grpc_ros2_bridge::FrontCameraComponent"
                      name="front_camera"
                      namespace="kachaka">
       <param name="server_uri"
