@@ -24,7 +24,7 @@
 * 「create」ボタンを押します
 * 「If This」を押して、以下の設定にします
   * Choose a serviceからGoogle Assistant V2を選択します
-  * 「activate sentence」を押します
+  * 「activate scene」を押します
      * 「シェルフを持ってきて」など、サービスを呼び出す時にGoogle Homeに呼びかける言葉を設定します
   * 「Create Trigger」を押します
 * 「Then That」を押して、以下の設定にします
@@ -33,6 +33,7 @@
     * URL: https://api.beebotte.com/v1/data/publish/test/sample?token=<Beebottteのトークン文字列>
     * Method: POST
     * Content Type: application/json
+    * Body: {"data": {}}
   * 「Create action」を押します
 
 ## Google Homeの設定
