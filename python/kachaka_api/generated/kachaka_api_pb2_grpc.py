@@ -70,6 +70,21 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetFrontCameraRosCompressedImageResponse.FromString,
                 )
+        self.GetBackCameraRosCameraInfo = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetBackCameraRosCameraInfo',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetBackCameraRosCameraInfoResponse.FromString,
+                )
+        self.GetBackCameraRosImage = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetBackCameraRosImage',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetBackCameraRosImageResponse.FromString,
+                )
+        self.GetBackCameraRosCompressedImage = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetBackCameraRosCompressedImage',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetBackCameraRosCompressedImageResponse.FromString,
+                )
         self.StartCommand = channel.unary_unary(
                 '/kachaka_api.KachakaApi/StartCommand',
                 request_serializer=kachaka__api__pb2.StartCommandRequest.SerializeToString,
@@ -207,6 +222,24 @@ class KachakaApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetFrontCameraRosCompressedImage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetBackCameraRosCameraInfo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetBackCameraRosImage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetBackCameraRosCompressedImage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -353,6 +386,21 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetFrontCameraRosCompressedImage,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetFrontCameraRosCompressedImageResponse.SerializeToString,
+            ),
+            'GetBackCameraRosCameraInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBackCameraRosCameraInfo,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetBackCameraRosCameraInfoResponse.SerializeToString,
+            ),
+            'GetBackCameraRosImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBackCameraRosImage,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetBackCameraRosImageResponse.SerializeToString,
+            ),
+            'GetBackCameraRosCompressedImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBackCameraRosCompressedImage,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetBackCameraRosCompressedImageResponse.SerializeToString,
             ),
             'StartCommand': grpc.unary_unary_rpc_method_handler(
                     servicer.StartCommand,
@@ -619,6 +667,57 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetFrontCameraRosCompressedImage',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetFrontCameraRosCompressedImageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetBackCameraRosCameraInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetBackCameraRosCameraInfo',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetBackCameraRosCameraInfoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetBackCameraRosImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetBackCameraRosImage',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetBackCameraRosImageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetBackCameraRosCompressedImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetBackCameraRosCompressedImage',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetBackCameraRosCompressedImageResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -108,6 +108,7 @@ enum ShelfAppearance {
   SHELF_APPEARANCE_DEFAULT_SHELF = 1;
   SHELF_APPEARANCE_KACHAKA_SHELF_3DRAWERS = 2;
   SHELF_APPEARANCE_KACHAKA_SHELF_2DRAWERS = 3;
+  SHELF_APPEARANCE_KACHAKA_BASE = 8;
 }
 
 enum ShelfSpeedMode {
@@ -340,6 +341,21 @@ message GetFrontCameraRosCompressedImageResponse {
   RosCompressedImage image = 2;
 }
 
+message GetBackCameraRosCameraInfoResponse {
+  Metadata metadata = 1;
+  RosCameraInfo camera_info = 2;
+}
+
+message GetBackCameraRosImageResponse {
+  Metadata metadata = 1;
+  RosImage image = 2;
+}
+
+message GetBackCameraRosCompressedImageResponse {
+  Metadata metadata = 1;
+  RosCompressedImage image = 2;
+}
+
 message StartCommandRequest {
   Command command = 1;
   bool cancel_all = 2;
@@ -361,12 +377,14 @@ message GetCommandStateResponse {
   Metadata metadata = 1;
   CommandState state = 2;
   Command command = 3;
+  string command_id = 4;
 }
 
 message GetLastCommandResultResponse {
   Metadata metadata = 1;
   Result result = 2;  // Empty if there is no last command
   Command command = 3;
+  string command_id = 4;
 }
 
 message GetLocationsResponse {
@@ -452,6 +470,9 @@ service KachakaApi {
   rpc GetFrontCameraRosCameraInfo (GetRequest) returns (GetFrontCameraRosCameraInfoResponse);
   rpc GetFrontCameraRosImage (GetRequest) returns (GetFrontCameraRosImageResponse);
   rpc GetFrontCameraRosCompressedImage (GetRequest) returns (GetFrontCameraRosCompressedImageResponse);
+  rpc GetBackCameraRosCameraInfo (GetRequest) returns (GetBackCameraRosCameraInfoResponse);
+  rpc GetBackCameraRosImage (GetRequest) returns (GetBackCameraRosImageResponse);
+  rpc GetBackCameraRosCompressedImage (GetRequest) returns (GetBackCameraRosCompressedImageResponse);
   rpc StartCommand (StartCommandRequest) returns (StartCommandResponse);
   rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
   rpc GetCommandState (GetRequest) returns (GetCommandStateResponse);
