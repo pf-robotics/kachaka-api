@@ -103,6 +103,29 @@ class KachakaApiClientBase:
         )
         return response.image
 
+    async def get_back_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
+        request = pb2.GetRequest()
+        response: pb2.GetBackCameraRosCameraInfoResponse = (
+            await self.stub.GetBackCameraRosCameraInfo(request)
+        )
+        return response.camera_info
+
+    async def get_back_camera_ros_image(self) -> pb2.RosImage:
+        request = pb2.GetRequest()
+        response: pb2.GetBackCameraRosImageResponse = (
+            await self.stub.GetBackCameraRosImage(request)
+        )
+        return response.image
+
+    async def get_back_camera_ros_compressed_image(
+        self,
+    ) -> pb2.RosCompressedImage:
+        request = pb2.GetRequest()
+        response: pb2.GetBackCameraRosCompressedImageResponse = (
+            await self.stub.GetBackCameraRosCompressedImage(request)
+        )
+        return response.image
+
     async def start_command(
         self,
         command: pb2.Command,
@@ -131,16 +154,16 @@ class KachakaApiClientBase:
         if not response.result.success or not wait_for_completion:
             return response.result
         while True:
-            command_state_response: pb2.GetCommandStateResponse = (
-                await self.stub.GetCommandState(
+            command_result_response: pb2.GetLastCommandResultResponse = (
+                await self.stub.GetLastCommandResult(
                     pb2.GetRequest(metadata=command_state_metadata)
                 )
             )
-            if command_state_response.state == pb2.COMMAND_STATE_PENDING:
-                break
             command_state_metadata.cursor = (
-                command_state_response.metadata.cursor
+                command_result_response.metadata.cursor
             )
+            if command_result_response.command_id == response.command_id:
+                break
         return (await self.get_last_command_result())[0]
 
     async def move_shelf(

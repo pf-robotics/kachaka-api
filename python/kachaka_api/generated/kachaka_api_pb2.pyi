@@ -18,6 +18,7 @@ class ShelfAppearance(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     SHELF_APPEARANCE_DEFAULT_SHELF: _ClassVar[ShelfAppearance]
     SHELF_APPEARANCE_KACHAKA_SHELF_3DRAWERS: _ClassVar[ShelfAppearance]
     SHELF_APPEARANCE_KACHAKA_SHELF_2DRAWERS: _ClassVar[ShelfAppearance]
+    SHELF_APPEARANCE_KACHAKA_BASE: _ClassVar[ShelfAppearance]
 
 class ShelfSpeedMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
@@ -45,6 +46,7 @@ SHELF_APPEARANCE_UNSPECIFIED: ShelfAppearance
 SHELF_APPEARANCE_DEFAULT_SHELF: ShelfAppearance
 SHELF_APPEARANCE_KACHAKA_SHELF_3DRAWERS: ShelfAppearance
 SHELF_APPEARANCE_KACHAKA_SHELF_2DRAWERS: ShelfAppearance
+SHELF_APPEARANCE_KACHAKA_BASE: ShelfAppearance
 SHELF_SPEED_MODE_UNSPECIFIED: ShelfSpeedMode
 SHELF_SPEED_MODE_LOW: ShelfSpeedMode
 SHELF_SPEED_MODE_NORMAL: ShelfSpeedMode
@@ -539,6 +541,30 @@ class GetFrontCameraRosCompressedImageResponse(_message.Message):
     image: RosCompressedImage
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ...) -> None: ...
 
+class GetBackCameraRosCameraInfoResponse(_message.Message):
+    __slots__ = ["metadata", "camera_info"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    CAMERA_INFO_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    camera_info: RosCameraInfo
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., camera_info: _Optional[_Union[RosCameraInfo, _Mapping]] = ...) -> None: ...
+
+class GetBackCameraRosImageResponse(_message.Message):
+    __slots__ = ["metadata", "image"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    image: RosImage
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosImage, _Mapping]] = ...) -> None: ...
+
+class GetBackCameraRosCompressedImageResponse(_message.Message):
+    __slots__ = ["metadata", "image"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    image: RosCompressedImage
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ...) -> None: ...
+
 class StartCommandRequest(_message.Message):
     __slots__ = ["command", "cancel_all", "tts_on_success", "title"]
     COMMAND_FIELD_NUMBER: _ClassVar[int]
@@ -568,24 +594,28 @@ class CancelCommandResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., command: _Optional[_Union[Command, _Mapping]] = ...) -> None: ...
 
 class GetCommandStateResponse(_message.Message):
-    __slots__ = ["metadata", "state", "command"]
+    __slots__ = ["metadata", "state", "command", "command_id"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     COMMAND_FIELD_NUMBER: _ClassVar[int]
+    COMMAND_ID_FIELD_NUMBER: _ClassVar[int]
     metadata: Metadata
     state: CommandState
     command: Command
-    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., state: _Optional[_Union[CommandState, str]] = ..., command: _Optional[_Union[Command, _Mapping]] = ...) -> None: ...
+    command_id: str
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., state: _Optional[_Union[CommandState, str]] = ..., command: _Optional[_Union[Command, _Mapping]] = ..., command_id: _Optional[str] = ...) -> None: ...
 
 class GetLastCommandResultResponse(_message.Message):
-    __slots__ = ["metadata", "result", "command"]
+    __slots__ = ["metadata", "result", "command", "command_id"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     COMMAND_FIELD_NUMBER: _ClassVar[int]
+    COMMAND_ID_FIELD_NUMBER: _ClassVar[int]
     metadata: Metadata
     result: Result
     command: Command
-    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., result: _Optional[_Union[Result, _Mapping]] = ..., command: _Optional[_Union[Command, _Mapping]] = ...) -> None: ...
+    command_id: str
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., result: _Optional[_Union[Result, _Mapping]] = ..., command: _Optional[_Union[Command, _Mapping]] = ..., command_id: _Optional[str] = ...) -> None: ...
 
 class GetLocationsResponse(_message.Message):
     __slots__ = ["metadata", "locations", "default_location_id"]
