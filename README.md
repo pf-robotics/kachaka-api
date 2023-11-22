@@ -17,11 +17,6 @@
   - [使用方法](#使用方法)
   - [カチャカAPIライブラリのサンプルコード](#カチャカapiライブラリのサンプルコード)
 - [gRPC](#grpc)
-  - [PythonによるgRPCクライアント開発の準備（PCで行う場合）](#pythonによるgrpcクライアント開発の準備pcで行う場合)
-  - [PythonによるgRPCクライアント開発の準備（カチャカにsshして行う場合）](#pythonによるgrpcクライアント開発の準備カチャカにsshして行う場合)
-  - [gRPC サンプルコード一覧](#grpc-サンプルコード一覧)
-  - [サンプルコードの実行方法](#サンプルコードの実行方法)
-  - [Cursor の概念](#cursor-の概念)
 - [ROS 2](#ros-2)
   - [ROS 2 Humbleのセットアップ](#ros-2-humbleのセットアップ)
   - [Dockerのセットアップ](#dockerのセットアップ)
@@ -230,9 +225,8 @@ callback機能については[sample_llm_speak.py](python/demos/sample_llm_speak
 
 ## gRPC
 
-* ここではPythonを用いてgRPCを使用する方法を説明します。
-    * その他の言語については、以下の情報をご参照ください。
-        * https://grpc.io/docs/
+* ライブラリを用いなくても、gRPCで直接カチャカAPIを利用することも可能です。
+* 詳細は[gRPC](./docs/GRPC.md)をご参照ください。
 
 
 ### PythonによるgRPCクライアント開発の準備（PCで行う場合）
