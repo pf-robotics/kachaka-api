@@ -29,17 +29,17 @@ class KachakaApiClientBase:
         self.stub = KachakaApiStub(grpc.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
 
-    def get_robot_serial_number(self) -> str:
+    def get_robot_serial_number(self, *, timeout: float | None = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotSerialNumberResponse = (
-            self.stub.GetRobotSerialNumber(request)
+            self.stub.GetRobotSerialNumber(request, timeout=timeout)
         )
         return response.serial_number
 
-    def get_robot_version(self) -> str:
+    def get_robot_version(self, *, timeout: float | None = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotVersionResponse = self.stub.GetRobotVersion(
-            request
+            request, timeout=timeout
         )
         return response.version
 
