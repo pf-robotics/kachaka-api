@@ -183,7 +183,6 @@ class KachakaApiClientBase:
             command_result_response: pb2.GetLastCommandResultResponse = (
                 self.stub.GetLastCommandResult(
                     pb2.GetRequest(metadata=command_state_metadata),
-                    timeout=self.timeout,
                 )
             )
             command_state_metadata.cursor = (
