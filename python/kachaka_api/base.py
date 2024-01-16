@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Optional
+
 import grpc
 from google._upb._message import RepeatedCompositeContainer
 
@@ -29,14 +31,14 @@ class KachakaApiClientBase:
         self.stub = KachakaApiStub(grpc.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
 
-    def get_robot_serial_number(self, *, timeout: float | None = None) -> str:
+    def get_robot_serial_number(self, *, timeout: Optional[float] = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotSerialNumberResponse = (
             self.stub.GetRobotSerialNumber(request, timeout=timeout)
         )
         return response.serial_number
 
-    def get_robot_version(self, *, timeout: float | None = None) -> str:
+    def get_robot_version(self, *, timeout: Optional[float] = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotVersionResponse = self.stub.GetRobotVersion(
             request, timeout=timeout
@@ -45,7 +47,9 @@ class KachakaApiClientBase:
 
     def get_robot_pose(self) -> pb2.Pose:
         request = pb2.GetRequest()
-        response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(request)
+        response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(
+            request
+        )
         return response.pose
 
     def get_png_map(self) -> pb2.Map:
@@ -57,8 +61,8 @@ class KachakaApiClientBase:
         self,
     ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
         request = pb2.GetRequest()
-        response: pb2.GetObjectDetectionResponse = self.stub.GetObjectDetection(
-            request
+        response: pb2.GetObjectDetectionResponse = (
+            self.stub.GetObjectDetection(request)
         )
         return (response.header, response.objects)
 
@@ -69,7 +73,9 @@ class KachakaApiClientBase:
 
     def get_ros_odometry(self) -> pb2.RosOdometry:
         request = pb2.GetRequest()
-        response: pb2.GetRosOdometryResponse = self.stub.GetRosOdometry(request)
+        response: pb2.GetRosOdometryResponse = self.stub.GetRosOdometry(
+            request
+        )
         return response.odometry
 
     def get_ros_laser_scan(self) -> pb2.RosLaserScan:
@@ -147,7 +153,9 @@ class KachakaApiClientBase:
                 pb2.GetRequest(metadata=command_state_metadata)
             )
         ).metadata.cursor
-        response: pb2.StartCommandResponse = self.stub.StartCommand(request)
+        response: pb2.StartCommandResponse = self.stub.StartCommand(
+            request
+        )
         if not response.result.success or not wait_for_completion:
             return response.result
         while True:
@@ -320,7 +328,9 @@ class KachakaApiClientBase:
 
     def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
-        response: pb2.CancelCommandResponse = self.stub.CancelCommand(request)
+        response: pb2.CancelCommandResponse = self.stub.CancelCommand(
+            request
+        )
         return (response.result, response.command)
 
     def get_command_state(self) -> tuple[pb2.CommandState, pb2.Command]:
@@ -355,12 +365,16 @@ class KachakaApiClientBase:
         self,
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(
+            request
+        )
         return response.locations
 
     def get_default_location_id(self) -> str:
         request = pb2.GetRequest()
-        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(
+            request
+        )
         return response.default_location_id
 
     def get_shelves(
@@ -405,12 +419,14 @@ class KachakaApiClientBase:
             linear=linear / MAX_LINEAR_VELOCITY,
             angular=angular / MAX_ANGULAR_VELOCITY,
         )
-        response: pb2.SetRobotVelocityResponse = self.stub.SetRobotVelocity(
-            request
+        response: pb2.SetRobotVelocityResponse = (
+            self.stub.SetRobotVelocity(request)
         )
         return response.result
 
-    def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
+    def set_robot_velocity(
+        self, linear: float, angular: float
+    ) -> pb2.Result:
         result = self._impl_set_robot_velocity(linear, angular)
         if result.success:
             return result
@@ -425,7 +441,9 @@ class KachakaApiClientBase:
         self,
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(request)
+        response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(
+            request
+        )
         return response.histories
 
     def update_resolver(self) -> None:

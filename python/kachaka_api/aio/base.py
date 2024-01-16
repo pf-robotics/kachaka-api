@@ -10,6 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Optional
+
 import grpc
 from google._upb._message import RepeatedCompositeContainer
 
@@ -26,17 +28,17 @@ class KachakaApiClientBase:
         self.stub = KachakaApiStub(grpc.aio.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
 
-    async def get_robot_serial_number(self) -> str:
+    async def get_robot_serial_number(self, *, timeout: Optional[float] = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotSerialNumberResponse = (
-            await self.stub.GetRobotSerialNumber(request)
+            await self.stub.GetRobotSerialNumber(request, timeout=timeout)
         )
         return response.serial_number
 
-    async def get_robot_version(self) -> str:
+    async def get_robot_version(self, *, timeout: Optional[float] = None) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotVersionResponse = await self.stub.GetRobotVersion(
-            request
+            request, timeout=timeout
         )
         return response.version
 
