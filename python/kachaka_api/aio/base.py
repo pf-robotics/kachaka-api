@@ -24,34 +24,41 @@ MAX_ANGULAR_VELOCITY = 1.57
 
 
 class KachakaApiClientBase:
-    def __init__(self, target: str = "100.94.1.1:26400"):
+    def __init__(
+        self,
+        target: str = "100.94.1.1:26400",
+        timeout: Optional[float] = None,
+    ):
         self.stub = KachakaApiStub(grpc.aio.insecure_channel(target))
         self.resolver = ShelfLocationResolver()
+        self.timeout = timeout
 
-    async def get_robot_serial_number(self, *, timeout: Optional[float] = None) -> str:
+    async def get_robot_serial_number(self) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotSerialNumberResponse = (
-            await self.stub.GetRobotSerialNumber(request, timeout=timeout)
+            await self.stub.GetRobotSerialNumber(request, timeout=self.timeout)
         )
         return response.serial_number
 
-    async def get_robot_version(self, *, timeout: Optional[float] = None) -> str:
+    async def get_robot_version(self) -> str:
         request = pb2.GetRequest()
         response: pb2.GetRobotVersionResponse = await self.stub.GetRobotVersion(
-            request, timeout=timeout
+            request, timeout=self.timeout
         )
         return response.version
 
     async def get_robot_pose(self) -> pb2.Pose:
         request = pb2.GetRequest()
         response: pb2.GetRobotPoseResponse = await self.stub.GetRobotPose(
-            request
+            request, timeout=self.timeout
         )
         return response.pose
 
     async def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
-        response: pb2.GetPngMapResponse = await self.stub.GetPngMap(request)
+        response: pb2.GetPngMapResponse = await self.stub.GetPngMap(
+            request, timeout=self.timeout
+        )
         return response.map
 
     async def get_object_detection(
@@ -59,40 +66,46 @@ class KachakaApiClientBase:
     ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
         request = pb2.GetRequest()
         response: pb2.GetObjectDetectionResponse = (
-            await self.stub.GetObjectDetection(request)
+            await self.stub.GetObjectDetection(request, timeout=self.timeout)
         )
         return (response.header, response.objects)
 
     async def get_ros_imu(self) -> pb2.RosImu:
         request = pb2.GetRequest()
-        response: pb2.GetRosImuResponse = await self.stub.GetRosImu(request)
+        response: pb2.GetRosImuResponse = await self.stub.GetRosImu(
+            request, timeout=self.timeout
+        )
         return response.imu
 
     async def get_ros_odometry(self) -> pb2.RosOdometry:
         request = pb2.GetRequest()
         response: pb2.GetRosOdometryResponse = await self.stub.GetRosOdometry(
-            request
+            request, timeout=self.timeout
         )
         return response.odometry
 
     async def get_ros_laser_scan(self) -> pb2.RosLaserScan:
         request = pb2.GetRequest()
         response: pb2.GetRosLaserScanResponse = await self.stub.GetRosLaserScan(
-            request
+            request, timeout=self.timeout
         )
         return response.scan
 
     async def get_front_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
         request = pb2.GetRequest()
         response: pb2.GetFrontCameraRosCameraInfoResponse = (
-            await self.stub.GetFrontCameraRosCameraInfo(request)
+            await self.stub.GetFrontCameraRosCameraInfo(
+                request, timeout=self.timeout
+            )
         )
         return response.camera_info
 
     async def get_front_camera_ros_image(self) -> pb2.RosImage:
         request = pb2.GetRequest()
         response: pb2.GetFrontCameraRosImageResponse = (
-            await self.stub.GetFrontCameraRosImage(request)
+            await self.stub.GetFrontCameraRosImage(
+                request, timeout=self.timeout
+            )
         )
         return response.image
 
@@ -101,21 +114,27 @@ class KachakaApiClientBase:
     ) -> pb2.RosCompressedImage:
         request = pb2.GetRequest()
         response: pb2.GetFrontCameraRosCompressedImageResponse = (
-            await self.stub.GetFrontCameraRosCompressedImage(request)
+            await self.stub.GetFrontCameraRosCompressedImage(
+                request, timeout=self.timeout
+            )
         )
         return response.image
 
     async def get_back_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
         request = pb2.GetRequest()
         response: pb2.GetBackCameraRosCameraInfoResponse = (
-            await self.stub.GetBackCameraRosCameraInfo(request)
+            await self.stub.GetBackCameraRosCameraInfo(
+                request, timeout=self.timeout
+            )
         )
         return response.camera_info
 
     async def get_back_camera_ros_image(self) -> pb2.RosImage:
         request = pb2.GetRequest()
         response: pb2.GetBackCameraRosImageResponse = (
-            await self.stub.GetBackCameraRosImage(request)
+            await self.stub.GetBackCameraRosImage(
+                request, timeout=self.timeout
+            )
         )
         return response.image
 
@@ -124,7 +143,9 @@ class KachakaApiClientBase:
     ) -> pb2.RosCompressedImage:
         request = pb2.GetRequest()
         response: pb2.GetBackCameraRosCompressedImageResponse = (
-            await self.stub.GetBackCameraRosCompressedImage(request)
+            await self.stub.GetBackCameraRosCompressedImage(
+                request, timeout=self.timeout
+            )
         )
         return response.image
 
@@ -147,18 +168,19 @@ class KachakaApiClientBase:
         command_state_metadata = pb2.Metadata(cursor=0)
         command_state_metadata.cursor = (
             await self.stub.GetCommandState(
-                pb2.GetRequest(metadata=command_state_metadata)
+                pb2.GetRequest(metadata=command_state_metadata), timeout=self.timeout
             )
         ).metadata.cursor
         response: pb2.StartCommandResponse = await self.stub.StartCommand(
-            request
+            request, timeout=self.timeout
         )
         if not response.result.success or not wait_for_completion:
             return response.result
         while True:
             command_result_response: pb2.GetLastCommandResultResponse = (
                 await self.stub.GetLastCommandResult(
-                    pb2.GetRequest(metadata=command_state_metadata)
+                    pb2.GetRequest(metadata=command_state_metadata),
+                    timeout=self.timeout,
                 )
             )
             command_state_metadata.cursor = (
@@ -326,35 +348,35 @@ class KachakaApiClientBase:
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
-            request
+            request, timeout=self.timeout,
         )
         return (response.result, response.command)
 
     async def get_command_state(self) -> tuple[pb2.CommandState, pb2.Command]:
         request = pb2.GetRequest()
         response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
-            request
+            request, timeout=self.timeout
         )
         return (response.state, response.command)
 
     async def is_command_running(self) -> bool:
         request = pb2.GetRequest()
         response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
-            request
+            request, timeout=self.timeout
         )
         return response.state == pb2.CommandState.COMMAND_STATE_RUNNING
 
     async def get_running_command(self) -> pb2.Command | None:
         request = pb2.GetRequest()
         response: pb2.GetCommandStateResponse = await self.stub.GetCommandState(
-            request
+            request, timeout=self.timeout
         )
         return response.command if response.HasField("command") else None
 
     async def get_last_command_result(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.GetRequest()
         response: pb2.GetLastCommandResultResponse = (
-            await self.stub.GetLastCommandResult(request)
+            await self.stub.GetLastCommandResult(request, timeout=self.timeout)
         )
         return (response.result, response.command)
 
@@ -363,14 +385,14 @@ class KachakaApiClientBase:
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
         response: pb2.GetLocationsResponse = await self.stub.GetLocations(
-            request
+            request, timeout=self.timeout
         )
         return response.locations
 
     async def get_default_location_id(self) -> str:
         request = pb2.GetRequest()
         response: pb2.GetLocationsResponse = await self.stub.GetLocations(
-            request
+            request, timeout=self.timeout
         )
         return response.default_location_id
 
@@ -378,34 +400,40 @@ class KachakaApiClientBase:
         self,
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response: pb2.GetShelvesResponse = await self.stub.GetShelves(request)
+        response: pb2.GetShelvesResponse = await self.stub.GetShelves(
+            request, timeout=self.timeout
+        )
         return response.shelves
 
     async def set_auto_homing_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetAutoHomingEnabledRequest(enable=enable)
         response: pb2.SetAutoHomingEnabledResponse = (
-            await self.stub.SetAutoHomingEnabled(request)
+            await self.stub.SetAutoHomingEnabled(request, timeout=self.timeout)
         )
         return response.result
 
     async def get_auto_homing_enabled(self) -> bool:
         request = pb2.GetRequest()
         response: pb2.GetAutoHomingEnabledResponse = (
-            await self.stub.GetAutoHomingEnabled(request)
+            await self.stub.GetAutoHomingEnabled(request, timeout=self.timeout)
         )
         return response.enabled
 
     async def set_manual_control_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetManualControlEnabledRequest(enable=enable)
         response: pb2.SetManualControlEnabledResponse = (
-            await self.stub.SetManualControlEnabled(request)
+            await self.stub.SetManualControlEnabled(
+                request, timeout=self.timeout
+            )
         )
         return response.result
 
     async def get_manual_control_enabled(self) -> bool:
         request = pb2.GetRequest()
         response: pb2.GetManualControlEnabledResponse = (
-            await self.stub.GetManualControlEnabled(request)
+            await self.stub.GetManualControlEnabled(
+                request, timeout=self.timeout
+            )
         )
         return response.enabled
 
@@ -417,7 +445,7 @@ class KachakaApiClientBase:
             angular=angular / MAX_ANGULAR_VELOCITY,
         )
         response: pb2.SetRobotVelocityResponse = (
-            await self.stub.SetRobotVelocity(request)
+            await self.stub.SetRobotVelocity(request, timeout=self.timeout)
         )
         return response.result
 
@@ -439,7 +467,7 @@ class KachakaApiClientBase:
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
         response: pb2.GetHistoryListResponse = await self.stub.GetHistoryList(
-            request
+            request, timeout=self.timeout
         )
         return response.histories
 
