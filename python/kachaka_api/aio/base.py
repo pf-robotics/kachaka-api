@@ -132,9 +132,7 @@ class KachakaApiClientBase:
     async def get_back_camera_ros_image(self) -> pb2.RosImage:
         request = pb2.GetRequest()
         response: pb2.GetBackCameraRosImageResponse = (
-            await self.stub.GetBackCameraRosImage(
-                request, timeout=self.timeout
-            )
+            await self.stub.GetBackCameraRosImage(request, timeout=self.timeout)
         )
         return response.image
 
@@ -168,7 +166,8 @@ class KachakaApiClientBase:
         command_state_metadata = pb2.Metadata(cursor=0)
         command_state_metadata.cursor = (
             await self.stub.GetCommandState(
-                pb2.GetRequest(metadata=command_state_metadata), timeout=self.timeout
+                pb2.GetRequest(metadata=command_state_metadata),
+                timeout=self.timeout,
             )
         ).metadata.cursor
         response: pb2.StartCommandResponse = await self.stub.StartCommand(
@@ -347,7 +346,7 @@ class KachakaApiClientBase:
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
-            request, timeout=self.timeout,
+            request, timeout=self.timeout
         )
         return (response.result, response.command)
 

@@ -21,7 +21,8 @@ from .util import layout as layout_util  # noqa: F401
 
 
 class KachakaApiClient(KachakaApiClientBase):
-    def __init__(self,
+    def __init__(
+        self,
         target: str = "100.94.1.1:26400",
         timeout: Optional[float] = None,
     ):
