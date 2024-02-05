@@ -3,14 +3,17 @@
 # Usage:
 #  export_map_api_client.py -s XX.XX.XX.XX:26400 -m XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX -o out.profile
 
+import argparse
+
 import grpc
 import kachaka_api_pb2
 import kachaka_api_pb2_grpc
-import argparse
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Export a map from the Baku server")
+    parser = argparse.ArgumentParser(
+        description="Export a map from the Baku server"
+    )
     parser.add_argument("--server_address", "-s", type=str, required=True)
     parser.add_argument("--map_id", "-m", type=str, required=True)
     parser.add_argument("--output_path", "-o", type=str, required=True)
@@ -38,7 +41,7 @@ def export_map(
                     return False
             elif response.HasField("middle_of_stream"):
                 fout.write(response.middle_of_stream.data)
-                print(".", end="");
+                print(".", end="")
             else:
                 print("Received invalid response")
                 return False
