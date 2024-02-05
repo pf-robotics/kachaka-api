@@ -443,6 +443,57 @@ message GetDynamicTransformResponse {
   repeated RosTransformStamped transforms = 1;
 }
 
+// Map
+message MapListEntry {
+  string id = 2;
+  string name = 1;
+}
+
+message GetMapListResponse {
+  Metadata metadata = 1;
+  repeated MapListEntry map_list_entries = 2;
+}
+
+message GetCurrentMapIdResponse {
+  Metadata metadata = 1;
+  string id = 2;  // empty if no map is available
+}
+
+message LoadMapPreviewRequest {
+  string map_id = 1;
+}
+
+message LoadMapPreviewResponse {
+  Result result = 1;
+  Map map = 2;
+}
+
+message ExportMapRequest {
+  string map_id = 1;
+}
+
+message ExportMapResponse {
+  message MiddleOfStream {
+    bytes data = 1;
+  }
+  message EndOfStream {
+    Result result = 1;
+  }
+  oneof response {
+    MiddleOfStream middle_of_stream = 1;
+    EndOfStream end_of_stream = 2;
+  }
+}
+
+message ImportMapRequest {
+  bytes data = 1;
+}
+
+message ImportMapResponse {
+  Result result = 1;
+  string map_id = 2;
+}
+
 // History
 message History {
   string id = 1;
@@ -484,6 +535,11 @@ service KachakaApi {
   rpc SetManualControlEnabled (SetManualControlEnabledRequest) returns (SetManualControlEnabledResponse);
   rpc GetManualControlEnabled (GetRequest) returns (GetManualControlEnabledResponse);
   rpc SetRobotVelocity (SetRobotVelocityRequest) returns (SetRobotVelocityResponse);
+  rpc GetMapList (GetRequest) returns (GetMapListResponse);
+  rpc GetCurrentMapId (GetRequest) returns (GetCurrentMapIdResponse);
+  rpc LoadMapPreview (LoadMapPreviewRequest) returns (LoadMapPreviewResponse);
+  rpc ExportMap (ExportMapRequest) returns (stream ExportMapResponse);
+  rpc ImportMap (stream ImportMapRequest) returns (ImportMapResponse);
   rpc GetHistoryList (GetRequest) returns (GetHistoryListResponse);
   rpc GetStaticTransform (GetRequest) returns (GetStaticTransformResponse);
   rpc GetDynamicTransform (EmptyRequest) returns (stream GetDynamicTransformResponse);
