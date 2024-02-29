@@ -176,6 +176,16 @@ class KachakaApiClient(KachakaApiClientBase):
         ](self.stub.GetLocations, lambda r: r.locations)
         self.set_locations_callback = self.locations.set_callback
 
+        self.map_list = ResponseHandler[
+            pb2.GetMapListResponse, RepeatedCompositeContainer
+        ](self.stub.GetMapList, lambda r: r.map_list_entries)
+        self.set_map_list_callback = self.map_list.set_callback
+
+        self.current_map_id = ResponseHandler[pb2.GetCurrentMapIdResponse, str](
+            self.stub.GetCurrentMapId, lambda r: r.id
+        )
+        self.set_current_map_id_callback = self.current_map_id.set_callback
+
         self.history_list = ResponseHandler[
             pb2.GetHistoryListResponse, RepeatedCompositeContainer
         ](self.stub.GetHistoryList, lambda r: r.histories)
