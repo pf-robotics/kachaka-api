@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Iterator
+
 import grpc
 from google._upb._message import RepeatedCompositeContainer
 
@@ -420,6 +422,59 @@ class KachakaApiClientBase:
     def set_robot_stop(self):
         self.set_robot_velocity(0, 0)
         self.set_manual_control_enabled(False)
+
+    def get_map_list(self) -> RepeatedCompositeContainer:
+        request = pb2.GetRequest()
+        response: pb2.GetMapListResponse = self.stub.GetMapList(request)
+        return response.map_list_entries
+
+    def get_current_map_id(self) -> str:
+        request = pb2.GetRequest()
+        response: pb2.GetCurrentMapIdResponse = self.stub.GetCurrentMapId(
+            request
+        )
+        return response.id
+
+    def load_map_preview(self, map_id: str) -> tuple[pb2.Result, pb2.Map]:
+        request = pb2.LoadMapPreviewRequest(map_id=map_id)
+        response: pb2.LoadMapPreviewResponse = self.stub.LoadMapPreview(request)
+        return response.map
+
+    def export_map(self, map_id: str, output_file_path: str) -> pb2.Result:
+        request = pb2.ExportMapRequest(map_id=map_id)
+        responses: Iterator[pb2.ExportMapResponse] = self.stub.ExportMap(
+            request
+        )
+        data = bytes()
+        result = pb2.Result(success=False)
+        for response in responses:
+            if response.HasField("middle_of_stream"):
+                data += response.middle_of_stream.data
+            elif response.HasField("end_of_stream"):
+                result = response.end_of_stream.result
+
+        if not result.success:
+            return result
+
+        with open(output_file_path, "wb") as file:
+            file.write(data)
+        return result
+
+    def import_map(
+        self, target_file_path: str, chunk_size: int = 1024 * 1024
+    ) -> tuple[pb2.Result, str]:
+        def request_iterator() -> Iterator[pb2.ImportMapRequest]:
+            with open(target_file_path, mode="rb") as file:
+                while True:
+                    chunk: bytes = file.read(chunk_size)
+                    if not chunk:
+                        break
+                    yield pb2.ImportMapRequest(data=chunk)
+
+        response: pb2.ImportMapResponse = self.stub.ImportMap(
+            request_iterator()
+        )
+        return response.result, response.map_id
 
     def get_history_list(
         self,

@@ -140,6 +140,31 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.SetRobotVelocityRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.SetRobotVelocityResponse.FromString,
                 )
+        self.GetMapList = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetMapList',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetMapListResponse.FromString,
+                )
+        self.GetCurrentMapId = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetCurrentMapId',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetCurrentMapIdResponse.FromString,
+                )
+        self.LoadMapPreview = channel.unary_unary(
+                '/kachaka_api.KachakaApi/LoadMapPreview',
+                request_serializer=kachaka__api__pb2.LoadMapPreviewRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.LoadMapPreviewResponse.FromString,
+                )
+        self.ExportMap = channel.unary_stream(
+                '/kachaka_api.KachakaApi/ExportMap',
+                request_serializer=kachaka__api__pb2.ExportMapRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.ExportMapResponse.FromString,
+                )
+        self.ImportMap = channel.stream_unary(
+                '/kachaka_api.KachakaApi/ImportMap',
+                request_serializer=kachaka__api__pb2.ImportMapRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.ImportMapResponse.FromString,
+                )
         self.GetHistoryList = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetHistoryList',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
@@ -311,6 +336,36 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetMapList(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetCurrentMapId(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LoadMapPreview(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ExportMap(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ImportMap(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetHistoryList(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -456,6 +511,31 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.SetRobotVelocity,
                     request_deserializer=kachaka__api__pb2.SetRobotVelocityRequest.FromString,
                     response_serializer=kachaka__api__pb2.SetRobotVelocityResponse.SerializeToString,
+            ),
+            'GetMapList': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMapList,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetMapListResponse.SerializeToString,
+            ),
+            'GetCurrentMapId': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCurrentMapId,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetCurrentMapIdResponse.SerializeToString,
+            ),
+            'LoadMapPreview': grpc.unary_unary_rpc_method_handler(
+                    servicer.LoadMapPreview,
+                    request_deserializer=kachaka__api__pb2.LoadMapPreviewRequest.FromString,
+                    response_serializer=kachaka__api__pb2.LoadMapPreviewResponse.SerializeToString,
+            ),
+            'ExportMap': grpc.unary_stream_rpc_method_handler(
+                    servicer.ExportMap,
+                    request_deserializer=kachaka__api__pb2.ExportMapRequest.FromString,
+                    response_serializer=kachaka__api__pb2.ExportMapResponse.SerializeToString,
+            ),
+            'ImportMap': grpc.stream_unary_rpc_method_handler(
+                    servicer.ImportMap,
+                    request_deserializer=kachaka__api__pb2.ImportMapRequest.FromString,
+                    response_serializer=kachaka__api__pb2.ImportMapResponse.SerializeToString,
             ),
             'GetHistoryList': grpc.unary_unary_rpc_method_handler(
                     servicer.GetHistoryList,
@@ -905,6 +985,91 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/SetRobotVelocity',
             kachaka__api__pb2.SetRobotVelocityRequest.SerializeToString,
             kachaka__api__pb2.SetRobotVelocityResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetMapList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetMapList',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetMapListResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetCurrentMapId(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetCurrentMapId',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetCurrentMapIdResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def LoadMapPreview(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/LoadMapPreview',
+            kachaka__api__pb2.LoadMapPreviewRequest.SerializeToString,
+            kachaka__api__pb2.LoadMapPreviewResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ExportMap(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/kachaka_api.KachakaApi/ExportMap',
+            kachaka__api__pb2.ExportMapRequest.SerializeToString,
+            kachaka__api__pb2.ExportMapResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ImportMap(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(request_iterator, target, '/kachaka_api.KachakaApi/ImportMap',
+            kachaka__api__pb2.ImportMapRequest.SerializeToString,
+            kachaka__api__pb2.ImportMapResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
