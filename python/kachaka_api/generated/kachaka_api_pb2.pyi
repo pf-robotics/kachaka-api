@@ -705,6 +705,82 @@ class GetDynamicTransformResponse(_message.Message):
     transforms: _containers.RepeatedCompositeFieldContainer[RosTransformStamped]
     def __init__(self, transforms: _Optional[_Iterable[_Union[RosTransformStamped, _Mapping]]] = ...) -> None: ...
 
+class MapListEntry(_message.Message):
+    __slots__ = ["id", "name"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    name: str
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
+
+class GetMapListResponse(_message.Message):
+    __slots__ = ["metadata", "map_list_entries"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    MAP_LIST_ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    map_list_entries: _containers.RepeatedCompositeFieldContainer[MapListEntry]
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., map_list_entries: _Optional[_Iterable[_Union[MapListEntry, _Mapping]]] = ...) -> None: ...
+
+class GetCurrentMapIdResponse(_message.Message):
+    __slots__ = ["metadata", "id"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    id: str
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., id: _Optional[str] = ...) -> None: ...
+
+class LoadMapPreviewRequest(_message.Message):
+    __slots__ = ["map_id"]
+    MAP_ID_FIELD_NUMBER: _ClassVar[int]
+    map_id: str
+    def __init__(self, map_id: _Optional[str] = ...) -> None: ...
+
+class LoadMapPreviewResponse(_message.Message):
+    __slots__ = ["result", "map"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    MAP_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    map: Map
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map: _Optional[_Union[Map, _Mapping]] = ...) -> None: ...
+
+class ExportMapRequest(_message.Message):
+    __slots__ = ["map_id"]
+    MAP_ID_FIELD_NUMBER: _ClassVar[int]
+    map_id: str
+    def __init__(self, map_id: _Optional[str] = ...) -> None: ...
+
+class ExportMapResponse(_message.Message):
+    __slots__ = ["middle_of_stream", "end_of_stream"]
+    class MiddleOfStream(_message.Message):
+        __slots__ = ["data"]
+        DATA_FIELD_NUMBER: _ClassVar[int]
+        data: bytes
+        def __init__(self, data: _Optional[bytes] = ...) -> None: ...
+    class EndOfStream(_message.Message):
+        __slots__ = ["result"]
+        RESULT_FIELD_NUMBER: _ClassVar[int]
+        result: Result
+        def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+    MIDDLE_OF_STREAM_FIELD_NUMBER: _ClassVar[int]
+    END_OF_STREAM_FIELD_NUMBER: _ClassVar[int]
+    middle_of_stream: ExportMapResponse.MiddleOfStream
+    end_of_stream: ExportMapResponse.EndOfStream
+    def __init__(self, middle_of_stream: _Optional[_Union[ExportMapResponse.MiddleOfStream, _Mapping]] = ..., end_of_stream: _Optional[_Union[ExportMapResponse.EndOfStream, _Mapping]] = ...) -> None: ...
+
+class ImportMapRequest(_message.Message):
+    __slots__ = ["data"]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    data: bytes
+    def __init__(self, data: _Optional[bytes] = ...) -> None: ...
+
+class ImportMapResponse(_message.Message):
+    __slots__ = ["result", "map_id"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    MAP_ID_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    map_id: str
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map_id: _Optional[str] = ...) -> None: ...
+
 class History(_message.Message):
     __slots__ = ["id", "command", "success", "error_code", "command_executed_time"]
     ID_FIELD_NUMBER: _ClassVar[int]
