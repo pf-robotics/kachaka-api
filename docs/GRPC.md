@@ -208,5 +208,3 @@ sequenceDiagram
   B -->>- C: 
 
 ```
-
-
