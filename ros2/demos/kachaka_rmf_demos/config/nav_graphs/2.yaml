@@ -1,0 +1,19 @@
+building_name: kachaka-youtalk
+doors: {}
+levels:
+  youtalk:
+    lanes:
+    - - 0
+      - 1
+      - {}
+    - - 1
+      - 0
+      - {}
+    vertices:
+    - - 7.608118742117873
+      - -5.108760951617469
+      - {name: Dining}
+    - - 7.608118742117873
+      - -5.989371654890708
+      - {name: ''}
+lifts: {}

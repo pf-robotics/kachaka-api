@@ -1,0 +1,22 @@
+<?xml version='1.0' ?>
+<launch>
+  <arg name="map_name" description="Name of the rmf_demos map to simulate" />
+  <arg name="initial_map" default="youtalk" description="Initial map name for the visualizer"/>
+  <arg name="ignition_version" default='6'/>
+
+  <let name="world_path" value="$(find-pkg-share kachaka_rmf_demos)/config/$(var map_name).world" />
+  <let name="model_path" value="$(find-pkg-share kachaka_rmf_demos)/config/$(var map_name)_$(var initial_map):$(env HOME)/.gazebo/models" />
+  <let name="plugin_path" value="$(find-pkg-prefix rmf_robot_sim_gz_plugins)/lib/rmf_robot_sim_gz_plugins:$(find-pkg-prefix rmf_building_sim_gz_plugins)/lib/rmf_building_sim_gz_plugins" />
+
+  <executable cmd="ign gazebo --force-version $(var ignition_version) $(var ign_headless) $(var tpe_engine) -r -v 4 $(var world_path)" output="both">
+    <env name="IGN_GAZEBO_RESOURCE_PATH" value="$(var model_path):$(var world_path)" />
+    <env name="IGN_GAZEBO_SYSTEM_PLUGIN_PATH" value="$(var plugin_path)"/>
+    <env name="IGN_GUI_PLUGIN_PATH" value="$(var plugin_path)"/>
+  </executable>
+
+  <!-- ros_ign bridge for simulation clock -->
+  <node pkg="ros_ign_bridge" exec="parameter_bridge"
+    args="/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock"
+    />
+
+</launch>
