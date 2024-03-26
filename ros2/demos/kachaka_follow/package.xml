@@ -9,7 +9,7 @@
   <author email="support@kachaka.life">Kachaka Customer Support</author>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>rclpy</exec_depend>
-  <exec_depend>geoemetry_msgs</exec_depend>
+  <exec_depend>common_interfaces</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>kachaka_interfaces</exec_depend>
 
