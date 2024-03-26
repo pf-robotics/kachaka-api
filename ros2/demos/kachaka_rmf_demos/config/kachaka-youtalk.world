@@ -15,8 +15,8 @@
       </plugin>
     </gui>
     <include>
-      <name>kachaka-youtalk</name>
-      <uri>model://kachaka-youtalk</uri>
+      <name>kachaka-youtalk_youtalk</name>
+      <uri>model://kachaka-youtalk_youtalk</uri>
       <pose>0 0 0.0 0 0 0</pose>
     </include>
     <rmf_charger_waypoints name="charger_waypoints">
