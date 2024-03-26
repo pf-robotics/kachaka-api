@@ -90,7 +90,7 @@ levels:
       - {name: ''}
     - - 7.672877544187198
       - -2.395753616723083
-      - {is_charger: false, name: Charger}
+      - {is_charger: true, name: Charger}
     - - 8.391591242287125
       - -3.036776571407016
       - {name: ''}

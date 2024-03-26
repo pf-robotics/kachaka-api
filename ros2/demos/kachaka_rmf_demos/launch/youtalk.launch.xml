@@ -2,10 +2,24 @@
 
 <launch>
   <arg name="use_sim_time" default="false"/>
+  <arg name="ignition_version" default="6"/>
 
   <include file="$(find-pkg-share kachaka_rmf_demos)/launch/common.launch.xml">
     <arg name="use_sim_time" value="$(var use_sim_time)"/>
     <arg name="viz_config_file" value ="$(find-pkg-share kachaka_rmf_demos)/config/youtalk.rviz"/>
     <arg name="config_file" value="$(find-pkg-share kachaka_rmf_demos)/config/kachaka-youtalk.building.yaml"/>
+  </include>
+
+  <group>
+    <include file="$(find-pkg-share rmf_demos_fleet_adapter)/launch/fleet_adapter.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="nav_graph_file" value="$(find-pkg-share kachaka_rmf_demos)/config/nav_graphs/0.yaml" />
+      <arg name="config_file" value="$(find-pkg-share rmf_demos)/config/clinic/deliveryRobot_config.yaml"/>
+    </include>
+  </group>
+
+  <include file="$(find-pkg-share rmf_demos_gz)/simulation.launch.xml">
+    <arg name="map_name" value="kachaka-youtalk" />
+    <arg name="ignition_version" value="$(var ignition_version)" />
   </include>
 </launch>

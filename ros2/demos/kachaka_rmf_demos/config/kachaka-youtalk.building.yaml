@@ -17,7 +17,7 @@ graphs:
 levels:
   youtalk:
     drawing:
-      filename: ./map.png
+      filename: map.png
     elevation: 0
     floors:
       - parameters: {ceiling_scale: [3, 1], ceiling_texture: [1, blue_linoleum], indoor: [2, 0], texture_name: [1, blue_linoleum], texture_rotation: [3, 0], texture_scale: [3, 1]}
@@ -88,7 +88,7 @@ levels:
       - [368.262, 225.29599999999999, 0, ""]
       - [357.54599999999999, 214.84200000000001, 0, ""]
       - [470.71699999999998, 214.31899999999999, 0, ""]
-      - [309.71699999999998, 96.704999999999998, 0, Charger, {is_charger: [4, false]}]
+      - [309.71699999999998, 96.704999999999998, 0, Charger, {is_charger: [4, true]}]
       - [338.20499999999998, 62.726999999999997, 0, ""]
       - [420.01299999999998, 120.75, 0, Bath]
       - [277.30799999999999, 123.887, 0, Kitchen]
