@@ -17,7 +17,7 @@ graphs:
 levels:
   youtalk:
     drawing:
-      filename: ../Desktop/var/opt/pfn/profiles/5f6f759a-5f66-4023-a8e8-661ceea2b993/map/map.png
+      filename: ./map.png
     elevation: 0
     floors:
       - parameters: {ceiling_scale: [3, 1], ceiling_texture: [1, blue_linoleum], indoor: [2, 0], texture_name: [1, blue_linoleum], texture_rotation: [3, 0], texture_scale: [3, 1]}
