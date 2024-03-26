@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>kachaka_bringup</name>
+  <name>kachaka_nav2_bringup</name>
   <version>1.0.12</version>
   <description>Bringup scripts and configurations for the Nav2 stack</description>
   <maintainer email="support@kachaka.life">Kachaka Customer Support</maintainer>

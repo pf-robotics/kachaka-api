@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(kachaka_bringup)
+project(kachaka_nav2_bringup)
 
 find_package(ament_cmake REQUIRED)
 find_package(nav2_common REQUIRED)
