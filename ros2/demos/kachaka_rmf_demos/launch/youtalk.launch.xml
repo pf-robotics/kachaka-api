@@ -1,0 +1,11 @@
+<?xml version='1.0' ?>
+
+<launch>
+  <arg name="use_sim_time" default="false"/>
+
+  <include file="$(find-pkg-share kachaka_rmf_demos)/common.launch.xml">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    <arg name="viz_config_file" value ="$(find-pkg-share kachaka_rmf_demos)/config/youtalk.rviz"/>
+    <arg name="config_file" value="$(find-pkg-share kachaka_rmf_demos)/config/kachaka-youtalk.building.yaml"/>
+  </include>
+</launch>
