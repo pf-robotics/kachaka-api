@@ -235,6 +235,7 @@ message Command {
     DockShelfCommand dock_shelf_command = 9;
     SpeakCommand speak_command = 12;
     MoveToPoseCommand move_to_pose_command = 13;
+    LockCommand lock_command = 15;
   }
 }
 
@@ -248,6 +249,9 @@ message ReturnShelfCommand {
 }
 
 message UndockShelfCommand {
+  // target_shelf_id can remain unset at the time of the request. It is filled
+  // in when retrieving the status or result of the issued command to identify
+  // which shelf was undocked. See GetLastCommandResultResponse for reference.
   string target_shelf_id = 1;
 }
 
@@ -269,6 +273,10 @@ message MoveToPoseCommand {
   double x = 1;
   double y = 2;
   double yaw = 3;
+}
+
+message LockCommand {
+  double duration_sec = 1;
 }
 
 enum CommandState {
@@ -387,6 +395,10 @@ message GetLastCommandResultResponse {
   string command_id = 4;
 }
 
+message ProceedResponse {
+  Result result = 1;
+}
+
 message GetLocationsResponse {
   Metadata metadata = 1;
   repeated Location locations = 2;
@@ -396,6 +408,19 @@ message GetLocationsResponse {
 message GetShelvesResponse {
   Metadata metadata = 1;
   repeated Shelf shelves = 2;
+}
+
+message GetMovingShelfIdResponse {
+  Metadata metadata = 1;
+  string shelf_id = 2;  // Empty if no shelf
+}
+
+message ResetShelfPoseRequest {
+  string shelf_id = 1;  // If empty, resetting all shelves
+}
+
+message ResetShelfPoseResponse {
+  Result result = 1;
 }
 
 message SetAutoHomingEnabledRequest {
@@ -528,8 +553,11 @@ service KachakaApi {
   rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
   rpc GetCommandState (GetRequest) returns (GetCommandStateResponse);
   rpc GetLastCommandResult (GetRequest) returns (GetLastCommandResultResponse);
+  rpc Proceed (EmptyRequest) returns (ProceedResponse);
   rpc GetLocations (GetRequest) returns (GetLocationsResponse);
   rpc GetShelves (GetRequest) returns (GetShelvesResponse);
+  rpc GetMovingShelfId (GetRequest) returns (GetMovingShelfIdResponse);
+  rpc ResetShelfPose (ResetShelfPoseRequest) returns (ResetShelfPoseResponse);
   rpc SetAutoHomingEnabled (SetAutoHomingEnabledRequest) returns (SetAutoHomingEnabledResponse);
   rpc GetAutoHomingEnabled (GetRequest) returns (GetAutoHomingEnabledResponse);
   rpc SetManualControlEnabled (SetManualControlEnabledRequest) returns (SetManualControlEnabledResponse);

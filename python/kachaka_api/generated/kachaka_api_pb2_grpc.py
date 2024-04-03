@@ -105,6 +105,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetLastCommandResultResponse.FromString,
                 )
+        self.Proceed = channel.unary_unary(
+                '/kachaka_api.KachakaApi/Proceed',
+                request_serializer=kachaka__api__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.ProceedResponse.FromString,
+                )
         self.GetLocations = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetLocations',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
@@ -114,6 +119,16 @@ class KachakaApiStub(object):
                 '/kachaka_api.KachakaApi/GetShelves',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetShelvesResponse.FromString,
+                )
+        self.GetMovingShelfId = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetMovingShelfId',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetMovingShelfIdResponse.FromString,
+                )
+        self.ResetShelfPose = channel.unary_unary(
+                '/kachaka_api.KachakaApi/ResetShelfPose',
+                request_serializer=kachaka__api__pb2.ResetShelfPoseRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.ResetShelfPoseResponse.FromString,
                 )
         self.SetAutoHomingEnabled = channel.unary_unary(
                 '/kachaka_api.KachakaApi/SetAutoHomingEnabled',
@@ -294,6 +309,12 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Proceed(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetLocations(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -301,6 +322,18 @@ class KachakaApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetShelves(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetMovingShelfId(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ResetShelfPose(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -477,6 +510,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetLastCommandResultResponse.SerializeToString,
             ),
+            'Proceed': grpc.unary_unary_rpc_method_handler(
+                    servicer.Proceed,
+                    request_deserializer=kachaka__api__pb2.EmptyRequest.FromString,
+                    response_serializer=kachaka__api__pb2.ProceedResponse.SerializeToString,
+            ),
             'GetLocations': grpc.unary_unary_rpc_method_handler(
                     servicer.GetLocations,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
@@ -486,6 +524,16 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetShelves,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetShelvesResponse.SerializeToString,
+            ),
+            'GetMovingShelfId': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMovingShelfId,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetMovingShelfIdResponse.SerializeToString,
+            ),
+            'ResetShelfPose': grpc.unary_unary_rpc_method_handler(
+                    servicer.ResetShelfPose,
+                    request_deserializer=kachaka__api__pb2.ResetShelfPoseRequest.FromString,
+                    response_serializer=kachaka__api__pb2.ResetShelfPoseResponse.SerializeToString,
             ),
             'SetAutoHomingEnabled': grpc.unary_unary_rpc_method_handler(
                     servicer.SetAutoHomingEnabled,
@@ -870,6 +918,23 @@ class KachakaApi(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def Proceed(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/Proceed',
+            kachaka__api__pb2.EmptyRequest.SerializeToString,
+            kachaka__api__pb2.ProceedResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetLocations(request,
             target,
             options=(),
@@ -900,6 +965,40 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetShelves',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetShelvesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetMovingShelfId(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetMovingShelfId',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetMovingShelfIdResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ResetShelfPose(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/ResetShelfPose',
+            kachaka__api__pb2.ResetShelfPoseRequest.SerializeToString,
+            kachaka__api__pb2.ResetShelfPoseResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -372,7 +372,7 @@ class ObjectDetection(_message.Message):
     def __init__(self, label: _Optional[int] = ..., roi: _Optional[_Union[RegionOfInterest, _Mapping]] = ..., score: _Optional[float] = ..., distance_median: _Optional[float] = ...) -> None: ...
 
 class Command(_message.Message):
-    __slots__ = ["move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command"]
+    __slots__ = ["move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command"]
     MOVE_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     RETURN_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     UNDOCK_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
@@ -381,6 +381,7 @@ class Command(_message.Message):
     DOCK_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     SPEAK_COMMAND_FIELD_NUMBER: _ClassVar[int]
     MOVE_TO_POSE_COMMAND_FIELD_NUMBER: _ClassVar[int]
+    LOCK_COMMAND_FIELD_NUMBER: _ClassVar[int]
     move_shelf_command: MoveShelfCommand
     return_shelf_command: ReturnShelfCommand
     undock_shelf_command: UndockShelfCommand
@@ -389,7 +390,8 @@ class Command(_message.Message):
     dock_shelf_command: DockShelfCommand
     speak_command: SpeakCommand
     move_to_pose_command: MoveToPoseCommand
-    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ...) -> None: ...
+    lock_command: LockCommand
+    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ...) -> None: ...
 
 class MoveShelfCommand(_message.Message):
     __slots__ = ["target_shelf_id", "destination_location_id"]
@@ -440,6 +442,12 @@ class MoveToPoseCommand(_message.Message):
     y: float
     yaw: float
     def __init__(self, x: _Optional[float] = ..., y: _Optional[float] = ..., yaw: _Optional[float] = ...) -> None: ...
+
+class LockCommand(_message.Message):
+    __slots__ = ["duration_sec"]
+    DURATION_SEC_FIELD_NUMBER: _ClassVar[int]
+    duration_sec: float
+    def __init__(self, duration_sec: _Optional[float] = ...) -> None: ...
 
 class EmptyRequest(_message.Message):
     __slots__ = []
@@ -617,6 +625,12 @@ class GetLastCommandResultResponse(_message.Message):
     command_id: str
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., result: _Optional[_Union[Result, _Mapping]] = ..., command: _Optional[_Union[Command, _Mapping]] = ..., command_id: _Optional[str] = ...) -> None: ...
 
+class ProceedResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
 class GetLocationsResponse(_message.Message):
     __slots__ = ["metadata", "locations", "default_location_id"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -634,6 +648,26 @@ class GetShelvesResponse(_message.Message):
     metadata: Metadata
     shelves: _containers.RepeatedCompositeFieldContainer[Shelf]
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., shelves: _Optional[_Iterable[_Union[Shelf, _Mapping]]] = ...) -> None: ...
+
+class GetMovingShelfIdResponse(_message.Message):
+    __slots__ = ["metadata", "shelf_id"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SHELF_ID_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    shelf_id: str
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., shelf_id: _Optional[str] = ...) -> None: ...
+
+class ResetShelfPoseRequest(_message.Message):
+    __slots__ = ["shelf_id"]
+    SHELF_ID_FIELD_NUMBER: _ClassVar[int]
+    shelf_id: str
+    def __init__(self, shelf_id: _Optional[str] = ...) -> None: ...
+
+class ResetShelfPoseResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
 
 class SetAutoHomingEnabledRequest(_message.Message):
     __slots__ = ["enable"]
