@@ -372,6 +372,18 @@ class KachakaApiClientBase:
         response: pb2.GetShelvesResponse = self.stub.GetShelves(request)
         return response.shelves
 
+    def get_moving_shelf_id(self) -> str:
+        request = pb2.GetRequest()
+        response: pb2.GetMovingShelfIdResponse = self.stub.GetMovingShelfId(
+            request
+        )
+        return response.shelf_id
+
+    def reset_shelf_pose(self, shelf_id: str) -> pb2.Result:
+        request = pb2.ResetShelfPoseRequest(shelf_id=shelf_id)
+        response: pb2.ResetShelfPoseResponse = self.stub.ResetShelfPose(request)
+        return response.result
+
     def set_auto_homing_enabled(self, enable: bool) -> pb2.Result:
         request = pb2.SetAutoHomingEnabledRequest(enable=enable)
         response: pb2.SetAutoHomingEnabledResponse = (

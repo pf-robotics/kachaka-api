@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 from kachaka_api.aio import KachakaApiClient  # noqa: E402
 
 
-def parse_args() -> argparse.Namespace:
+def pares_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="export map data to file")
 
     parser.add_argument(
@@ -33,7 +33,7 @@ def parse_args() -> argparse.Namespace:
 
 
 async def main() -> None:
-    args = parse_args()
+    args = pares_args()
 
     client = (
         KachakaApiClient()

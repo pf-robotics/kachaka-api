@@ -171,6 +171,11 @@ class KachakaApiClient(KachakaApiClientBase):
         ](self.stub.GetShelves, lambda r: r.shelves)
         self.set_shelves_callback = self.shelves.set_callback
 
+        self.moving_shelf_id = ResponseHandler[
+            pb2.GetMovingShelfIdResponse, str
+        ](self.stub.GetMovingShelfId, lambda r: r.shelf_id)
+        self.set_moving_shelf_id_callback = self.moving_shelf_id.set_callback
+
         self.locations = ResponseHandler[
             pb2.GetLocationsResponse, RepeatedCompositeContainer
         ](self.stub.GetLocations, lambda r: r.locations)
