@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # カチャカの地図をインポートする実行形式のスクリプトのサンプルです。
-# Usage: python3 import_map.py --ip_address <カチャカのIPアドレス> --output_dir <出力先ディレクトリ>
+# Usage: python3 import_map.py --ip_address <カチャカのIPアドレス> --input_file <インポートするマップファイル>
 
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--ip_address",
         type=str,
+        default="100.94.1.1",
         help="IP Address of Kachaka",
     )
     parser.add_argument(
