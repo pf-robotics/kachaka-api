@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output_dir",
         type=str,
-        default=os.path.dirname(os.path.abspath(__file__)),
+        default=os.getcwd(),
         help="output directory",
     )
     return parser.parse_args()
