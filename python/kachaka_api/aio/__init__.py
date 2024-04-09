@@ -121,6 +121,18 @@ class KachakaApiClient(KachakaApiClientBase):
             self.object_detection.set_tuple_callback
         )
 
+        self.object_detection_features = TupleResponseHandler[
+            pb2.GetObjectDetectionFeaturesResponse,
+            tuple[pb2.RosHeader, RepeatedCompositeContainer],
+            [pb2.RosHeader, RepeatedCompositeContainer],
+        ](
+            self.stub.GetObjectDetectionFeatures,
+            lambda r: (r.header, r.features),
+        )
+        self.object_detection_features_callback = (
+            self.object_detection_features.set_tuple_callback
+        )
+
         self.ros_imu = ResponseHandler[pb2.GetRosImuResponse, pb2.RosImu](
             self.stub.GetRosImu, lambda r: r.imu
         )
