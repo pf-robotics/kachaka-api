@@ -64,6 +64,15 @@ class KachakaApiClientBase:
         )
         return (response.header, response.objects)
 
+    def get_object_detection_features(
+        self,
+    ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
+        request = pb2.GetRequest()
+        response: pb2.GetObjectDetectionFeaturesResponse = (
+            self.stub.GetObjectDetectionFeatures(request)
+        )
+        return (response.header, response.features)
+
     def get_ros_imu(self) -> pb2.RosImu:
         request = pb2.GetRequest()
         response: pb2.GetRosImuResponse = self.stub.GetRosImu(request)

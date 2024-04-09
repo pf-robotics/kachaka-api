@@ -224,6 +224,12 @@ message ObjectDetection {
   double distance_median = 4;
 }
 
+message ObjectDetectionFeatures {
+  string name = 1;
+  repeated uint32 shape = 2;
+  repeated float data = 3;
+}
+
 // Commands
 message Command {
   oneof command {
@@ -317,6 +323,12 @@ message GetObjectDetectionResponse {
   Metadata metadata = 1;
   RosHeader header = 2;
   repeated ObjectDetection objects = 3;
+}
+
+message GetObjectDetectionFeaturesResponse {
+  Metadata metadata = 1;
+  RosHeader header = 2;
+  repeated ObjectDetectionFeatures features = 3;
 }
 
 message GetRosImuResponse {
@@ -540,6 +552,7 @@ service KachakaApi {
   rpc GetRobotPose (GetRequest) returns (GetRobotPoseResponse);
   rpc GetPngMap (GetRequest) returns (GetPngMapResponse);
   rpc GetObjectDetection (GetRequest) returns (GetObjectDetectionResponse);
+  rpc GetObjectDetectionFeatures (GetRequest) returns (GetObjectDetectionFeaturesResponse);
   rpc GetRosImu (GetRequest) returns (GetRosImuResponse);
   rpc GetRosOdometry (GetRequest) returns (GetRosOdometryResponse);
   rpc GetRosLaserScan (GetRequest) returns (GetRosLaserScanResponse);

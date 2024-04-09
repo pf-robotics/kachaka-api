@@ -40,6 +40,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetObjectDetectionResponse.FromString,
                 )
+        self.GetObjectDetectionFeatures = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetObjectDetectionFeatures',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetObjectDetectionFeaturesResponse.FromString,
+                )
         self.GetRosImu = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetRosImu',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
@@ -226,6 +231,12 @@ class KachakaApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetObjectDetection(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetObjectDetectionFeatures(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -444,6 +455,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetObjectDetection,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetObjectDetectionResponse.SerializeToString,
+            ),
+            'GetObjectDetectionFeatures': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetObjectDetectionFeatures,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetObjectDetectionFeaturesResponse.SerializeToString,
             ),
             'GetRosImu': grpc.unary_unary_rpc_method_handler(
                     servicer.GetRosImu,
@@ -693,6 +709,23 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetObjectDetection',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetObjectDetectionResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetObjectDetectionFeatures(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetObjectDetectionFeatures',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetObjectDetectionFeaturesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
