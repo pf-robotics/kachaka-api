@@ -1,1 +1,0 @@
-../python/demos/export_current_map.py
