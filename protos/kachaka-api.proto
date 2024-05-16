@@ -250,6 +250,8 @@ message Command {
     SpeakCommand speak_command = 12;
     MoveToPoseCommand move_to_pose_command = 13;
     LockCommand lock_command = 15;
+    MoveForwardCommand move_forward_command = 16;
+    RotateInPlaceCommand rotate_in_place_command = 17;
   }
 }
 
@@ -291,6 +293,14 @@ message MoveToPoseCommand {
 
 message LockCommand {
   double duration_sec = 1;
+}
+
+message MoveForwardCommand {
+  double distance_meter = 1;
+}
+
+message RotateInPlaceCommand {
+  double angle_radian = 1;
 }
 
 enum CommandState {
@@ -601,6 +611,15 @@ message GetHistoryListResponse {
   repeated History histories = 2;
 }
 
+message SwitchMapRequest {
+  string map_id = 1;
+  Pose initial_pose = 2;  // use the charger pose if the message is empty
+}
+
+message SwitchMapResponse {
+  Result result = 1;
+}
+
 // Services
 service KachakaApi {
   rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
@@ -647,4 +666,5 @@ service KachakaApi {
   rpc GetHistoryList (GetRequest) returns (GetHistoryListResponse);
   rpc GetStaticTransform (GetRequest) returns (GetStaticTransformResponse);
   rpc GetDynamicTransform (EmptyRequest) returns (stream GetDynamicTransformResponse);
+  rpc SwitchMap (SwitchMapRequest) returns (SwitchMapResponse);
 }
