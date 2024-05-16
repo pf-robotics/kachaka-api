@@ -1,14 +1,56 @@
+import contextlib
 import io
-from typing import List
+import threading
+from typing import Generator, List, Optional
 
+import grpc
 import numpy as np
 from google._upb._message import RepeatedCompositeContainer
 from PIL import Image, ImageDraw, ImageFont
 
 from ..generated import kachaka_api_pb2 as pb2
+from ..generated.kachaka_api_pb2_grpc import KachakaApiStub
 
 OBJECT_LABEL = ["?", "person", "shelf", "charger", "door"]
 OBJECT_LABEL_COLOR = ["pink", "green", "blue", "cyan", "red"]
+
+
+class LaserScanActivator:
+    def __init__(self, target: str = "100.94.1.1:26400") -> None:
+        self._stub = KachakaApiStub(grpc.insecure_channel(target))
+        self._thread: Optional[threading.Thread] = None
+        self._disposing = threading.Event()
+
+    @contextlib.contextmanager
+    def activate(self) -> Generator[None, None, None]:
+        try:
+            self._start()
+            yield
+        except Exception as e:
+            raise e
+        finally:
+            self._stop()
+
+    def _activation_loop(
+        self,
+        duration_sec: float = 5.0,
+        publish_rate: float = 1.0,
+    ) -> None:
+        request = pb2.ActivateLaserScanRequest(duration_sec=duration_sec)
+        wait_timeout = 1 / publish_rate
+        while not self._disposing.is_set():
+            self._stub.ActivateLaserScan(request)
+            self._disposing.wait(timeout=wait_timeout)
+
+    def _stop(self) -> None:
+        if self._thread:
+            self._disposing.set()
+            self._thread.join()
+
+    def _start(self) -> None:
+        self._disposing.clear()
+        self._thread = threading.Thread(target=self._activation_loop)
+        self._thread.start()
 
 
 def get_bbox_drawn_image(

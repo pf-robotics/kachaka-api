@@ -136,6 +136,33 @@ class KachakaApiClientBase:
         )
         return response.image
 
+    def get_tof_camera_ros_camera_info(self) -> pb2.RosCameraInfo:
+        request = pb2.GetRequest()
+        response: pb2.GetTofCameraRosCameraInfoResponse = (
+            self.stub.GetTofCameraRosCameraInfo(request)
+        )
+        return response.camera_info
+
+    def get_tof_camera_ros_image(self) -> pb2.RosImage:
+        request = pb2.GetRequest()
+        response: pb2.GetTofCameraRosImageResponse = (
+            self.stub.GetTofCameraRosImage(request)
+        )
+        if not response.is_available:
+            raise Exception("tof is not available on charger.")
+        return response.image
+
+    def get_tof_camera_ros_compressed_image(
+        self,
+    ) -> pb2.RosCompressedImage:
+        request = pb2.GetRequest()
+        response: pb2.GetTofCameraRosCompressedImageResponse = (
+            self.stub.GetTofCameraRosCompressedImage(request)
+        )
+        if not response.is_available:
+            raise Exception("tof is not available on charger.")
+        return response.image
+
     def start_command(
         self,
         command: pb2.Command,

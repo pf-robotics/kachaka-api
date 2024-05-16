@@ -97,13 +97,14 @@
 
 ![kachaka-api](docs/images/kachka-api.png)
 
-## 前提条件
 
-* カチャカ本体内で動作するJupyterLabに関しては、ブラウザのみ用意すれば使用する事ができます。
+## 対応環境・言語
+
+* カチャカ本体内で動作するJupyterLabを利用することで、OSを問わずWebブラウザのみ用意すれば開発を行うことができます。
   * 対応ブラウザについては、[JupyterLab公式ドキュメント](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html#supported-browsers)をご確認ください。
-* カチャカの外部から本書の手順に従ってカチャカAPIを使用する場合には、以下の条件に準拠したソフトウェアをインストールしたPCが必要となります。
-    * OS
-        *  Ubuntu 22.04 LTS
+* カチャカ外部のPCからAPIを利用することも可能で、本ドキュメントの内容は以下の環境にて確認していますが、多くはmacOSやWindowsなど他の環境でも可能です。
+    * 動作確認済みのOS
+        * Ubuntu 22.04 LTS
     * 開発言語
         * Python3.10
     * ROS 2（使用する場合）
