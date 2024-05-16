@@ -31,7 +31,7 @@ class FrontCameraComponent : public rclcpp::Node {
         CameraBridge<kachaka_api::GetFrontCameraRosCameraInfoResponse,
                      kachaka_api::GetFrontCameraRosImageResponse,
                      kachaka_api::GetFrontCameraRosCompressedImageResponse>>(
-        stub_, this,
+        stub_, this, false,
         std::bind(&kachaka_api::KachakaApi::Stub::GetFrontCameraRosCameraInfo,
                   *stub_, _1, _2, _3),
         std::bind(&kachaka_api::KachakaApi::Stub::GetFrontCameraRosImage,

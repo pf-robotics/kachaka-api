@@ -72,6 +72,14 @@ message TwistWithCovariance {
   repeated double covariance = 2;
 }
 
+enum PowerSupplyStatus {
+  POWER_SUPPLY_STATUS_UNSPECIFIED = 0;
+  POWER_SUPPLY_STATUS_CHARGING = 1;
+  POWER_SUPPLY_STATUS_DISCHARGING = 2;
+  POWER_SUPPLY_STATUS_NOT_CHARGING = 3;
+  POWER_SUPPLY_STATUS_FULL = 4;
+}
+
 message Map {
   bytes data = 1;  // uint8[]
   string name = 2;
@@ -314,6 +322,12 @@ message GetRobotPoseResponse {
   Pose pose = 2;
 }
 
+message GetBatteryInfoResponse {
+  Metadata metadata = 1;
+  double remaining_percentage = 2;  // [0, 100]
+  PowerSupplyStatus power_supply_status = 3;
+}
+
 message GetPngMapResponse {
   Metadata metadata = 1;
   Map map = 2;
@@ -376,11 +390,29 @@ message GetBackCameraRosCompressedImageResponse {
   RosCompressedImage image = 2;
 }
 
+message GetTofCameraRosCameraInfoResponse {
+  Metadata metadata = 1;
+  RosCameraInfo camera_info = 2;
+}
+
+message GetTofCameraRosImageResponse {
+  Metadata metadata = 1;
+  RosImage image = 2;
+  bool is_available = 3;
+}
+
+message GetTofCameraRosCompressedImageResponse {
+  Metadata metadata = 1;
+  RosCompressedImage image = 2;
+  bool is_available = 3;
+}
+
 message StartCommandRequest {
   Command command = 1;
   bool cancel_all = 2;
   string tts_on_success = 3;
   string title = 4;
+  bool deferrable = 5;
 }
 
 message StartCommandResponse {
@@ -462,12 +494,36 @@ message GetManualControlEnabledResponse {
   bool enabled = 2;
 }
 
+message SetFrontTorchIntensityRequest {
+  int32 intensity = 1;  // [0, 255]
+}
+
+message SetFrontTorchIntensityResponse {
+  Result result = 1;
+}
+
+message SetBackTorchIntensityRequest {
+  int32 intensity = 1;  // [0, 255]
+}
+
+message SetBackTorchIntensityResponse {
+  Result result = 1;
+}
+
 message SetRobotVelocityRequest {
   double linear = 1;   // [-1, 1]
   double angular = 2;  // [-1, 1]
 }
 
 message SetRobotVelocityResponse {
+  Result result = 1;
+}
+
+message ActivateLaserScanRequest {
+  double duration_sec = 1;
+}
+
+message ActivateLaserScanResponse {
   Result result = 1;
 }
 
@@ -550,6 +606,7 @@ service KachakaApi {
   rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
   rpc GetRobotVersion (GetRequest) returns (GetRobotVersionResponse);
   rpc GetRobotPose (GetRequest) returns (GetRobotPoseResponse);
+  rpc GetBatteryInfo (GetRequest) returns (GetBatteryInfoResponse);
   rpc GetPngMap (GetRequest) returns (GetPngMapResponse);
   rpc GetObjectDetection (GetRequest) returns (GetObjectDetectionResponse);
   rpc GetObjectDetectionFeatures (GetRequest) returns (GetObjectDetectionFeaturesResponse);
@@ -562,6 +619,9 @@ service KachakaApi {
   rpc GetBackCameraRosCameraInfo (GetRequest) returns (GetBackCameraRosCameraInfoResponse);
   rpc GetBackCameraRosImage (GetRequest) returns (GetBackCameraRosImageResponse);
   rpc GetBackCameraRosCompressedImage (GetRequest) returns (GetBackCameraRosCompressedImageResponse);
+  rpc GetTofCameraRosCameraInfo (GetRequest) returns (GetTofCameraRosCameraInfoResponse);
+  rpc GetTofCameraRosImage (GetRequest) returns (GetTofCameraRosImageResponse);
+  rpc GetTofCameraRosCompressedImage (GetRequest) returns (GetTofCameraRosCompressedImageResponse);
   rpc StartCommand (StartCommandRequest) returns (StartCommandResponse);
   rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
   rpc GetCommandState (GetRequest) returns (GetCommandStateResponse);
@@ -575,7 +635,10 @@ service KachakaApi {
   rpc GetAutoHomingEnabled (GetRequest) returns (GetAutoHomingEnabledResponse);
   rpc SetManualControlEnabled (SetManualControlEnabledRequest) returns (SetManualControlEnabledResponse);
   rpc GetManualControlEnabled (GetRequest) returns (GetManualControlEnabledResponse);
+  rpc SetFrontTorchIntensity (SetFrontTorchIntensityRequest) returns (SetFrontTorchIntensityResponse);
+  rpc SetBackTorchIntensity (SetBackTorchIntensityRequest) returns (SetBackTorchIntensityResponse);
   rpc SetRobotVelocity (SetRobotVelocityRequest) returns (SetRobotVelocityResponse);
+  rpc ActivateLaserScan (ActivateLaserScanRequest) returns (ActivateLaserScanResponse);
   rpc GetMapList (GetRequest) returns (GetMapListResponse);
   rpc GetCurrentMapId (GetRequest) returns (GetCurrentMapIdResponse);
   rpc LoadMapPreview (LoadMapPreviewRequest) returns (LoadMapPreviewResponse);

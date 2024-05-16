@@ -21,40 +21,40 @@
 
 namespace kachaka::grpc_ros2_bridge {
 
-class BackCameraComponent : public rclcpp::Node {
+class TofCameraComponent : public rclcpp::Node {
  public:
-  explicit BackCameraComponent(const rclcpp::NodeOptions& options)
-      : Node("back_camera", options) {
+  explicit TofCameraComponent(const rclcpp::NodeOptions& options)
+      : Node("tof_camera", options) {
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
     using namespace std::placeholders;
-    back_camera_bridge_ = std::make_unique<
-        CameraBridge<kachaka_api::GetBackCameraRosCameraInfoResponse,
-                     kachaka_api::GetBackCameraRosImageResponse,
-                     kachaka_api::GetBackCameraRosCompressedImageResponse>>(
-        stub_, this, false,
-        std::bind(&kachaka_api::KachakaApi::Stub::GetBackCameraRosCameraInfo,
+    tof_camera_bridge_ = std::make_unique<
+        CameraBridge<kachaka_api::GetTofCameraRosCameraInfoResponse,
+                     kachaka_api::GetTofCameraRosImageResponse,
+                     kachaka_api::GetTofCameraRosCompressedImageResponse>>(
+        stub_, this, true,
+        std::bind(&kachaka_api::KachakaApi::Stub::GetTofCameraRosCameraInfo,
                   *stub_, _1, _2, _3),
-        std::bind(&kachaka_api::KachakaApi::Stub::GetBackCameraRosImage, *stub_,
+        std::bind(&kachaka_api::KachakaApi::Stub::GetTofCameraRosImage, *stub_,
                   _1, _2, _3),
         std::bind(
-            &kachaka_api::KachakaApi::Stub::GetBackCameraRosCompressedImage,
+            &kachaka_api::KachakaApi::Stub::GetTofCameraRosCompressedImage,
             *stub_, _1, _2, _3));
   }
 
-  ~BackCameraComponent() = default;
+  ~TofCameraComponent() = default;
 
-  BackCameraComponent(const BackCameraComponent&) = delete;
-  BackCameraComponent& operator=(const BackCameraComponent&) = delete;
+  TofCameraComponent(const TofCameraComponent&) = delete;
+  TofCameraComponent& operator=(const TofCameraComponent&) = delete;
 
  private:
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<
-      CameraBridge<kachaka_api::GetBackCameraRosCameraInfoResponse,
-                   kachaka_api::GetBackCameraRosImageResponse,
-                   kachaka_api::GetBackCameraRosCompressedImageResponse>>
-      back_camera_bridge_;
+      CameraBridge<kachaka_api::GetTofCameraRosCameraInfoResponse,
+                   kachaka_api::GetTofCameraRosImageResponse,
+                   kachaka_api::GetTofCameraRosCompressedImageResponse>>
+      tof_camera_bridge_;
 };
 
 }  // namespace kachaka::grpc_ros2_bridge
 
-RCLCPP_COMPONENTS_REGISTER_NODE(kachaka::grpc_ros2_bridge::BackCameraComponent)
+RCLCPP_COMPONENTS_REGISTER_NODE(kachaka::grpc_ros2_bridge::TofCameraComponent)

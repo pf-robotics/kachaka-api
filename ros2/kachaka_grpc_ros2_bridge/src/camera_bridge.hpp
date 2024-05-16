@@ -38,6 +38,7 @@ class CameraBridge {
  public:
   explicit CameraBridge(
       std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node,
+      bool is_depth,
       typename GrpcBridge<kachaka_api::GetRequest,
                           GetCameraInfoResponse>::GrpcService
           camera_info_service,
@@ -75,10 +76,14 @@ class CameraBridge {
     image_bridge_->StartAsync();
 
     // compressed image
+    std::string compressed_image_topic = "~/image_raw/compressed";
+    if (is_depth) {
+      compressed_image_topic += "Depth";
+    }
     compressed_image_bridge_ =
         std::make_unique<Ros2TopicBridge<GetCompressedImageResponse,
                                          sensor_msgs::msg::CompressedImage>>(
-            node, compressed_image_service, "~/image_raw/compressed", qos);
+            node, compressed_image_service, compressed_image_topic, qos);
     compressed_image_bridge_->SetConverter(
         [this](const GetCompressedImageResponse& grpc_msg,
                sensor_msgs::msg::CompressedImage* ros2_msg) {

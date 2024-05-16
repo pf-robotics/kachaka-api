@@ -6,6 +6,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class PowerSupplyStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    POWER_SUPPLY_STATUS_UNSPECIFIED: _ClassVar[PowerSupplyStatus]
+    POWER_SUPPLY_STATUS_CHARGING: _ClassVar[PowerSupplyStatus]
+    POWER_SUPPLY_STATUS_DISCHARGING: _ClassVar[PowerSupplyStatus]
+    POWER_SUPPLY_STATUS_NOT_CHARGING: _ClassVar[PowerSupplyStatus]
+    POWER_SUPPLY_STATUS_FULL: _ClassVar[PowerSupplyStatus]
+
 class LocationType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     LOCATION_TYPE_UNSPECIFIED: _ClassVar[LocationType]
@@ -39,6 +47,11 @@ class CommandState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     COMMAND_STATE_UNSPECIFIED: _ClassVar[CommandState]
     COMMAND_STATE_PENDING: _ClassVar[CommandState]
     COMMAND_STATE_RUNNING: _ClassVar[CommandState]
+POWER_SUPPLY_STATUS_UNSPECIFIED: PowerSupplyStatus
+POWER_SUPPLY_STATUS_CHARGING: PowerSupplyStatus
+POWER_SUPPLY_STATUS_DISCHARGING: PowerSupplyStatus
+POWER_SUPPLY_STATUS_NOT_CHARGING: PowerSupplyStatus
+POWER_SUPPLY_STATUS_FULL: PowerSupplyStatus
 LOCATION_TYPE_UNSPECIFIED: LocationType
 LOCATION_TYPE_CHARGER: LocationType
 LOCATION_TYPE_SHELF_HOME: LocationType
@@ -493,6 +506,16 @@ class GetRobotPoseResponse(_message.Message):
     pose: Pose
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., pose: _Optional[_Union[Pose, _Mapping]] = ...) -> None: ...
 
+class GetBatteryInfoResponse(_message.Message):
+    __slots__ = ("metadata", "remaining_percentage", "power_supply_status")
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    REMAINING_PERCENTAGE_FIELD_NUMBER: _ClassVar[int]
+    POWER_SUPPLY_STATUS_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    remaining_percentage: float
+    power_supply_status: PowerSupplyStatus
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., remaining_percentage: _Optional[float] = ..., power_supply_status: _Optional[_Union[PowerSupplyStatus, str]] = ...) -> None: ...
+
 class GetPngMapResponse(_message.Message):
     __slots__ = ("metadata", "map")
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -593,17 +616,47 @@ class GetBackCameraRosCompressedImageResponse(_message.Message):
     image: RosCompressedImage
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ...) -> None: ...
 
+class GetTofCameraRosCameraInfoResponse(_message.Message):
+    __slots__ = ("metadata", "camera_info")
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    CAMERA_INFO_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    camera_info: RosCameraInfo
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., camera_info: _Optional[_Union[RosCameraInfo, _Mapping]] = ...) -> None: ...
+
+class GetTofCameraRosImageResponse(_message.Message):
+    __slots__ = ("metadata", "image", "is_available")
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    IS_AVAILABLE_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    image: RosImage
+    is_available: bool
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosImage, _Mapping]] = ..., is_available: bool = ...) -> None: ...
+
+class GetTofCameraRosCompressedImageResponse(_message.Message):
+    __slots__ = ("metadata", "image", "is_available")
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    IS_AVAILABLE_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    image: RosCompressedImage
+    is_available: bool
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ..., is_available: bool = ...) -> None: ...
+
 class StartCommandRequest(_message.Message):
-    __slots__ = ("command", "cancel_all", "tts_on_success", "title")
+    __slots__ = ("command", "cancel_all", "tts_on_success", "title", "deferrable")
     COMMAND_FIELD_NUMBER: _ClassVar[int]
     CANCEL_ALL_FIELD_NUMBER: _ClassVar[int]
     TTS_ON_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     TITLE_FIELD_NUMBER: _ClassVar[int]
+    DEFERRABLE_FIELD_NUMBER: _ClassVar[int]
     command: Command
     cancel_all: bool
     tts_on_success: str
     title: str
-    def __init__(self, command: _Optional[_Union[Command, _Mapping]] = ..., cancel_all: bool = ..., tts_on_success: _Optional[str] = ..., title: _Optional[str] = ...) -> None: ...
+    deferrable: bool
+    def __init__(self, command: _Optional[_Union[Command, _Mapping]] = ..., cancel_all: bool = ..., tts_on_success: _Optional[str] = ..., title: _Optional[str] = ..., deferrable: bool = ...) -> None: ...
 
 class StartCommandResponse(_message.Message):
     __slots__ = ("result", "command_id")
@@ -731,6 +784,30 @@ class GetManualControlEnabledResponse(_message.Message):
     enabled: bool
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., enabled: bool = ...) -> None: ...
 
+class SetFrontTorchIntensityRequest(_message.Message):
+    __slots__ = ("intensity",)
+    INTENSITY_FIELD_NUMBER: _ClassVar[int]
+    intensity: int
+    def __init__(self, intensity: _Optional[int] = ...) -> None: ...
+
+class SetFrontTorchIntensityResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class SetBackTorchIntensityRequest(_message.Message):
+    __slots__ = ("intensity",)
+    INTENSITY_FIELD_NUMBER: _ClassVar[int]
+    intensity: int
+    def __init__(self, intensity: _Optional[int] = ...) -> None: ...
+
+class SetBackTorchIntensityResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
 class SetRobotVelocityRequest(_message.Message):
     __slots__ = ("linear", "angular")
     LINEAR_FIELD_NUMBER: _ClassVar[int]
@@ -740,6 +817,18 @@ class SetRobotVelocityRequest(_message.Message):
     def __init__(self, linear: _Optional[float] = ..., angular: _Optional[float] = ...) -> None: ...
 
 class SetRobotVelocityResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class ActivateLaserScanRequest(_message.Message):
+    __slots__ = ("duration_sec",)
+    DURATION_SEC_FIELD_NUMBER: _ClassVar[int]
+    duration_sec: float
+    def __init__(self, duration_sec: _Optional[float] = ...) -> None: ...
+
+class ActivateLaserScanResponse(_message.Message):
     __slots__ = ("result",)
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: Result
