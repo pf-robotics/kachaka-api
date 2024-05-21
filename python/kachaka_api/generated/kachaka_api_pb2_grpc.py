@@ -235,6 +235,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.EmptyRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetDynamicTransformResponse.FromString,
                 )
+        self.SwitchMap = channel.unary_unary(
+                '/kachaka_api.KachakaApi/SwitchMap',
+                request_serializer=kachaka__api__pb2.SwitchMapRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.SwitchMapResponse.FromString,
+                )
 
 
 class KachakaApiServicer(object):
@@ -505,6 +510,12 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SwitchMap(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KachakaApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -727,6 +738,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetDynamicTransform,
                     request_deserializer=kachaka__api__pb2.EmptyRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetDynamicTransformResponse.SerializeToString,
+            ),
+            'SwitchMap': grpc.unary_unary_rpc_method_handler(
+                    servicer.SwitchMap,
+                    request_deserializer=kachaka__api__pb2.SwitchMapRequest.FromString,
+                    response_serializer=kachaka__api__pb2.SwitchMapResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1484,5 +1500,22 @@ class KachakaApi(object):
         return grpc.experimental.unary_stream(request, target, '/kachaka_api.KachakaApi/GetDynamicTransform',
             kachaka__api__pb2.EmptyRequest.SerializeToString,
             kachaka__api__pb2.GetDynamicTransformResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SwitchMap(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/SwitchMap',
+            kachaka__api__pb2.SwitchMapRequest.SerializeToString,
+            kachaka__api__pb2.SwitchMapResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
