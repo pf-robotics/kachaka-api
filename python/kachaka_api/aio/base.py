@@ -55,7 +55,7 @@ class KachakaApiClientBase:
             request
         )
         return response.remaining_percentage, response.power_supply_status
-        
+
     async def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
         response: pb2.GetPngMapResponse = await self.stub.GetPngMap(request)
@@ -549,7 +549,7 @@ class KachakaApiClientBase:
         return response.result, response.map_id
 
     async def switch_map(
-            self, map_id: str, x: float, y: float, theta: float
+        self, map_id: str, x: float, y: float, theta: float
     ) -> pb2.Result:
         request = pb2.SwitchMapRequest(
             map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
