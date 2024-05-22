@@ -50,6 +50,11 @@ class KachakaApiClientBase:
         response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(request)
         return response.pose
 
+    def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
+        request = pb2.GetRequest()
+        response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(request)
+        return response.remaining_percentage, response.power_supply_status
+
     def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
         response: pb2.GetPngMapResponse = self.stub.GetPngMap(request)
@@ -523,6 +528,15 @@ class KachakaApiClientBase:
             request_iterator()
         )
         return response.result, response.map_id
+
+    def switch_map(
+        self, map_id: str, x: float, y: float, theta: float
+    ) -> pb2.Result:
+        request = pb2.SwitchMapRequest(
+            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
+        )
+        response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
+        return response.result
 
     def get_history_list(
         self,
