@@ -51,8 +51,8 @@ class KachakaApiClientBase:
 
     async def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
         request = pb2.GetRequest()
-        response: pb2.GetBatteryInfoResponse = (
-            await self.stub.GetBatteryInfo(request)
+        response: pb2.GetBatteryInfoResponse = await self.stub.GetBatteryInfo(
+            request
         )
         return response.remaining_percentage, response.power_supply_status
         
@@ -548,9 +548,12 @@ class KachakaApiClientBase:
         )
         return response.result, response.map_id
 
-    async def switch_map(self, map_id: str, x: float, y: float, theta: float) -> pb2.Result:
+    async def switch_map(
+            self, map_id: str, x: float, y: float, theta: float
+    ) -> pb2.Result:
         request = pb2.SwitchMapRequest(
-            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta))
+            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
+        )
         response: pb2.SwitchMapResponse = await self.stub.SwitchMap(request)
         return response.result
 

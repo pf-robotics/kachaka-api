@@ -52,9 +52,7 @@ class KachakaApiClientBase:
 
     def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
         request = pb2.GetRequest()
-        response: pb2.GetBatteryInfoResponse = (
-            self.stub.GetBatteryInfo(request)
-        )
+        response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(request)
         return response.remaining_percentage, response.power_supply_status
 
     def get_png_map(self) -> pb2.Map:
@@ -531,9 +529,12 @@ class KachakaApiClientBase:
         )
         return response.result, response.map_id
 
-    def switch_map(self, map_id: str, x: float, y: float, theta: float) -> pb2.Result:
+    def switch_map(
+            self, map_id: str, x: float, y: float, theta: float
+    ) -> pb2.Result:
         request = pb2.SwitchMapRequest(
-            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta))
+            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
+        )
         response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
         return response.result
 
