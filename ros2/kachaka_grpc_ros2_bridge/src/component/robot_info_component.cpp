@@ -13,9 +13,8 @@
 #include <grpcpp/grpcpp.h>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
+#include <sensor_msgs/msg/battery_state.hpp>
 #include <std_msgs/msg/string.hpp>
-#include <std_msgs/msg/float64.hpp>
-#include <std_msgs/msg/int8.hpp>
 
 #include "../ros2_topic_bridge.hpp"
 #include "../stub_util.hpp"
@@ -46,41 +45,29 @@ class RobotInfoComponent : public rclcpp::Node {
           return true;
         });
 
-    rclcpp::SensorDataQoS qos_battery_info;
-    get_battery_remain_percentage_bridge_ = std::make_unique<
-        Ros2TopicBridge<kachaka_api::GetBatteryInfoResponse, std_msgs::msg::Float64>>(
+    rclcpp::SensorDataQoS qos_battery_state;
+    get_battery_state_bridge_ =
+        std::make_unique<Ros2TopicBridge<kachaka_api::GetBatteryInfoResponse,
+                                         sensor_msgs::msg::BatteryState>>(
             this,
             std::bind(&kachaka_api::KachakaApi::Stub::GetBatteryInfo, *stub_,
                       _1, _2, _3),
-            "~/battery_percentage", qos_battery_info);
-    get_battery_remain_percentage_bridge_->SetConverter(
+            "~/battery_state", qos_battery_state);
+    get_battery_state_bridge_->SetConverter(
         [this](const kachaka_api::GetBatteryInfoResponse& grpc_msg,
-               std_msgs::msg::Float64* ros2_msg) {
-            ros2_msg->data = grpc_msg.remaining_percentage();
-            return true;
-        });
-
-    get_battery_power_supply_status_bridge_ = std::make_unique<
-        Ros2TopicBridge<kachaka_api::GetBatteryInfoResponse, std_msgs::msg::Int8>>(
-            this,
-            std::bind(&kachaka_api::KachakaApi::Stub::GetBatteryInfo, *stub_,
-                      _1, _2, _3),
-            "~/battery_power_supply_status", qos_battery_info);
-    get_battery_power_supply_status_bridge_->SetConverter(
-        [this](const kachaka_api::GetBatteryInfoResponse& grpc_msg,
-               std_msgs::msg::Int8* ros2_msg) {
-            ros2_msg->data = grpc_msg.power_supply_status();
-            return true;
+               sensor_msgs::msg::BatteryState* ros2_msg) {
+          ros2_msg->voltage = -1.0;
+          ros2_msg->percentage = grpc_msg.remaining_percentage() / 100.0;
+          ros2_msg->power_supply_status = grpc_msg.power_supply_status();
+          return true;
         });
 
     get_robot_version_bridge_->StartAsync();
-    get_battery_remain_percentage_bridge_->StartAsync();
-    get_battery_power_supply_status_bridge_->StartAsync();
+    get_battery_state_bridge_->StartAsync();
   }
   ~RobotInfoComponent() override {
-      get_robot_version_bridge_->StopAsync();
-      get_battery_remain_percentage_bridge_->StopAsync();
-      get_battery_power_supply_status_bridge_->StopAsync();
+    get_robot_version_bridge_->StopAsync();
+    get_battery_state_bridge_->StopAsync();
   }
 
   RobotInfoComponent(const RobotInfoComponent&) = delete;
@@ -92,11 +79,8 @@ class RobotInfoComponent : public rclcpp::Node {
                                   std_msgs::msg::String>>
       get_robot_version_bridge_{nullptr};
   std::unique_ptr<Ros2TopicBridge<kachaka_api::GetBatteryInfoResponse,
-                                  std_msgs::msg::Float64>>
-      get_battery_remain_percentage_bridge_{nullptr};
-  std::unique_ptr<Ros2TopicBridge<kachaka_api::GetBatteryInfoResponse,
-                                  std_msgs::msg::Int8>>
-      get_battery_power_supply_status_bridge_{nullptr};
+                                  sensor_msgs::msg::BatteryState>>
+      get_battery_state_bridge_{nullptr};
 };
 
 }  // namespace kachaka::grpc_ros2_bridge
