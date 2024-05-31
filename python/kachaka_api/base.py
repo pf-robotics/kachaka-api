@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Iterator
+from typing import Iterator, Optional
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -530,11 +530,9 @@ class KachakaApiClientBase:
         return response.result, response.map_id
 
     def switch_map(
-        self, map_id: str, x: float, y: float, theta: float
+        self, map_id: str, *, pose: Optional[pb2.Pose] = None
     ) -> pb2.Result:
-        request = pb2.SwitchMapRequest(
-            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
-        )
+        request = pb2.SwitchMapRequest(map_id=map_id, initial_pose=pose)
         response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
         return response.result
 
