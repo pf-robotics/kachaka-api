@@ -551,9 +551,9 @@ class KachakaApiClientBase:
     async def switch_map(
         self, map_id: str, *, pose: Optional[pb2.Pose] = None
     ) -> pb2.Result:
-        # If "pose" is not specified, the initial pose is automatically determined based on 
+        # If "pose" is not specified, the initial pose is automatically determined based on
         # the mapping mode used for the target map.
-        # In office mode, the initial pose becomes the same pose before switching. 
+        # In office mode, the initial pose becomes the same pose before switching.
         # In small mode, the initial pose becomes the charger pose.
         # In a future release, the automatically determined initial pose will be the charger pose.
         request = pb2.SwitchMapRequest(map_id=map_id, initial_pose=pose)
