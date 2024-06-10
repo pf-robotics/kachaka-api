@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Iterator
+from typing import Iterator, TypedDict
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -529,12 +529,25 @@ class KachakaApiClientBase:
         )
         return response.result, response.map_id
 
+    class Pose2d(TypedDict):
+        x: float
+        y: float
+        theta: float
+
     def switch_map(
-        self, map_id: str, x: float, y: float, theta: float
+        self, map_id: str, *, pose: Pose2d | None = None
     ) -> pb2.Result:
-        request = pb2.SwitchMapRequest(
-            map_id=map_id, initial_pose=pb2.Pose(x=x, y=y, theta=theta)
+        # If "pose" is not specified, the initial pose is automatically determined based on
+        # the mapping mode used for the target map.
+        # In the narrow mode (~200㎡), the initial pose becomes the charger pose.
+        # In the wide mode (200㎡~), the initial pose becomes the same pose before switching.
+        # In a future release, the automatically determined initial pose will be the charger pose.
+        initial_pose = (
+            pb2.Pose(x=pose["x"], y=pose["y"], theta=pose["theta"])
+            if pose
+            else None
         )
+        request = pb2.SwitchMapRequest(map_id=map_id, initial_pose=initial_pose)
         response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
         return response.result
 
