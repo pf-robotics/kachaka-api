@@ -181,17 +181,17 @@ message RegionOfInterest {
 }
 
 message RosCameraInfo {
- RosHeader header = 1;
- uint32 height = 2;
- uint32 width = 3;
- string distortion_model = 4;
- repeated double D = 5;
- repeated double K = 6;
- repeated double R = 7;
- repeated double P = 8;
- uint32 binning_x = 9;
- uint32 binning_y = 10;
- RegionOfInterest roi = 11;
+  RosHeader header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  string distortion_model = 4;
+  repeated double D = 5;
+  repeated double K = 6;
+  repeated double R = 7;
+  repeated double P = 8;
+  uint32 binning_x = 9;
+  uint32 binning_y = 10;
+  RegionOfInterest roi = 11;
 }
 
 message RosImage {
@@ -338,6 +338,16 @@ message GetBatteryInfoResponse {
   PowerSupplyStatus power_supply_status = 3;
 }
 
+message GetRobotErrorCodeJsonResponse {
+  string json = 1;
+  Result result = 2;
+}
+
+message GetErrorResponse {
+  Metadata metadata = 1;
+  repeated int32 error_codes = 2;
+}
+
 message GetPngMapResponse {
   Metadata metadata = 1;
   Map map = 2;
@@ -417,12 +427,17 @@ message GetTofCameraRosCompressedImageResponse {
   bool is_available = 3;
 }
 
+message LockOnEnd {
+  double duration_sec = 1;
+}
+
 message StartCommandRequest {
   Command command = 1;
   bool cancel_all = 2;
   string tts_on_success = 3;
   string title = 4;
   bool deferrable = 5;
+  LockOnEnd lock_on_end = 6;
 }
 
 message StartCommandResponse {
@@ -571,6 +586,15 @@ message LoadMapPreviewResponse {
   Map map = 2;
 }
 
+message SwitchMapRequest {
+  string map_id = 1;
+  Pose initial_pose = 2;  // use the charger pose if the message is empty
+}
+
+message SwitchMapResponse {
+  Result result = 1;
+}
+
 message ExportMapRequest {
   string map_id = 1;
 }
@@ -597,6 +621,25 @@ message ImportMapResponse {
   string map_id = 2;
 }
 
+message Shortcut {
+  string id = 1;
+  string name = 3;
+}
+
+message GetShortcutsResponse {
+  Metadata metadata = 1;
+  repeated Shortcut shortcuts = 2;
+}
+
+message StartShortcutCommandRequest {
+  string target_shortcut_id = 1;
+  bool cancel_all = 2;
+}
+
+message StartShortcutCommandResponse {
+  Result result = 1;
+}
+
 // History
 message History {
   string id = 1;
@@ -611,12 +654,25 @@ message GetHistoryListResponse {
   repeated History histories = 2;
 }
 
-message SwitchMapRequest {
-  string map_id = 1;
-  Pose initial_pose = 2;  // use the charger pose if the message is empty
+// Robot settings
+message GetSpeakerVolumeResponse {
+  Metadata metadata = 1;
+  int32 volume = 2;  // [0-10]
 }
 
-message SwitchMapResponse {
+message SetSpeakerVolumeRequest {
+  int32 volume = 1;  // [0-10]
+}
+
+message SetSpeakerVolumeResponse {
+  Result result = 1;
+}
+
+message RestartRobotResponse {
+  Result result = 1;
+}
+
+message SetEmergencyStopResponse {
   Result result = 1;
 }
 
@@ -625,8 +681,8 @@ service KachakaApi {
   rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
   rpc GetRobotVersion (GetRequest) returns (GetRobotVersionResponse);
   rpc GetRobotPose (GetRequest) returns (GetRobotPoseResponse);
-  rpc GetBatteryInfo (GetRequest) returns (GetBatteryInfoResponse);
   rpc GetPngMap (GetRequest) returns (GetPngMapResponse);
+  rpc GetBatteryInfo (GetRequest) returns (GetBatteryInfoResponse);
   rpc GetObjectDetection (GetRequest) returns (GetObjectDetectionResponse);
   rpc GetObjectDetectionFeatures (GetRequest) returns (GetObjectDetectionFeaturesResponse);
   rpc GetRosImu (GetRequest) returns (GetRosImuResponse);
@@ -641,30 +697,48 @@ service KachakaApi {
   rpc GetTofCameraRosCameraInfo (GetRequest) returns (GetTofCameraRosCameraInfoResponse);
   rpc GetTofCameraRosImage (GetRequest) returns (GetTofCameraRosImageResponse);
   rpc GetTofCameraRosCompressedImage (GetRequest) returns (GetTofCameraRosCompressedImageResponse);
+  rpc GetRobotErrorCodeJson (EmptyRequest) returns (GetRobotErrorCodeJsonResponse);
+  rpc GetError (GetRequest) returns (GetErrorResponse);
+  // Commands
   rpc StartCommand (StartCommandRequest) returns (StartCommandResponse);
   rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
   rpc GetCommandState (GetRequest) returns (GetCommandStateResponse);
   rpc GetLastCommandResult (GetRequest) returns (GetLastCommandResultResponse);
   rpc Proceed (EmptyRequest) returns (ProceedResponse);
+  // Locations
   rpc GetLocations (GetRequest) returns (GetLocationsResponse);
+  // Shelves
   rpc GetShelves (GetRequest) returns (GetShelvesResponse);
   rpc GetMovingShelfId (GetRequest) returns (GetMovingShelfIdResponse);
   rpc ResetShelfPose (ResetShelfPoseRequest) returns (ResetShelfPoseResponse);
+  // Auto homing
   rpc SetAutoHomingEnabled (SetAutoHomingEnabledRequest) returns (SetAutoHomingEnabledResponse);
   rpc GetAutoHomingEnabled (GetRequest) returns (GetAutoHomingEnabledResponse);
+  // Teleop
   rpc SetManualControlEnabled (SetManualControlEnabledRequest) returns (SetManualControlEnabledResponse);
   rpc GetManualControlEnabled (GetRequest) returns (GetManualControlEnabledResponse);
   rpc SetFrontTorchIntensity (SetFrontTorchIntensityRequest) returns (SetFrontTorchIntensityResponse);
   rpc SetBackTorchIntensity (SetBackTorchIntensityRequest) returns (SetBackTorchIntensityResponse);
   rpc SetRobotVelocity (SetRobotVelocityRequest) returns (SetRobotVelocityResponse);
   rpc ActivateLaserScan (ActivateLaserScanRequest) returns (ActivateLaserScanResponse);
+  // Map
   rpc GetMapList (GetRequest) returns (GetMapListResponse);
   rpc GetCurrentMapId (GetRequest) returns (GetCurrentMapIdResponse);
   rpc LoadMapPreview (LoadMapPreviewRequest) returns (LoadMapPreviewResponse);
+  rpc SwitchMap (SwitchMapRequest) returns (SwitchMapResponse);
   rpc ExportMap (ExportMapRequest) returns (stream ExportMapResponse);
   rpc ImportMap (stream ImportMapRequest) returns (ImportMapResponse);
+  // Shortcut
+  rpc GetShortcuts (GetRequest) returns (GetShortcutsResponse);
+  rpc StartShortcutCommand (StartShortcutCommandRequest) returns (StartShortcutCommandResponse);
+  // History
   rpc GetHistoryList (GetRequest) returns (GetHistoryListResponse);
+  // Robot settings
+  rpc GetSpeakerVolume (GetRequest) returns (GetSpeakerVolumeResponse);
+  rpc SetSpeakerVolume (SetSpeakerVolumeRequest) returns (SetSpeakerVolumeResponse);
+  rpc RestartRobot (EmptyRequest) returns (RestartRobotResponse);
+  rpc SetEmergencyStop (EmptyRequest) returns (SetEmergencyStopResponse);
+  // Transform
   rpc GetStaticTransform (GetRequest) returns (GetStaticTransformResponse);
   rpc GetDynamicTransform (EmptyRequest) returns (stream GetDynamicTransformResponse);
-  rpc SwitchMap (SwitchMapRequest) returns (SwitchMapResponse);
 }
