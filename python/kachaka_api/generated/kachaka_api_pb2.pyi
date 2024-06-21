@@ -676,12 +676,6 @@ class GetTofCameraRosCompressedImageResponse(_message.Message):
     is_available: bool
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ..., is_available: bool = ...) -> None: ...
 
-class SetEmergencyStopResponse(_message.Message):
-    __slots__ = ["result"]
-    RESULT_FIELD_NUMBER: _ClassVar[int]
-    result: Result
-    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
-
 class LockOnEnd(_message.Message):
     __slots__ = ["duration_sec"]
     DURATION_SEC_FIELD_NUMBER: _ClassVar[int]
@@ -932,6 +926,20 @@ class LoadMapPreviewResponse(_message.Message):
     map: Map
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map: _Optional[_Union[Map, _Mapping]] = ...) -> None: ...
 
+class SwitchMapRequest(_message.Message):
+    __slots__ = ["map_id", "initial_pose"]
+    MAP_ID_FIELD_NUMBER: _ClassVar[int]
+    INITIAL_POSE_FIELD_NUMBER: _ClassVar[int]
+    map_id: str
+    initial_pose: Pose
+    def __init__(self, map_id: _Optional[str] = ..., initial_pose: _Optional[_Union[Pose, _Mapping]] = ...) -> None: ...
+
+class SwitchMapResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
 class ExportMapRequest(_message.Message):
     __slots__ = ["map_id"]
     MAP_ID_FIELD_NUMBER: _ClassVar[int]
@@ -987,10 +995,12 @@ class GetShortcutsResponse(_message.Message):
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., shortcuts: _Optional[_Iterable[_Union[Shortcut, _Mapping]]] = ...) -> None: ...
 
 class StartShortcutCommandRequest(_message.Message):
-    __slots__ = ["target_shortcut_id"]
+    __slots__ = ["target_shortcut_id", "cancel_all"]
     TARGET_SHORTCUT_ID_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_ALL_FIELD_NUMBER: _ClassVar[int]
     target_shortcut_id: str
-    def __init__(self, target_shortcut_id: _Optional[str] = ...) -> None: ...
+    cancel_all: bool
+    def __init__(self, target_shortcut_id: _Optional[str] = ..., cancel_all: bool = ...) -> None: ...
 
 class StartShortcutCommandResponse(_message.Message):
     __slots__ = ["result"]
@@ -1040,15 +1050,13 @@ class SetSpeakerVolumeResponse(_message.Message):
     result: Result
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
 
-class SwitchMapRequest(_message.Message):
-    __slots__ = ["map_id", "initial_pose"]
-    MAP_ID_FIELD_NUMBER: _ClassVar[int]
-    INITIAL_POSE_FIELD_NUMBER: _ClassVar[int]
-    map_id: str
-    initial_pose: Pose
-    def __init__(self, map_id: _Optional[str] = ..., initial_pose: _Optional[_Union[Pose, _Mapping]] = ...) -> None: ...
+class RestartRobotResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
 
-class SwitchMapResponse(_message.Message):
+class SetEmergencyStopResponse(_message.Message):
     __slots__ = ["result"]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: Result
