@@ -15,7 +15,7 @@
 
 import json
 import socket
-from typing import Iterator, Iterator, NamedTuple
+from typing import Iterator, NamedTuple
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -88,9 +88,7 @@ class KachakaApiClientBase:
 
     def get_robot_pose(self) -> pb2.Pose:
         request = pb2.GetRequest()
-        response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(
-            request
-        )
+        response: pb2.GetRobotPoseResponse = self.stub.GetRobotPose(request)
         return response.pose
 
     def get_png_map(self) -> pb2.Map:
@@ -100,17 +98,15 @@ class KachakaApiClientBase:
 
     def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
         request = pb2.GetRequest()
-        response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(
-            request
-        )
+        response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(request)
         return (response.battery_percentage, response.power_supply_status)
 
     def get_object_detection(
         self,
     ) -> tuple[pb2.RosHeader, RepeatedCompositeContainer]:
         request = pb2.GetRequest()
-        response: pb2.GetObjectDetectionResponse = (
-            self.stub.GetObjectDetection(request)
+        response: pb2.GetObjectDetectionResponse = self.stub.GetObjectDetection(
+            request
         )
         return (response.header, response.objects)
 
@@ -130,9 +126,7 @@ class KachakaApiClientBase:
 
     def get_ros_odometry(self) -> pb2.RosOdometry:
         request = pb2.GetRequest()
-        response: pb2.GetRosOdometryResponse = self.stub.GetRosOdometry(
-            request
-        )
+        response: pb2.GetRosOdometryResponse = self.stub.GetRosOdometry(request)
         return response.odometry
 
     def get_ros_laser_scan(self) -> pb2.RosLaserScan:
@@ -262,9 +256,7 @@ class KachakaApiClientBase:
                 pb2.GetRequest(metadata=command_state_metadata)
             )
         ).metadata.cursor
-        response: pb2.StartCommandResponse = self.stub.StartCommand(
-            request
-        )
+        response: pb2.StartCommandResponse = self.stub.StartCommand(request)
         if not response.result.success or not wait_for_completion:
             return response.result
         while True:
@@ -479,9 +471,7 @@ class KachakaApiClientBase:
 
     def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
-        response: pb2.CancelCommandResponse = self.stub.CancelCommand(
-            request
-        )
+        response: pb2.CancelCommandResponse = self.stub.CancelCommand(request)
         return (response.result, response.command)
 
     def get_command_state(self) -> tuple[pb2.CommandState, pb2.Command]:
@@ -516,16 +506,12 @@ class KachakaApiClientBase:
         self,
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response: pb2.GetLocationsResponse = self.stub.GetLocations(
-            request
-        )
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
         return response.locations
 
     def get_default_location_id(self) -> str:
         request = pb2.GetRequest()
-        response: pb2.GetLocationsResponse = self.stub.GetLocations(
-            request
-        )
+        response: pb2.GetLocationsResponse = self.stub.GetLocations(request)
         return response.default_location_id
 
     def get_shelves(
@@ -537,16 +523,14 @@ class KachakaApiClientBase:
 
     def get_moving_shelf_id(self) -> str:
         request = pb2.GetRequest()
-        response: pb2.GetMovingShelfIdResponse = (
-            self.stub.GetMovingShelfId(request)
+        response: pb2.GetMovingShelfIdResponse = self.stub.GetMovingShelfId(
+            request
         )
         return response.shelf_id
 
     def reset_shelf_pose(self, shelf_id: str) -> pb2.Result:
         request = pb2.ResetShelfPoseRequest(shelf_id=shelf_id)
-        response: pb2.ResetShelfPoseResponse = self.stub.ResetShelfPose(
-            request
-        )
+        response: pb2.ResetShelfPoseResponse = self.stub.ResetShelfPose(request)
         return response.result
 
     def set_auto_homing_enabled(self, enable: bool) -> pb2.Result:
@@ -584,14 +568,12 @@ class KachakaApiClientBase:
             linear=linear / MAX_LINEAR_VELOCITY,
             angular=angular / MAX_ANGULAR_VELOCITY,
         )
-        response: pb2.SetRobotVelocityResponse = (
-            self.stub.SetRobotVelocity(request)
+        response: pb2.SetRobotVelocityResponse = self.stub.SetRobotVelocity(
+            request
         )
         return response.result
 
-    def set_robot_velocity(
-        self, linear: float, angular: float
-    ) -> pb2.Result:
+    def set_robot_velocity(self, linear: float, angular: float) -> pb2.Result:
         result = self._impl_set_robot_velocity(linear, angular)
         if result.success:
             return result
@@ -616,14 +598,10 @@ class KachakaApiClientBase:
 
     def load_map_preview(self, map_id: str) -> tuple[pb2.Result, pb2.Map]:
         request = pb2.LoadMapPreviewRequest(map_id=map_id)
-        response: pb2.LoadMapPreviewResponse = self.stub.LoadMapPreview(
-            request
-        )
+        response: pb2.LoadMapPreviewResponse = self.stub.LoadMapPreview(request)
         return response.map
 
-    def export_map(
-        self, map_id: str, output_file_path: str
-    ) -> pb2.Result:
+    def export_map(self, map_id: str, output_file_path: str) -> pb2.Result:
         request = pb2.ExportMapRequest(map_id=map_id)
         responses: Iterator[pb2.ExportMapResponse] = self.stub.ExportMap(
             request
@@ -661,9 +639,7 @@ class KachakaApiClientBase:
 
     def get_shortcuts(self) -> dict[str, str]:
         request = pb2.GetRequest()
-        response: pb2.GetShortcutsResponse = self.stub.GetShortcuts(
-            request
-        )
+        response: pb2.GetShortcutsResponse = self.stub.GetShortcuts(request)
         return {item.id: item.name for item in response.shortcuts}
 
     def start_shortcut_command(
@@ -692,9 +668,7 @@ class KachakaApiClientBase:
         self,
     ) -> RepeatedCompositeContainer:
         request = pb2.GetRequest()
-        response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(
-            request
-        )
+        response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(request)
         return response.histories
 
     def get_speaker_volume(self) -> int:
@@ -702,8 +676,8 @@ class KachakaApiClientBase:
         Get the current volume of the speaker. The volume is in the range of 0 to 10.
         """
         request = pb2.GetRequest()
-        response: pb2.GetSpeakerVolumeResponse = (
-            self.stub.GetSpeakerVolume(request)
+        response: pb2.GetSpeakerVolumeResponse = self.stub.GetSpeakerVolume(
+            request
         )
         return response.volume
 
@@ -712,22 +686,20 @@ class KachakaApiClientBase:
         Set the volume of the speaker. The volume is in the range of 0 to 10.
         """
         request = pb2.SetSpeakerVolumeRequest(volume=volume)
-        response: pb2.SetSpeakerVolumeResponse = (
-            self.stub.SetSpeakerVolume(request)
+        response: pb2.SetSpeakerVolumeResponse = self.stub.SetSpeakerVolume(
+            request
         )
         return response.result
 
     def restart_robot(self) -> pb2.Result:
         request = pb2.EmptyRequest()
-        response: pb2.RestartRobotResponse = self.stub.RestartRobot(
-            request
-        )
+        response: pb2.RestartRobotResponse = self.stub.RestartRobot(request)
         return response.result
 
     def set_emergency_stop(self) -> int:
         request = pb2.EmptyRequest()
-        response: pb2.SetEmergencyStopResponse = (
-            self.stub.SetEmergencyStop(request)
+        response: pb2.SetEmergencyStopResponse = self.stub.SetEmergencyStop(
+            request
         )
         return response.result.error_code
 
