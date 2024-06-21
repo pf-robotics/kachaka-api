@@ -10,7 +10,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import AsyncIterator, Iterator, TypedDict
+import json
+import socket
+from typing import AsyncIterator, Iterator, NamedTuple, TypedDict
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -23,9 +25,42 @@ MAX_LINEAR_VELOCITY = 0.3
 MAX_ANGULAR_VELOCITY = 1.57
 
 
+class ErrorCode(NamedTuple):
+    code: int
+    error_type: str
+    title: str
+    description: str
+    title_en: str
+    description_en: str
+    ref_url: str
+
+
+def _resolve_hostname(domain: str) -> str | None:
+    try:
+        return socket.gethostbyname(domain)
+    except socket.gaierror:
+        return None
+
+
+def _resolve_target(target: str) -> str | None:
+    try:
+        hostname, port = target.split(":")
+    except ValueError:
+        return None
+
+    ip = _resolve_hostname(hostname)
+    if ip is None:
+        return None
+
+    return f"{ip}:{port}"
+
+
 class KachakaApiClientBase:
     def __init__(self, target: str = "100.94.1.1:26400"):
-        self.stub = KachakaApiStub(grpc.aio.insecure_channel(target))
+        target_resolved = _resolve_target(target)
+        if target_resolved is None:
+            raise ValueError(f"Invalid target: {target}")
+        self.stub = KachakaApiStub(grpc.aio.insecure_channel(target_resolved))
         self.resolver = ShelfLocationResolver()
 
     async def get_robot_serial_number(self) -> str:
@@ -48,13 +83,6 @@ class KachakaApiClientBase:
             request
         )
         return response.pose
-
-    async def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
-        request = pb2.GetRequest()
-        response: pb2.GetBatteryInfoResponse = await self.stub.GetBatteryInfo(
-            request
-        )
-        return response.remaining_percentage, response.power_supply_status
 
     async def get_png_map(self) -> pb2.Map:
         request = pb2.GetRequest()
@@ -366,6 +394,48 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    async def move_forward(
+        self,
+        distance_meter: float,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return await self.start_command(
+            pb2.Command(
+                move_forward_command=pb2.MoveForwardCommand(
+                    distance_meter=distance_meter
+                )
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
+    async def rotate_in_place(
+        self,
+        angle_radian: float,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return await self.start_command(
+            pb2.Command(
+                rotate_in_place_command=pb2.RotateInPlaceCommand(
+                    angle_radian=angle_radian
+                )
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
@@ -556,11 +626,7 @@ class KachakaApiClientBase:
     async def switch_map(
         self, map_id: str, *, pose: Pose2d | None = None
     ) -> pb2.Result:
-        # If "pose" is not specified, the initial pose is automatically determined based on
-        # the mapping mode used for the target map.
-        # In the narrow mode (~200㎡), the initial pose becomes the charger pose.
-        # In the wide mode (200㎡~), the initial pose becomes the same pose before switching.
-        # In a future release, the automatically determined initial pose will be the charger pose.
+        # If "pose" is not specified, the initial pose is automatically determined to the charger pose.
         initial_pose = (
             pb2.Pose(x=pose["x"], y=pose["y"], theta=pose["theta"])
             if pose
@@ -578,6 +644,38 @@ class KachakaApiClientBase:
             request
         )
         return response.histories
+
+    async def get_error(self) -> list[int]:
+        request = pb2.GetRequest()
+        response: pb2.GetErrorResponse = await self.stub.GetError(request)
+        return response.error_codes
+
+    async def get_robot_error_code(self) -> dict[int, ErrorCode]:
+        request = pb2.EmptyRequest()
+        response: pb2.GetRobotErrorCodeJsonResponse = (
+            await self.stub.GetRobotErrorCodeJson(request)
+        )
+        return {
+            item["code"]: (
+                ErrorCode(
+                    item["code"],
+                    item["error_type"],
+                    item["title"],
+                    item["description"],
+                    item["title_en"],
+                    item["description_en"],
+                    item["ref_url"],
+                )
+            )
+            for item in json.loads(response.json)
+        }
+
+    async def set_emergency_stop(self) -> int:
+        request = pb2.EmptyRequest()
+        response: pb2.SetEmergencyStopResponse = (
+            await self.stub.SetEmergencyStop(request)
+        )
+        return response.result.error_code
 
     async def update_resolver(self) -> None:
         self.resolver.set_shelves(await self.get_shelves())

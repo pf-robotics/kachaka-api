@@ -532,6 +532,22 @@ class GetBatteryInfoResponse(_message.Message):
     power_supply_status: PowerSupplyStatus
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., remaining_percentage: _Optional[float] = ..., power_supply_status: _Optional[_Union[PowerSupplyStatus, str]] = ...) -> None: ...
 
+class GetRobotErrorCodeJsonResponse(_message.Message):
+    __slots__ = ["json", "result"]
+    JSON_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    json: str
+    result: Result
+    def __init__(self, json: _Optional[str] = ..., result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class GetErrorResponse(_message.Message):
+    __slots__ = ["metadata", "error_codes"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    ERROR_CODES_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    error_codes: _containers.RepeatedScalarFieldContainer[int]
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., error_codes: _Optional[_Iterable[int]] = ...) -> None: ...
+
 class GetPngMapResponse(_message.Message):
     __slots__ = ["metadata", "map"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -660,19 +676,33 @@ class GetTofCameraRosCompressedImageResponse(_message.Message):
     is_available: bool
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ..., is_available: bool = ...) -> None: ...
 
+class SetEmergencyStopResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class LockOnEnd(_message.Message):
+    __slots__ = ["duration_sec"]
+    DURATION_SEC_FIELD_NUMBER: _ClassVar[int]
+    duration_sec: float
+    def __init__(self, duration_sec: _Optional[float] = ...) -> None: ...
+
 class StartCommandRequest(_message.Message):
-    __slots__ = ["command", "cancel_all", "tts_on_success", "title", "deferrable"]
+    __slots__ = ["command", "cancel_all", "tts_on_success", "title", "deferrable", "lock_on_end"]
     COMMAND_FIELD_NUMBER: _ClassVar[int]
     CANCEL_ALL_FIELD_NUMBER: _ClassVar[int]
     TTS_ON_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     TITLE_FIELD_NUMBER: _ClassVar[int]
     DEFERRABLE_FIELD_NUMBER: _ClassVar[int]
+    LOCK_ON_END_FIELD_NUMBER: _ClassVar[int]
     command: Command
     cancel_all: bool
     tts_on_success: str
     title: str
     deferrable: bool
-    def __init__(self, command: _Optional[_Union[Command, _Mapping]] = ..., cancel_all: bool = ..., tts_on_success: _Optional[str] = ..., title: _Optional[str] = ..., deferrable: bool = ...) -> None: ...
+    lock_on_end: LockOnEnd
+    def __init__(self, command: _Optional[_Union[Command, _Mapping]] = ..., cancel_all: bool = ..., tts_on_success: _Optional[str] = ..., title: _Optional[str] = ..., deferrable: bool = ..., lock_on_end: _Optional[_Union[LockOnEnd, _Mapping]] = ...) -> None: ...
 
 class StartCommandResponse(_message.Message):
     __slots__ = ["result", "command_id"]
@@ -940,6 +970,34 @@ class ImportMapResponse(_message.Message):
     map_id: str
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map_id: _Optional[str] = ...) -> None: ...
 
+class Shortcut(_message.Message):
+    __slots__ = ["id", "name"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    name: str
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
+
+class GetShortcutsResponse(_message.Message):
+    __slots__ = ["metadata", "shortcuts"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SHORTCUTS_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    shortcuts: _containers.RepeatedCompositeFieldContainer[Shortcut]
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., shortcuts: _Optional[_Iterable[_Union[Shortcut, _Mapping]]] = ...) -> None: ...
+
+class StartShortcutCommandRequest(_message.Message):
+    __slots__ = ["target_shortcut_id"]
+    TARGET_SHORTCUT_ID_FIELD_NUMBER: _ClassVar[int]
+    target_shortcut_id: str
+    def __init__(self, target_shortcut_id: _Optional[str] = ...) -> None: ...
+
+class StartShortcutCommandResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
 class History(_message.Message):
     __slots__ = ["id", "command", "success", "error_code", "command_executed_time"]
     ID_FIELD_NUMBER: _ClassVar[int]
@@ -961,6 +1019,26 @@ class GetHistoryListResponse(_message.Message):
     metadata: Metadata
     histories: _containers.RepeatedCompositeFieldContainer[History]
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., histories: _Optional[_Iterable[_Union[History, _Mapping]]] = ...) -> None: ...
+
+class GetSpeakerVolumeResponse(_message.Message):
+    __slots__ = ["metadata", "volume"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    VOLUME_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    volume: int
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., volume: _Optional[int] = ...) -> None: ...
+
+class SetSpeakerVolumeRequest(_message.Message):
+    __slots__ = ["volume"]
+    VOLUME_FIELD_NUMBER: _ClassVar[int]
+    volume: int
+    def __init__(self, volume: _Optional[int] = ...) -> None: ...
+
+class SetSpeakerVolumeResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
 
 class SwitchMapRequest(_message.Message):
     __slots__ = ["map_id", "initial_pose"]

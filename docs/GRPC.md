@@ -45,12 +45,12 @@ python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_pyt
 
 ### gRPC サンプルコード一覧
 
-[python/demos/grpc_samples](python/demos/grpc_samples) にgrpcを利用したサンプルコードがあります。
+[python/demos/grpc_samples](../python/demos/grpc_samples) にgrpcを利用したサンプルコードがあります。
 
 ### gRPC サンプルコードの実行方法
 
 * 目的地一覧を取得する(GetLocations)を実行する例
-    * ソースコード: [python/demos/grpc_samples/get_locations.py](python/demos/grpc_samples/get_locations.py)
+    * ソースコード: [python/demos/grpc_samples/get_locations.py](../python/demos/grpc_samples/get_locations.py)
 
 実行
 

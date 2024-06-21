@@ -221,3 +221,8 @@ class KachakaApiClient(KachakaApiClientBase):
         self.set_manual_control_enabled_callback = (
             self.manual_control_enabled.set_callback
         )
+
+        self.error = ResponseHandler[pb2.GetErrorResponse, list[int]](
+            self.stub.GetError, lambda r: r.error_codes
+        )
+        self.set_error_callback = self.error.set_callback
