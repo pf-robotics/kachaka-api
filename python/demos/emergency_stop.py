@@ -9,7 +9,7 @@ import asyncio
 from kachaka_api.aio import KachakaApiClient  # noqa: E402
 
 
-def pares_args() -> argparse.Namespace:
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="import map data from file")
 
     parser.add_argument(
@@ -21,7 +21,7 @@ def pares_args() -> argparse.Namespace:
 
 
 async def main() -> None:
-    args = pares_args()
+    args = parse_args()
 
     client = (
         KachakaApiClient()
