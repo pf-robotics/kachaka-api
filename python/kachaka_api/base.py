@@ -15,7 +15,7 @@
 
 import json
 import socket
-from typing import Iterator, NamedTuple, TypedDict
+from typing import Iterator, NamedTuple
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -26,6 +26,12 @@ from .util.layout import ShelfLocationResolver
 
 MAX_LINEAR_VELOCITY = 0.3
 MAX_ANGULAR_VELOCITY = 1.57
+
+
+class Pose2d(NamedTuple):
+    x: float
+    y: float
+    theta: float
 
 
 class ErrorCode(NamedTuple):
@@ -89,6 +95,11 @@ class KachakaApiClientBase:
         request = pb2.GetRequest()
         response: pb2.GetPngMapResponse = self.stub.GetPngMap(request)
         return response.map
+
+    def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
+        request = pb2.GetRequest()
+        response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(request)
+        return (response.battery_percentage, response.power_supply_status)
 
     def get_object_detection(
         self,
@@ -197,6 +208,31 @@ class KachakaApiClientBase:
         if not response.is_available:
             raise Exception("tof is not available on charger.")
         return response.image
+
+    def get_error(self) -> list[int]:
+        request = pb2.GetRequest()
+        response: pb2.GetErrorResponse = self.stub.GetError(request)
+        return response.error_codes
+
+    def get_robot_error_code(self) -> dict[int, ErrorCode]:
+        request = pb2.EmptyRequest()
+        response: pb2.GetRobotErrorCodeJsonResponse = (
+            self.stub.GetRobotErrorCodeJson(request)
+        )
+        return {
+            item["code"]: (
+                ErrorCode(
+                    item["code"],
+                    item["error_type"],
+                    item["title"],
+                    item["description"],
+                    item["title_en"],
+                    item["description_en"],
+                    item["ref_url"],
+                )
+            )
+            for item in json.loads(response.json)
+        }
 
     def start_command(
         self,
@@ -601,19 +637,28 @@ class KachakaApiClientBase:
         )
         return response.result, response.map_id
 
-    class Pose2d(TypedDict):
-        x: float
-        y: float
-        theta: float
+    def get_shortcuts(self) -> dict[str, str]:
+        request = pb2.GetRequest()
+        response: pb2.GetShortcutsResponse = self.stub.GetShortcuts(request)
+        return {item.id: item.name for item in response.shortcuts}
+
+    def start_shortcut_command(
+        self, target_shortcut_id: str, cancel_all: bool = True
+    ) -> pb2.Result:
+        request = pb2.StartShortcutCommandRequest(
+            target_shortcut_id=target_shortcut_id, cancel_all=cancel_all
+        )
+        response: pb2.StartShortcutCommandResponse = (
+            self.stub.StartShortcutCommand(request)
+        )
+        return response.result
 
     def switch_map(
         self, map_id: str, *, pose: Pose2d | None = None
     ) -> pb2.Result:
         # If "pose" is not specified, the initial pose is automatically determined to the charger pose.
         initial_pose = (
-            pb2.Pose(x=pose["x"], y=pose["y"], theta=pose["theta"])
-            if pose
-            else None
+            pb2.Pose(x=pose.x, y=pose.y, theta=pose.theta) if pose else None
         )
         request = pb2.SwitchMapRequest(map_id=map_id, initial_pose=initial_pose)
         response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
@@ -626,30 +671,30 @@ class KachakaApiClientBase:
         response: pb2.GetHistoryListResponse = self.stub.GetHistoryList(request)
         return response.histories
 
-    def get_error(self) -> list[int]:
+    def get_speaker_volume(self) -> int:
+        """
+        Get the current volume of the speaker. The volume is in the range of 0 to 10.
+        """
         request = pb2.GetRequest()
-        response: pb2.GetErrorResponse = self.stub.GetError(request)
-        return response.error_codes
-
-    def get_robot_error_code(self) -> dict[int, ErrorCode]:
-        request = pb2.EmptyRequest()
-        response: pb2.GetRobotErrorCodeJsonResponse = (
-            self.stub.GetRobotErrorCodeJson(request)
+        response: pb2.GetSpeakerVolumeResponse = self.stub.GetSpeakerVolume(
+            request
         )
-        return {
-            item["code"]: (
-                ErrorCode(
-                    item["code"],
-                    item["error_type"],
-                    item["title"],
-                    item["description"],
-                    item["title_en"],
-                    item["description_en"],
-                    item["ref_url"],
-                )
-            )
-            for item in json.loads(response.json)
-        }
+        return response.volume
+
+    def set_speaker_volume(self, volume: int) -> pb2.Result:
+        """
+        Set the volume of the speaker. The volume is in the range of 0 to 10.
+        """
+        request = pb2.SetSpeakerVolumeRequest(volume=volume)
+        response: pb2.SetSpeakerVolumeResponse = self.stub.SetSpeakerVolume(
+            request
+        )
+        return response.result
+
+    def restart_robot(self) -> pb2.Result:
+        request = pb2.EmptyRequest()
+        response: pb2.RestartRobotResponse = self.stub.RestartRobot(request)
+        return response.result
 
     def set_emergency_stop(self) -> int:
         request = pb2.EmptyRequest()
