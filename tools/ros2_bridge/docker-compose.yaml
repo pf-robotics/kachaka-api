@@ -11,6 +11,7 @@ services:
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
       - ROS_LOG_DIR=/tmp
+      - RMW_IMPLEMENTATION
       - USER_ID
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
@@ -25,6 +26,7 @@ services:
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
       - ROS_LOG_DIR=/tmp
+      - RMW_IMPLEMENTATION
       - USER_ID
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
@@ -39,6 +41,7 @@ services:
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
       - ROS_LOG_DIR=/tmp
+      - RMW_IMPLEMENTATION
       - USER_ID
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
@@ -53,6 +56,7 @@ services:
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
       - ROS_LOG_DIR=/tmp
+      - RMW_IMPLEMENTATION
       - USER_ID
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
@@ -67,6 +71,7 @@ services:
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
       - ROS_LOG_DIR=/tmp
+      - RMW_IMPLEMENTATION
       - USER_ID
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"

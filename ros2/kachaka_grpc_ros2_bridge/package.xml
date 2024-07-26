@@ -48,6 +48,8 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>kachaka_interfaces</exec_depend>
   <exec_depend>kachaka_description</exec_depend>
+  <exec_depend>cyclonedds</exec_depend>
+  <exec_depend>rmw_cyclonedds_cpp</exec_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
   <test_depend>launch</test_depend>
