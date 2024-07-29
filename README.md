@@ -20,6 +20,7 @@
 - [ROS 2](#ros-2)
   - [ROS 2 Humbleのセットアップ](#ros-2-humbleのセットアップ)
   - [Dockerのセットアップ](#dockerのセットアップ)
+  - [Dockerイメージのビルド](#dockerイメージのビルド)
   - [サンプルコードのダウンロード](#サンプルコードのダウンロード)
   - [kachaka\_interfaces, kachaka\_descriptionのビルド](#kachaka_interfaces-kachaka_descriptionのビルド)
   - [動作確認](#動作確認)
@@ -242,6 +243,20 @@ callback機能については[sample_llm_speak.py](python/demos/sample_llm_speak
 * 以下を参考に、Dockerの設定を行って下さい。
     * https://docs.docker.com/engine/install/ubuntu/
 
+### Dockerイメージのビルド
+
+* 初期設定では配布Dockerイメージを使って起動したDockerコンテナ上でros2_bridgeを動作させます。配布Dockerイメージを使う場合はこの手順はスキップしてください。
+* Dockerイメージをカスタマイズしたい場合、以下の手順でビルドします。
+    * 以下の実行例では`BASE_ARCH=x86_64`としていますが、ros2_bridgeをx86_64アーキテクチャのCPU上で実行させる場合の例です。
+    * ros2_bridgeをarm64アーキテクチャのCPU上で実行させる場合は`BASE_ARCH=arm64`としてください。
+
+```
+docker buildx build -t kachaka-api --target kachaka-grpc-ros2-bridge -f Dockerfile.ros2 . --build-arg BASE_ARCH=x86_64 --load
+```
+
+* [tools/ros2_bridge/docker-compose.yaml](tools/ros2_bridge/docker-compose.yaml)に対して以下の変更を行います。
+    * 変更前：`image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"`
+    * 変更後：`image: kachaka-api:latest`
 
 ### サンプルコードのダウンロード
 
