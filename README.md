@@ -276,6 +276,7 @@ ln -s ~/kachaka-api/ros2/kachaka_interfaces/ kachaka_interfaces
 ln -s ~/kachaka-api/ros2/kachaka_description/ kachaka_description
 
 cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
 colcon build
 ```
 

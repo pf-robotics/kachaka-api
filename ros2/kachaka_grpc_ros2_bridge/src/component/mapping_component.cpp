@@ -47,6 +47,9 @@ class MappingComponent : public rclcpp::Node {
                nav_msgs::msg::OccupancyGrid* ros2_msg) {
           ros2_msg->header.frame_id = kOriginFrameId;
           ros2_msg->header.stamp = get_clock()->now();
+          if (ros2_msg->data.empty()) {
+            return false;
+          }
           FillMapMetaData(grpc_msg, ros2_msg);
           FillOccupancyGridData(grpc_msg, ros2_msg);
           return true;

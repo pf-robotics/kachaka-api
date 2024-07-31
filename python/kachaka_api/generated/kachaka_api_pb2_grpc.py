@@ -60,6 +60,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetRosOdometryResponse.FromString,
                 )
+        self.GetRosWheelOdometry = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetRosWheelOdometry',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetRosWheelOdometryResponse.FromString,
+                )
         self.GetRosLaserScan = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetRosLaserScan',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
@@ -335,6 +340,12 @@ class KachakaApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetRosOdometry(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRosWheelOdometry(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -661,6 +672,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetRosOdometry,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetRosOdometryResponse.SerializeToString,
+            ),
+            'GetRosWheelOdometry': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRosWheelOdometry,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetRosWheelOdometryResponse.SerializeToString,
             ),
             'GetRosLaserScan': grpc.unary_unary_rpc_method_handler(
                     servicer.GetRosLaserScan,
@@ -1043,6 +1059,23 @@ class KachakaApi(object):
         return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetRosOdometry',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetRosOdometryResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRosWheelOdometry(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/kachaka_api.KachakaApi/GetRosWheelOdometry',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetRosWheelOdometryResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
