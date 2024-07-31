@@ -143,6 +143,13 @@ class KachakaApiClient(KachakaApiClientBase):
         ](self.stub.GetRosOdometry, lambda r: r.odometry)
         self.set_ros_odometry_callback = self.ros_odometry.set_callback
 
+        self.ros_wheel_odometry = ResponseHandler[
+            pb2.GetRosWheelOdometryResponse, pb2.RosOdometry
+        ](self.stub.GetRosWheelOdometry, lambda r: r.odometry)
+        self.set_ros_wheel_odometry_callback = (
+            self.ros_wheel_odometry.set_callback
+        )
+
         self.ros_laser_scan = ResponseHandler[
             pb2.GetRosLaserScanResponse, pb2.RosLaserScan
         ](self.stub.GetRosLaserScan, lambda r: r.scan)

@@ -375,6 +375,11 @@ message GetRosOdometryResponse {
   RosOdometry odometry = 2;
 }
 
+message GetRosWheelOdometryResponse {
+  Metadata metadata = 1;
+  RosOdometry odometry = 2;
+}
+
 message GetRosLaserScanResponse {
   Metadata metadata = 1;
   RosLaserScan scan = 2;
@@ -687,6 +692,7 @@ service KachakaApi {
   rpc GetObjectDetectionFeatures (GetRequest) returns (GetObjectDetectionFeaturesResponse);
   rpc GetRosImu (GetRequest) returns (GetRosImuResponse);
   rpc GetRosOdometry (GetRequest) returns (GetRosOdometryResponse);
+  rpc GetRosWheelOdometry (GetRequest) returns (GetRosWheelOdometryResponse);
   rpc GetRosLaserScan (GetRequest) returns (GetRosLaserScanResponse);
   rpc GetFrontCameraRosCameraInfo (GetRequest) returns (GetFrontCameraRosCameraInfoResponse);
   rpc GetFrontCameraRosImage (GetRequest) returns (GetFrontCameraRosImageResponse);
