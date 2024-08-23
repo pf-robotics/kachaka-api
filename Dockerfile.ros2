@@ -105,6 +105,7 @@ RUN apt-get update && \
     apt-get -y install --no-install-recommends \
         libprotobuf-dev \
         libgrpc++-dev \
+        nlohmann-json3-dev \
         ros-dev-tools \
         && \
     apt-get clean && \
