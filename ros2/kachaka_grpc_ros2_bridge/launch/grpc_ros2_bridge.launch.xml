@@ -27,6 +27,15 @@
                  value="false" />
     </composable_node>
     <composable_node pkg="kachaka_grpc_ros2_bridge"
+                     plugin="kachaka::grpc_ros2_bridge::DiagnosticsComponent"
+                     name="diagnostics"
+                     namespace="kachaka">
+      <param name="server_uri"
+             value="$(var server_uri)" />
+      <extra_arg name="use_intra_process_comms"
+                 value="false" />
+    </composable_node>
+    <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::KachakaCommandComponent"
                      name="kachaka_command"
                      namespace="kachaka">
