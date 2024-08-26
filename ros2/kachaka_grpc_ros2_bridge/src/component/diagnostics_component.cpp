@@ -81,8 +81,8 @@ class DiagnosticsComponent : public rclcpp::Node {
               }
               diag.name = std::to_string(error_info[this->CODE].get<int>());
               diag.message = error_info[this->TITLE_EN].get<std::string>();
-              diagnostic_msgs::msg::KeyValue code, title, description,
-                  e_title, e_description, error_type, ref_url;
+              diagnostic_msgs::msg::KeyValue code, title, description, e_title,
+                  e_description, error_type, ref_url;
               title.key = this->TITLE;
               title.value = error_info[this->TITLE].get<std::string>();
               description.key = this->DESC;
@@ -90,7 +90,8 @@ class DiagnosticsComponent : public rclcpp::Node {
               e_title.key = this->TITLE_EN;
               e_title.value = error_info[this->TITLE_EN].get<std::string>();
               e_description.key = this->DESC_EN;
-              e_description.value = error_info[this->DESC_EN].get<std::string>();
+              e_description.value =
+                  error_info[this->DESC_EN].get<std::string>();
               error_type.key = this->ERROR_TYPE;
               error_type.value =
                   error_info[this->ERROR_TYPE].get<std::string>();
