@@ -79,16 +79,18 @@ class DiagnosticsComponent : public rclcpp::Node {
                 // ERROR_TYPE_CALL_FOR_SUPPORT
                 diag.level = diagnostic_msgs::msg::DiagnosticStatus::ERROR;
               }
-              diag.name = error_info[this->TITLE_EN].get<std::string>();
-              diag.message = error_info[this->DESC_EN].get<std::string>();
+              diag.name = std::to_string(error_info[this->CODE].get<int>());
+              diag.message = error_info[this->TITLE_EN].get<std::string>();
               diagnostic_msgs::msg::KeyValue code, title, description,
-                  error_type, ref_url;
-              code.key = this->CODE;
-              code.value = std::to_string(error_info[this->CODE].get<int>());
+                  e_title, e_description, error_type, ref_url;
               title.key = this->TITLE;
               title.value = error_info[this->TITLE].get<std::string>();
               description.key = this->DESC;
               description.value = error_info[this->DESC].get<std::string>();
+              e_title.key = this->TITLE_EN;
+              e_title.value = error_info[this->TITLE_EN].get<std::string>();
+              e_description.key = this->DESC_EN;
+              e_description.value = error_info[this->DESC_EN].get<std::string>();
               error_type.key = this->ERROR_TYPE;
               error_type.value =
                   error_info[this->ERROR_TYPE].get<std::string>();
@@ -97,6 +99,8 @@ class DiagnosticsComponent : public rclcpp::Node {
               diag.values.emplace_back(code);
               diag.values.emplace_back(title);
               diag.values.emplace_back(description);
+              diag.values.emplace_back(e_title);
+              diag.values.emplace_back(e_description);
               diag.values.emplace_back(error_type);
               diag.values.emplace_back(ref_url);
               ros2_msg->status.emplace_back(diag);
