@@ -35,7 +35,7 @@ class DiagnosticsComponent : public rclcpp::Node {
       : Node("diagnostics", options) {
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
-    rclcpp::SensorDataQoS qos;
+    rclcpp::SystemDefaultsQoS qos;
     using namespace std::placeholders;
     get_robot_error_code_json_bridge_ = std::make_unique<GrpcBridge<
         kachaka_api::EmptyRequest, kachaka_api::GetRobotErrorCodeJsonResponse>>(
