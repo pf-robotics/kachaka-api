@@ -1,4 +1,4 @@
-//  Copyright 2023 Preferred Robotics, Inc.
+//  Copyright 2024 Preferred Robotics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,42 +58,42 @@ void SetOdometryMsg(const kachaka_api::RosOdometry& odometry,
 
 namespace kachaka::grpc_ros2_bridge {
 
-class OdometryComponent : public rclcpp::Node {
+class WheelOdometryComponent : public rclcpp::Node {
  public:
-  explicit OdometryComponent(const rclcpp::NodeOptions& options)
-      : Node("odometry", options) {
+  explicit WheelOdometryComponent(const rclcpp::NodeOptions& options)
+      : Node("wheel_odometry", options) {
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SensorDataQoS qos;
     using namespace std::placeholders;
-    odometry_bridge_ =
-        std::make_unique<Ros2TopicBridge<kachaka_api::GetRosOdometryResponse,
-                                         nav_msgs::msg::Odometry>>(
-            this,
-            std::bind(&kachaka_api::KachakaApi::Stub::GetRosOdometry, *stub_,
-                      _1, _2, _3),
-            "~/odometry", qos);
-    odometry_bridge_->SetConverter(
-        [](const kachaka_api::GetRosOdometryResponse& grpc_msg,
+    wheel_odometry_bridge_ = std::make_unique<Ros2TopicBridge<
+        kachaka_api::GetRosWheelOdometryResponse, nav_msgs::msg::Odometry>>(
+        this,
+        std::bind(&kachaka_api::KachakaApi::Stub::GetRosWheelOdometry, *stub_,
+                  _1, _2, _3),
+        "~/wheel_odometry", qos);
+    wheel_odometry_bridge_->SetConverter(
+        [](const kachaka_api::GetRosWheelOdometryResponse& grpc_msg,
            nav_msgs::msg::Odometry* ros2_msg) {
           const auto& odometry = grpc_msg.odometry();
           SetOdometryMsg(odometry, ros2_msg);
           return true;
         });
-    odometry_bridge_->StartAsync();
+    wheel_odometry_bridge_->StartAsync();
   }
-  ~OdometryComponent() override { odometry_bridge_->StopAsync(); }
+  ~WheelOdometryComponent() override { wheel_odometry_bridge_->StopAsync(); }
 
-  OdometryComponent(const OdometryComponent&) = delete;
-  OdometryComponent& operator=(const OdometryComponent&) = delete;
+  WheelOdometryComponent(const WheelOdometryComponent&) = delete;
+  WheelOdometryComponent& operator=(const WheelOdometryComponent&) = delete;
 
  private:
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
-  std::unique_ptr<Ros2TopicBridge<kachaka_api::GetRosOdometryResponse,
+  std::unique_ptr<Ros2TopicBridge<kachaka_api::GetRosWheelOdometryResponse,
                                   nav_msgs::msg::Odometry>>
-      odometry_bridge_{nullptr};
+      wheel_odometry_bridge_{nullptr};
 };
 
 }  // namespace kachaka::grpc_ros2_bridge
 
-RCLCPP_COMPONENTS_REGISTER_NODE(kachaka::grpc_ros2_bridge::OdometryComponent)
+RCLCPP_COMPONENTS_REGISTER_NODE(
+    kachaka::grpc_ros2_bridge::WheelOdometryComponent)
