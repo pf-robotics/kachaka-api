@@ -2,8 +2,6 @@
 <launch>
   <arg name="server_uri"
        default="localhost:2021" />
-  <arg name="publish_wheel_odometry"
-       default="false" />
   <node_container pkg="rclcpp_components"
                   exec="component_container_mt"
                   name="grpc_ros2_bridge_container"
@@ -123,8 +121,15 @@
                      namespace="kachaka">
       <param name="server_uri"
              value="$(var server_uri)" />
-      <param name="publish_wheel_odometry"
-             value="$(var publish_wheel_odometry)" />
+      <extra_arg name="use_intra_process_comms"
+                 value="false" />
+    </composable_node>
+    <composable_node pkg="kachaka_grpc_ros2_bridge"
+                     plugin="kachaka::grpc_ros2_bridge::WheelOdometryComponent"
+                     name="wheel_odometry"
+                     namespace="kachaka">
+      <param name="server_uri"
+             value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
                  value="false" />
     </composable_node>

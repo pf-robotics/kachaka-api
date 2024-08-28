@@ -43,6 +43,7 @@ ament_auto_add_library(
   src/component/mapping_component.cpp
   src/component/object_detection_component.cpp
   src/component/odometry_component.cpp
+  src/component/wheel_odometry_component.cpp
   src/component/robot_info_component.cpp
   src/component/static_tf_component.cpp
   src/component/tof_camera_component.cpp
@@ -144,6 +145,13 @@ rclcpp_components_register_node(
   "kachaka::grpc_ros2_bridge::OdometryComponent"
   EXECUTABLE
   odometry)
+
+rclcpp_components_register_node(
+  ${PROJECT_NAME}
+  PLUGIN
+  "kachaka::grpc_ros2_bridge::WheelOdometryComponent"
+  EXECUTABLE
+  wheel_odometry)
 
 rclcpp_components_register_node(
   ${PROJECT_NAME}
