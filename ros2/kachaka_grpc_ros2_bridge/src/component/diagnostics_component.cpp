@@ -68,13 +68,13 @@ class DiagnosticsComponent : public rclcpp::Node {
             if (this->robot_error_dictionary_.contains(ec_str)) {
               const auto& error_info = this->robot_error_dictionary_[ec_str];
               diagnostic_msgs::msg::DiagnosticStatus diag;
-              if (error_info[this->ERROR_TYPE] == this->ERROR_TYPE_BUG ||
-                  error_info[this->ERROR_TYPE] == this->ERROR_TYPE_IGNORE) {
+              if (error_info[this->ERROR_TYPE] == this->ERROR_TYPE_IGNORE) {
                 diag.level = diagnostic_msgs::msg::DiagnosticStatus::OK;
               } else if (error_info[this->ERROR_TYPE] ==
                          this->ERROR_TYPE_WARN) {
                 diag.level = diagnostic_msgs::msg::DiagnosticStatus::WARN;
               } else {
+                // ERROR_TYPE_BUG
                 // ERROR_TYPE_ERROR, ERROR_TYPE_FATAL
                 // ERROR_TYPE_CALL_FOR_SUPPORT
                 diag.level = diagnostic_msgs::msg::DiagnosticStatus::ERROR;
@@ -83,6 +83,8 @@ class DiagnosticsComponent : public rclcpp::Node {
               diag.message = error_info[this->TITLE_EN].get<std::string>();
               diagnostic_msgs::msg::KeyValue code, title, description, e_title,
                   e_description, error_type, ref_url;
+              code.key = this->CODE;
+              code.value = std::to_string(error_info[this->CODE].get<int>());
               title.key = this->TITLE;
               title.value = error_info[this->TITLE].get<std::string>();
               description.key = this->DESC;
