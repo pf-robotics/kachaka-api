@@ -252,6 +252,7 @@ message Command {
     LockCommand lock_command = 15;
     MoveForwardCommand move_forward_command = 16;
     RotateInPlaceCommand rotate_in_place_command = 17;
+    DockAnyShelfWithRegistrationCommand dock_any_shelf_with_registration_command = 18;
   }
 }
 
@@ -303,6 +304,11 @@ message RotateInPlaceCommand {
   double angle_radian = 1;
 }
 
+message DockAnyShelfWithRegistrationCommand {
+  string target_location_id = 1;
+  bool dock_forward = 2;
+}
+
 enum CommandState {
   COMMAND_STATE_UNSPECIFIED = 0;
   COMMAND_STATE_PENDING = 1;  // No command is running. Waiting for requests.
@@ -330,6 +336,14 @@ message GetRobotVersionResponse {
 message GetRobotPoseResponse {
   Metadata metadata = 1;
   Pose pose = 2;
+}
+
+message SetRobotPoseRequest {
+  Pose pose = 1;  // required
+}
+
+message SetRobotPoseResponse {
+  Result result = 1;
 }
 
 message GetBatteryInfoResponse {
@@ -594,6 +608,7 @@ message LoadMapPreviewResponse {
 message SwitchMapRequest {
   string map_id = 1;
   Pose initial_pose = 2;  // use the charger pose if the message is empty
+  bool inherit_docking_state_and_docked_shelf = 3;
 }
 
 message SwitchMapResponse {
@@ -686,6 +701,7 @@ service KachakaApi {
   rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
   rpc GetRobotVersion (GetRequest) returns (GetRobotVersionResponse);
   rpc GetRobotPose (GetRequest) returns (GetRobotPoseResponse);
+  rpc SetRobotPose (SetRobotPoseRequest) returns (SetRobotPoseResponse);
   rpc GetPngMap (GetRequest) returns (GetPngMapResponse);
   rpc GetBatteryInfo (GetRequest) returns (GetBatteryInfoResponse);
   rpc GetObjectDetection (GetRequest) returns (GetObjectDetectionResponse);
