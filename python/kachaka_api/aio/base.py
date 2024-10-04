@@ -450,6 +450,29 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    async def dock_any_shelf_with_registration(
+        self,
+        target_location_id: str,
+        dock_forward: bool = False,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return await self.start_command(
+            pb2.Command(
+                dock_any_shelf_with_registration_command=pb2.DockAnyShelfWithRegistrationCommand(
+                    target_location_id=target_location_id,
+                    dock_forward=dock_forward,
+                )
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
@@ -656,7 +679,11 @@ class KachakaApiClientBase:
         theta: float
 
     async def switch_map(
-        self, map_id: str, *, pose: Pose2d | None = None
+        self,
+        map_id: str,
+        *,
+        pose: Pose2d | None = None,
+        inherit_docking_state_and_docked_shelf: bool = False,
     ) -> pb2.Result:
         # If "pose" is not specified, the initial pose is automatically determined to the charger pose.
         initial_pose = (
@@ -664,7 +691,11 @@ class KachakaApiClientBase:
             if pose
             else None
         )
-        request = pb2.SwitchMapRequest(map_id=map_id, initial_pose=initial_pose)
+        request = pb2.SwitchMapRequest(
+            map_id=map_id,
+            initial_pose=initial_pose,
+            inherit_docking_state_and_docked_shelf=inherit_docking_state_and_docked_shelf,
+        )
         response: pb2.SwitchMapResponse = await self.stub.SwitchMap(request)
         return response.result
 
@@ -739,3 +770,11 @@ class KachakaApiClientBase:
     async def update_resolver(self) -> None:
         self.resolver.set_shelves(await self.get_shelves())
         self.resolver.set_locations(await self.get_locations())
+
+    async def set_robot_pose(self, pose: Pose2d) -> pb2.Result:
+        pose = pb2.Pose(x=pose["x"], y=pose["y"], theta=pose["theta"])
+        request = pb2.SetRobotPoseRequest(pose=pose)
+        response: pb2.SetRobotPoseResponse = await self.stub.SetRobotPose(
+            request
+        )
+        return response.result
