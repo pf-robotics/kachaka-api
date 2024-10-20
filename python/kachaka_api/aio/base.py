@@ -56,7 +56,7 @@ def _resolve_target(target: str) -> str | None:
 
 
 class KachakaApiClientBase:
-    def __init__(self, target: str = "100.94.1.1:26400"):
+    def __init__(self, target: str = "100.94.1.1:26400") -> None:
         target_resolved = _resolve_target(target)
         if target_resolved is None:
             raise ValueError(f"Invalid target: {target}")
