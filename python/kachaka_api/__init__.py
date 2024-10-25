@@ -19,5 +19,5 @@ from .util import layout as layout_util  # noqa: F401
 
 
 class KachakaApiClient(KachakaApiClientBase):
-    def __init__(self, target="100.94.1.1:26400"):
+    def __init__(self, target="100.94.1.1:26400") -> None:
         super().__init__(target)
