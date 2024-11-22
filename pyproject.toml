@@ -8,6 +8,10 @@ readme = "README.md"
 [project.urls]
 Repository = "https://github.com/pf-robotics/kachaka-api"
 
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools]
 package-dir = {"" = "python"}
 
