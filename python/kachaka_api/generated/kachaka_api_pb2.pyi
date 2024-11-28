@@ -479,10 +479,12 @@ class LockCommand(_message.Message):
     def __init__(self, duration_sec: _Optional[float] = ...) -> None: ...
 
 class MoveForwardCommand(_message.Message):
-    __slots__ = ("distance_meter",)
+    __slots__ = ("distance_meter", "speed")
     DISTANCE_METER_FIELD_NUMBER: _ClassVar[int]
+    SPEED_FIELD_NUMBER: _ClassVar[int]
     distance_meter: float
-    def __init__(self, distance_meter: _Optional[float] = ...) -> None: ...
+    speed: float
+    def __init__(self, distance_meter: _Optional[float] = ..., speed: _Optional[float] = ...) -> None: ...
 
 class RotateInPlaceCommand(_message.Message):
     __slots__ = ("angle_radian",)
