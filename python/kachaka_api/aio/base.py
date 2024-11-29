@@ -412,6 +412,7 @@ class KachakaApiClientBase:
         self,
         distance_meter: float,
         *,
+        speed: float = 0.0,
         wait_for_completion: bool = True,
         cancel_all: bool = True,
         tts_on_success: str = "",
@@ -420,7 +421,7 @@ class KachakaApiClientBase:
         return await self.start_command(
             pb2.Command(
                 move_forward_command=pb2.MoveForwardCommand(
-                    distance_meter=distance_meter
+                    distance_meter=distance_meter, speed=speed
                 )
             ),
             wait_for_completion=wait_for_completion,
