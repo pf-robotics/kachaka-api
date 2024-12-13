@@ -94,7 +94,7 @@ class KachakaApiClientBase:
         response: pb2.GetBatteryInfoResponse = await self.stub.GetBatteryInfo(
             request
         )
-        return (response.battery_percentage, response.power_supply_status)
+        return (response.remaining_percentage, response.power_supply_status)
 
     async def get_object_detection(
         self,
