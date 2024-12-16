@@ -4,7 +4,20 @@ set -eu
 
 output_dir=python/kachaka_api/generated
 
-python -m grpc_tools.protoc -I./protos --python_out="$output_dir" --pyi_out="$output_dir" --grpc_python_out="$output_dir" ./protos/kachaka-api.proto
-sed "$output_dir"/kachaka_api_pb2_grpc.py -i \
-    -e "s/import kachaka_api_pb2/from . import kachaka_api_pb2/" \
-    -e "s/self, channel/self, channel: grpc.Channel/"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# build docker image specifying the target stage
+pushd "${SCRIPT_DIR}/gen_proto" || exit 1
+docker build \
+    -t kachaka-api-gen-proto \
+    --target kachaka-api-gen-proto \
+    .
+popd || exit 1
+
+# run docker image
+REPO_TOP_DIR="${SCRIPT_DIR}/.."
+cd "${SCRIPT_DIR}/.." || exit 1
+docker run --rm \
+    -v "${REPO_TOP_DIR}/protos:/protos" \
+    -v "${REPO_TOP_DIR}/python/kachaka_api/generated:/generated" \
+    kachaka-api-gen-proto
