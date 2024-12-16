@@ -3,7 +3,6 @@ name = "kachaka-api"
 version = "3.6.6"
 authors = [{name="Preferred Robotics inc."}]
 dependencies = [
-    "grpcio-tools>=1.68.1",
     "grpcio>=1.68.1",
     "numpy>=2.2.0",
     "protobuf>=5.29.1",
