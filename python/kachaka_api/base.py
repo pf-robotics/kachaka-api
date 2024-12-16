@@ -93,7 +93,7 @@ class KachakaApiClientBase:
     def get_battery_info(self) -> tuple[float, pb2.PowerSupplyStatus]:
         request = pb2.GetRequest()
         response: pb2.GetBatteryInfoResponse = self.stub.GetBatteryInfo(request)
-        return (response.battery_percentage, response.power_supply_status)
+        return (response.remaining_percentage, response.power_supply_status)
 
     def get_object_detection(
         self,
