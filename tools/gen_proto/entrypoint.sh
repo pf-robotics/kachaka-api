@@ -2,6 +2,12 @@
 
 set -eu
 
+export UV_CACHE_DIR=/tmp/.cache/uv
+export UV_PYTHON_INSTALL_DIR=/tmp/.local/share/uv
+
+pushd /app
+uv sync
+
 uv run python -m grpc_tools.protoc \
     -I/protos \
     --python_out="/generated" \
