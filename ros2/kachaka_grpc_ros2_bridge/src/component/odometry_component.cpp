@@ -25,10 +25,11 @@
 namespace {
 
 void SetOdometryMsg(const kachaka_api::RosOdometry& odometry,
-                    nav_msgs::msg::Odometry* ros2_msg) {
+                    nav_msgs::msg::Odometry* ros2_msg,
+                    const std::string& frame_prefix) {
   kachaka::grpc_ros2_bridge::converter::ConvertGrpcHeaderToRos2Header(
-      odometry.header(), &ros2_msg->header);
-  ros2_msg->child_frame_id = odometry.child_frame_id();
+      odometry.header(), &ros2_msg->header, frame_prefix);
+  ros2_msg->child_frame_id = frame_prefix + odometry.child_frame_id();
   ros2_msg->pose.pose.position.x = odometry.pose().pose().position().x();
   ros2_msg->pose.pose.position.y = odometry.pose().pose().position().y();
   ros2_msg->pose.pose.position.z = odometry.pose().pose().position().z();
@@ -62,6 +63,8 @@ class OdometryComponent : public rclcpp::Node {
  public:
   explicit OdometryComponent(const rclcpp::NodeOptions& options)
       : Node("odometry", options) {
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SensorDataQoS qos;
@@ -74,10 +77,10 @@ class OdometryComponent : public rclcpp::Node {
                       _1, _2, _3),
             "~/odometry", qos);
     odometry_bridge_->SetConverter(
-        [](const kachaka_api::GetRosOdometryResponse& grpc_msg,
+        [this](const kachaka_api::GetRosOdometryResponse& grpc_msg,
            nav_msgs::msg::Odometry* ros2_msg) {
           const auto& odometry = grpc_msg.odometry();
-          SetOdometryMsg(odometry, ros2_msg);
+          SetOdometryMsg(odometry, ros2_msg, this->frame_prefix_);
           return true;
         });
     odometry_bridge_->StartAsync();
@@ -88,6 +91,7 @@ class OdometryComponent : public rclcpp::Node {
   OdometryComponent& operator=(const OdometryComponent&) = delete;
 
  private:
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<Ros2TopicBridge<kachaka_api::GetRosOdometryResponse,
                                   nav_msgs::msg::Odometry>>

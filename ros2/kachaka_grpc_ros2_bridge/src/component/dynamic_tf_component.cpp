@@ -32,11 +32,13 @@ class DynamicTfComponent : public rclcpp::Node {
       : Node("dynamic_tf", options) {
     RCLCPP_INFO(this->get_logger(), "start dynamic tf");
 
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     RCLCPP_INFO(this->get_logger(), "get stub");
 
-    dynamic_tf_client_ = std::make_unique<TfStreamClient>(stub_, this);
+    dynamic_tf_client_ = std::make_unique<TfStreamClient>(frame_prefix_, stub_, this);
 
     dynamic_tf_client_->ReadStream();
     RCLCPP_INFO(this->get_logger(), "start read dynamic tf");
@@ -47,6 +49,7 @@ class DynamicTfComponent : public rclcpp::Node {
   DynamicTfComponent& operator=(const DynamicTfComponent&) = delete;
 
  private:
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<TfStreamClient> dynamic_tf_client_;
 };
