@@ -25,6 +25,8 @@ class BackCameraComponent : public rclcpp::Node {
  public:
   explicit BackCameraComponent(const rclcpp::NodeOptions& options)
       : Node("back_camera", options) {
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
     using namespace std::placeholders;
     back_camera_bridge_ = std::make_unique<
@@ -47,6 +49,7 @@ class BackCameraComponent : public rclcpp::Node {
   BackCameraComponent& operator=(const BackCameraComponent&) = delete;
 
  private:
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<
       CameraBridge<kachaka_api::GetBackCameraRosCameraInfoResponse,
