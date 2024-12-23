@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <robot name="kachaka"
        xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:property name="PI"
-                  value="3.141592653589793" />
   <material name="body">
     <color rgba="0.2175 0.2355 0.246 1.0" />
   </material>
@@ -13,6 +11,9 @@
     <color rgba="0.0 0.0 0.0 1.0" />
   </material>
   <xacro:macro name="kachaka_robot" params="parent *origin">
+    <xacro:property name="PI"
+                    value="3.141592653589793" />
+
     <link name="base_link">
       <inertial>
         <mass value="6.4" />
