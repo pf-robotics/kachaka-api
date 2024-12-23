@@ -12,6 +12,7 @@
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0" />
   </material>
+  <xacro:macro name="kachaka_robot" params="parent *origin">
   <link name="base_footprint" />
   <link name="base_link">
     <inertial>
@@ -231,6 +232,7 @@
          type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
+    <xacro:insert_block name="origin" />
   </joint>
   <joint name="base_r_drive_wheel_joint"
          type="continuous">
@@ -260,4 +262,5 @@
     <origin rpy="0 0 0"
             xyz="0.0756 -0.0655 0.05146" />
   </joint>
+  </xacro:macro>
 </robot>
