@@ -51,7 +51,7 @@ namespace kachaka::grpc_ros2_bridge {
 
 TfStreamClient::TfStreamClient(
     std::string frame_prefix, std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node)
-    : frame_prefix_(frame_prefix),
+    : frame_prefix_(std::move(frame_prefix)),
       stub_(stub),
       node_(node),
       publisher_(node->create_publisher<tf2_msgs::msg::TFMessage>(
