@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="kachaka"
+<robot name="kachaka_robot"
        xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="kachaka_robot" params="parent *origin">
     <xacro:property name="PI"
