@@ -15,15 +15,12 @@
   <link name="base_footprint" />
   <link name="base_link">
     <inertial>
-      <mass value="6.4" />
+      <mass value="10" />
       <origin xyz="0 0 0"
               rpy="0 0 0" />
-      <inertia ixx="2.1342e-02"
-               ixy="0"
-               ixz="0"
-               iyy="2.1342e-02"
-               iyz="0"
-               izz="4.2667e-02" />
+      <inertia ixx="${1/12*10*(0.095**2+0.240**2)}" ixy="0" ixz="0"
+               iyy="${1/12*10*(0.095**2+0.387**2)}" iyz="0"
+               izz="${1/12*10*(0.387**2+0.240**2)}" />
     </inertial>
     <visual>
       <origin xyz="0.0435 0.0 0.0475"
