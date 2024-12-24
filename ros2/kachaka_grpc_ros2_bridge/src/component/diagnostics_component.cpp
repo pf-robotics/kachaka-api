@@ -33,6 +33,8 @@ class DiagnosticsComponent : public rclcpp::Node {
  public:
   explicit DiagnosticsComponent(const rclcpp::NodeOptions& options)
       : Node("diagnostics", options) {
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SystemDefaultsQoS qos;
@@ -60,7 +62,7 @@ class DiagnosticsComponent : public rclcpp::Node {
         [&, this](const kachaka_api::GetErrorResponse& grpc_msg,
                   diagnostic_msgs::msg::DiagnosticArray* ros2_msg) {
           ros2_msg->header.stamp = this->now();
-          ros2_msg->header.frame_id = "";
+          ros2_msg->header.frame_id = this->frame_prefix_;
 
           const auto& error_codes = grpc_msg.error_codes();
           for (auto& ec : error_codes) {
@@ -135,6 +137,7 @@ class DiagnosticsComponent : public rclcpp::Node {
   const std::string ERROR_TYPE_FATAL = "Fatal";
   const std::string ERROR_TYPE_CALL_FOR_SUPPORT = "CallForSupport";
   json robot_error_dictionary_;
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<Ros2TopicBridge<kachaka_api::GetErrorResponse,
                                   diagnostic_msgs::msg::DiagnosticArray>>
