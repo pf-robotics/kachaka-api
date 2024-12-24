@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="kachaka_description" />
+  <arg name="frame_prefix" default="/" />
+  <arg name="use_gui" default="true" />
+
+  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" >
+      <arg name="namespace" value="$(var namespace)" />
+      <arg name="frame_prefix" value="$(var frame_prefix)" />
+  </include>
+
+  <node pkg="joint_state_publisher_gui"
+        exec="joint_state_publisher_gui"
+        name="joint_state_publisher_gui" 
+        namespace="$(var namespace)"
+        if="$(var use_gui)" />
+
+  <node pkg="joint_state_publisher"
+        exec="joint_state_publisher"
+        name="joint_state_publisher" 
+        namespace="$(var namespace)"
+        unless="$(var use_gui)" />
+
+  <node pkg="rviz2"
+        exec="rviz2"
+        name="rviz2"
+        namespace="$(var namespace)"
+        args="-d $(find-pkg-share kachaka_description)/config/display.rviz" />
+</launch>
