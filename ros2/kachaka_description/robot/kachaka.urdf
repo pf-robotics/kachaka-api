@@ -156,6 +156,7 @@
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
   <joint name="base_r_drive_wheel_joint" type="continuous">
     <parent link="base_link"/>
