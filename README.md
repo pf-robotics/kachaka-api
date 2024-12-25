@@ -14,6 +14,7 @@
   - [サンプルコードのダウンロード](#サンプルコードのダウンロード)
   - [サンプルコードの実行方法](#サンプルコードの実行方法)
 - [カチャカAPIライブラリ](#カチャカapiライブラリ)
+  - [インストール方法](#インストール方法)
   - [使用方法](#使用方法)
   - [カチャカAPIライブラリのサンプルコード](#カチャカapiライブラリのサンプルコード)
 - [gRPC](#grpc)
@@ -207,6 +208,26 @@ Verify password: <新しいパスワード>
 
 * カチャカAPIライブラリは、gRPCを意識せずにPythonで開発を行うことができるライブラリです。
 * 同期、非同期それぞれのライブラリがあります。
+
+### インストール方法
+
+以下のコマンドでインストールできます：
+
+```bash
+pip install --extra-index-url https://pf-robotics.github.io/kachaka-python-packages/simple kachaka-api
+```
+
+#### uv
+uvの場合は、pyproject.tomlに以下を追加してインストールすることができます。
+
+```toml
+[[tool.uv.index]]
+url = "https://pf-robotics.github.io/kachaka-python-packages/simple"
+```
+
+```
+uv add kachaka-api
+```
 
 
 ### 使用方法
