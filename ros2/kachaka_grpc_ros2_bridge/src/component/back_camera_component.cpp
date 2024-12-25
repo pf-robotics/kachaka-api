@@ -33,7 +33,7 @@ class BackCameraComponent : public rclcpp::Node {
         CameraBridge<kachaka_api::GetBackCameraRosCameraInfoResponse,
                      kachaka_api::GetBackCameraRosImageResponse,
                      kachaka_api::GetBackCameraRosCompressedImageResponse>>(
-        stub_, this, false,
+        frame_prefix_, stub_, this, false,
         std::bind(&kachaka_api::KachakaApi::Stub::GetBackCameraRosCameraInfo,
                   *stub_, _1, _2, _3),
         std::bind(&kachaka_api::KachakaApi::Stub::GetBackCameraRosImage, *stub_,

@@ -33,7 +33,7 @@ class TofCameraComponent : public rclcpp::Node {
         CameraBridge<kachaka_api::GetTofCameraRosCameraInfoResponse,
                      kachaka_api::GetTofCameraRosImageResponse,
                      kachaka_api::GetTofCameraRosCompressedImageResponse>>(
-        stub_, this, true,
+        frame_prefix_, stub_, this, true,
         std::bind(&kachaka_api::KachakaApi::Stub::GetTofCameraRosCameraInfo,
                   *stub_, _1, _2, _3),
         std::bind(&kachaka_api::KachakaApi::Stub::GetTofCameraRosImage, *stub_,
