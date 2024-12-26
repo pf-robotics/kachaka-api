@@ -20,9 +20,10 @@
 namespace kachaka::grpc_ros2_bridge::converter {
 
 void ConvertGrpcHeaderToRos2Header(const kachaka_api::RosHeader& grpc_header,
-                                   std_msgs::msg::Header* ros2_header) {
+                                   std_msgs::msg::Header* ros2_header,
+                                   const std::string& frame_prefix) {
   ros2_header->stamp = rclcpp::Time(grpc_header.stamp_nsec());
-  ros2_header->frame_id = grpc_header.frame_id();
+  ros2_header->frame_id = frame_prefix + grpc_header.frame_id();
 }
 
 }  // namespace kachaka::grpc_ros2_bridge::converter

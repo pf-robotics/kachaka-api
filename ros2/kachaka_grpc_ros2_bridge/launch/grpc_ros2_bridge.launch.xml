@@ -1,15 +1,19 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="namespace"
+       default="kachaka" />
+  <arg name="frame_prefix"
+       default="/" />
   <arg name="server_uri"
        default="localhost:2021" />
   <node_container pkg="rclcpp_components"
                   exec="component_container_mt"
                   name="grpc_ros2_bridge_container"
-                  namespace="kachaka">
+                  namespace="$(var namespace)">
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::AutoHomingComponent"
                      name="auto_homing"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -18,7 +22,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::BackCameraComponent"
                      name="back_camera"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -27,7 +33,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::DiagnosticsComponent"
                      name="diagnostics"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -36,7 +42,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::KachakaCommandComponent"
                      name="kachaka_command"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -45,7 +51,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::FrontCameraComponent"
                      name="front_camera"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -54,16 +62,18 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::GoalPoseComponent"
                      name="goal_pose"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <remap from="~/goal_pose"
-             to="/goal_pose" />
+             to="goal_pose" />
       <extra_arg name="use_intra_process_comms"
                  value="false" />
     </composable_node>
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::ImuComponent"
                      name="imu"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -72,7 +82,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::LayoutComponent"
                      name="layout"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -81,7 +91,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::LidarComponent"
                      name="lidar"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -90,7 +102,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::ManualControlComponent"
                      name="manual_control"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -99,7 +111,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::MappingComponent"
                      name="mapping"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -108,7 +122,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::RobotInfoComponent"
                      name="robot_info"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -118,7 +132,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::ObjectDetectionComponent"
                      name="object_detection"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -127,7 +141,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::OdometryComponent"
                      name="odometry"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -136,7 +152,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::WheelOdometryComponent"
                      name="wheel_odometry"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -145,7 +163,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::TofCameraComponent"
                      name="tof_camera"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -154,7 +174,7 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::TorchComponent"
                      name="torch"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -163,7 +183,9 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::StaticTfComponent"
                      name="static_tf"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -172,12 +194,19 @@
     <composable_node pkg="kachaka_grpc_ros2_bridge"
                      plugin="kachaka::grpc_ros2_bridge::DynamicTfComponent"
                      name="dynamic_tf"
-                     namespace="kachaka">
+                     namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
                  value="false" />
     </composable_node>
   </node_container>
-  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" />
+  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" >
+    <arg name="namespace"
+         value="$(var namespace)" />
+    <arg name="frame_prefix"
+         value="$(var frame_prefix)" />
+  </include>
 </launch>

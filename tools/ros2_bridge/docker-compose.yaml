@@ -7,6 +7,8 @@ services:
     ipc: "host"
     pid: "host"
     environment:
+      - NAMESPACE
+      - FRAME_PREFIX
       - API_GRPC_BRIDGE_SERVER_URI
       - ROS_DOMAIN_ID
       - ROS_LOCALHOST_ONLY
@@ -16,7 +18,7 @@ services:
       - GROUP_ID
     user: "${USER_ID}:${GROUP_ID}"
     command: >
-      ros2 launch kachaka_grpc_ros2_bridge grpc_ros2_bridge.launch.xml server_uri:=${API_GRPC_BRIDGE_SERVER_URI}
+      ros2 launch kachaka_grpc_ros2_bridge grpc_ros2_bridge.launch.xml server_uri:=${API_GRPC_BRIDGE_SERVER_URI} namespace:=${NAMESPACE} frame_prefix:=${FRAME_PREFIX}
   kachaka_follow:
     image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"
     network_mode: "host"

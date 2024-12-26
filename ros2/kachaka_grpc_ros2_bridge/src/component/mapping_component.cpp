@@ -30,6 +30,8 @@ class MappingComponent : public rclcpp::Node {
  public:
   explicit MappingComponent(const rclcpp::NodeOptions& options)
       : Node("map", options) {
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::QoS qos(rclcpp::KeepLast{1});
@@ -45,7 +47,7 @@ class MappingComponent : public rclcpp::Node {
     map_bridge_->SetConverter(
         [this](const kachaka_api::GetPngMapResponse& grpc_msg,
                nav_msgs::msg::OccupancyGrid* ros2_msg) {
-          ros2_msg->header.frame_id = kOriginFrameId;
+          ros2_msg->header.frame_id = this->frame_prefix_ + std::string(kOriginFrameId);
           ros2_msg->header.stamp = get_clock()->now();
           if (grpc_msg.map().data().empty()) {
             return false;
@@ -109,6 +111,7 @@ class MappingComponent : public rclcpp::Node {
     }
   }
 
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<Ros2TopicBridge<kachaka_api::GetPngMapResponse,
                                   nav_msgs::msg::OccupancyGrid>>
