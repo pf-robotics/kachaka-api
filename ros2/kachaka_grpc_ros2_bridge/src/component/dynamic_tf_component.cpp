@@ -38,7 +38,8 @@ class DynamicTfComponent : public rclcpp::Node {
 
     RCLCPP_INFO(this->get_logger(), "get stub");
 
-    dynamic_tf_client_ = std::make_unique<TfStreamClient>(frame_prefix_, stub_, this);
+    dynamic_tf_client_ =
+        std::make_unique<TfStreamClient>(frame_prefix_, stub_, this);
 
     dynamic_tf_client_->ReadStream();
     RCLCPP_INFO(this->get_logger(), "start read dynamic tf");

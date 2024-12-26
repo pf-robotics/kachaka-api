@@ -77,7 +77,7 @@ class WheelOdometryComponent : public rclcpp::Node {
         "~/wheel_odometry", qos);
     wheel_odometry_bridge_->SetConverter(
         [this](const kachaka_api::GetRosWheelOdometryResponse& grpc_msg,
-           nav_msgs::msg::Odometry* ros2_msg) {
+               nav_msgs::msg::Odometry* ros2_msg) {
           const auto& odometry = grpc_msg.odometry();
           SetOdometryMsg(odometry, ros2_msg, this->frame_prefix_);
           return true;

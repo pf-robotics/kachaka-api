@@ -37,7 +37,8 @@ template <class GetCameraInfoResponse, class GetImageResponse,
 class CameraBridge {
  public:
   explicit CameraBridge(
-      std::string frame_prefix, std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node,
+      std::string frame_prefix,
+      std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node,
       bool is_depth,
       typename GrpcBridge<kachaka_api::GetRequest,
                           GetCameraInfoResponse>::GrpcService
@@ -47,7 +48,9 @@ class CameraBridge {
       typename GrpcBridge<kachaka_api::GetRequest,
                           GetCompressedImageResponse>::GrpcService
           compressed_image_service)
-      : frame_prefix_(std::move(frame_prefix)), stub_(std::move(stub)), node_(node) {
+      : frame_prefix_(std::move(frame_prefix)),
+        stub_(std::move(stub)),
+        node_(node) {
     rclcpp::SensorDataQoS qos;
     // camera_info
     camera_info_publisher_ =
@@ -69,8 +72,7 @@ class CameraBridge {
                                        sensor_msgs::msg::Image* ros2_msg) {
       ConvertToRos2Image(grpc_msg.image(), ros2_msg, this->frame_prefix_);
       if (camera_info_publisher_->get_subscription_count() > 0) {
-        PublishCameraInfo(camera_info_publisher_,
-                          grpc_msg.image().header(),
+        PublishCameraInfo(camera_info_publisher_, grpc_msg.image().header(),
                           this->frame_prefix_);
       }
       return true;
@@ -89,11 +91,11 @@ class CameraBridge {
     compressed_image_bridge_->SetConverter(
         [this](const GetCompressedImageResponse& grpc_msg,
                sensor_msgs::msg::CompressedImage* ros2_msg) {
-          ConvertToRos2CompressedImage(grpc_msg.image(), ros2_msg, this->frame_prefix_);
+          ConvertToRos2CompressedImage(grpc_msg.image(), ros2_msg,
+                                       this->frame_prefix_);
           if (camera_info_compressed_publisher_->get_subscription_count() > 0) {
             PublishCameraInfo(camera_info_compressed_publisher_,
-                              grpc_msg.image().header(),
-                              this->frame_prefix_);
+                              grpc_msg.image().header(), this->frame_prefix_);
           }
           return true;
         });
@@ -111,13 +113,13 @@ class CameraBridge {
  private:
   void PublishCameraInfo(
       rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr& publisher,
-      const kachaka_api::RosHeader& header,
-      const std::string& frame_prefix) {
+      const kachaka_api::RosHeader& header, const std::string& frame_prefix) {
     if (!camera_info_) {
       camera_info_ = GetCameraInfo(camera_info_last_cursor_);
     }
     if (camera_info_) {
-      converter::ConvertGrpcHeaderToRos2Header(header, &camera_info_->header, frame_prefix);
+      converter::ConvertGrpcHeaderToRos2Header(header, &camera_info_->header,
+                                               frame_prefix);
       publisher->publish(*camera_info_);
     }
   }
@@ -181,8 +183,7 @@ class CameraBridge {
                                  sensor_msgs::msg::Image* ros2_msg,
                                  const std::string& frame_prefix = "") {
     converter::ConvertGrpcHeaderToRos2Header(grpc_msg.header(),
-                                             &ros2_msg->header,
-                                             frame_prefix);
+                                             &ros2_msg->header, frame_prefix);
     std::vector<uchar> buffer(grpc_msg.data().begin(), grpc_msg.data().end());
     ros2_msg->data = std::move(buffer);
     ros2_msg->height = grpc_msg.height();
@@ -197,8 +198,7 @@ class CameraBridge {
       sensor_msgs::msg::CompressedImage* ros2_msg,
       const std::string& frame_prefix = "") {
     converter::ConvertGrpcHeaderToRos2Header(grpc_msg.header(),
-                                             &ros2_msg->header,
-                                             frame_prefix);
+                                             &ros2_msg->header, frame_prefix);
     ros2_msg->format = grpc_msg.format();
     std::vector<uchar> buffer(grpc_msg.data().begin(), grpc_msg.data().end());
     ros2_msg->data = std::move(buffer);

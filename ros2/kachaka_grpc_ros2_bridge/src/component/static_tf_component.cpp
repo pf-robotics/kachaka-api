@@ -27,8 +27,7 @@
 namespace {
 bool ConvertGrpcTfToRosTf(
     const kachaka_api::GetStaticTransformResponse& grpc_msg,
-    tf2_msgs::msg::TFMessage* msg,
-    std::string frame_prefix = "") {
+    tf2_msgs::msg::TFMessage* msg, std::string frame_prefix = "") {
   msg->transforms.clear();
   msg->transforms.reserve(grpc_msg.transforms_size());
   for (const auto& transform_grpc : grpc_msg.transforms()) {
@@ -36,7 +35,8 @@ bool ConvertGrpcTfToRosTf(
     kachaka::grpc_ros2_bridge::converter::ConvertGrpcHeaderToRos2Header(
         transform_grpc.header(), &(transform_ros.header), frame_prefix);
 
-    transform_ros.child_frame_id = frame_prefix + transform_grpc.child_frame_id();
+    transform_ros.child_frame_id =
+        frame_prefix + transform_grpc.child_frame_id();
     transform_ros.transform.translation.x = transform_grpc.translation().x();
     transform_ros.transform.translation.y = transform_grpc.translation().y();
     transform_ros.transform.translation.z = transform_grpc.translation().z();

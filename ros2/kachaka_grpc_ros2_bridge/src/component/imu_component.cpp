@@ -40,41 +40,46 @@ class ImuComponent : public rclcpp::Node {
         std::bind(&kachaka_api::KachakaApi::Stub::GetRosImu, *stub_, _1, _2,
                   _3),
         "~/imu", qos);
-    imu_bridge_->SetConverter([this](const kachaka_api::GetRosImuResponse& grpc_msg,
-                                 sensor_msgs::msg::Imu* ros2_msg) {
-      const auto& imu = grpc_msg.imu();
-      converter::ConvertGrpcHeaderToRos2Header(imu.header(), &ros2_msg->header, this->frame_prefix_);
-      ros2_msg->orientation.x = imu.orientation().x();
-      ros2_msg->orientation.y = imu.orientation().y();
-      ros2_msg->orientation.z = imu.orientation().z();
-      ros2_msg->orientation.w = imu.orientation().w();
-      for (int i = 0;
-           i < static_cast<int>(ros2_msg->orientation_covariance.size()); i++) {
-        ros2_msg->orientation_covariance[i] = imu.orientation_covariance()[i];
-      }
+    imu_bridge_->SetConverter(
+        [this](const kachaka_api::GetRosImuResponse& grpc_msg,
+               sensor_msgs::msg::Imu* ros2_msg) {
+          const auto& imu = grpc_msg.imu();
+          converter::ConvertGrpcHeaderToRos2Header(
+              imu.header(), &ros2_msg->header, this->frame_prefix_);
+          ros2_msg->orientation.x = imu.orientation().x();
+          ros2_msg->orientation.y = imu.orientation().y();
+          ros2_msg->orientation.z = imu.orientation().z();
+          ros2_msg->orientation.w = imu.orientation().w();
+          for (int i = 0;
+               i < static_cast<int>(ros2_msg->orientation_covariance.size());
+               i++) {
+            ros2_msg->orientation_covariance[i] =
+                imu.orientation_covariance()[i];
+          }
 
-      ros2_msg->angular_velocity.x = imu.angular_velocity().x();
-      ros2_msg->angular_velocity.y = imu.angular_velocity().y();
-      ros2_msg->angular_velocity.z = imu.angular_velocity().z();
-      for (int i = 0;
-           i < static_cast<int>(ros2_msg->angular_velocity_covariance.size());
-           i++) {
-        ros2_msg->angular_velocity_covariance[i] =
-            imu.angular_velocity_covariance()[i];
-      }
+          ros2_msg->angular_velocity.x = imu.angular_velocity().x();
+          ros2_msg->angular_velocity.y = imu.angular_velocity().y();
+          ros2_msg->angular_velocity.z = imu.angular_velocity().z();
+          for (int i = 0; i < static_cast<int>(
+                                  ros2_msg->angular_velocity_covariance.size());
+               i++) {
+            ros2_msg->angular_velocity_covariance[i] =
+                imu.angular_velocity_covariance()[i];
+          }
 
-      ros2_msg->linear_acceleration.x = imu.linear_acceleration().x();
-      ros2_msg->linear_acceleration.y = imu.linear_acceleration().y();
-      ros2_msg->linear_acceleration.z = imu.linear_acceleration().z();
-      for (int i = 0; i < static_cast<int>(
-                              ros2_msg->linear_acceleration_covariance.size());
-           i++) {
-        ros2_msg->linear_acceleration_covariance[i] =
-            imu.linear_acceleration_covariance()[i];
-      }
+          ros2_msg->linear_acceleration.x = imu.linear_acceleration().x();
+          ros2_msg->linear_acceleration.y = imu.linear_acceleration().y();
+          ros2_msg->linear_acceleration.z = imu.linear_acceleration().z();
+          for (int i = 0;
+               i < static_cast<int>(
+                       ros2_msg->linear_acceleration_covariance.size());
+               i++) {
+            ros2_msg->linear_acceleration_covariance[i] =
+                imu.linear_acceleration_covariance()[i];
+          }
 
-      return true;
-    });
+          return true;
+        });
     imu_bridge_->StartAsync();
   }
   ~ImuComponent() override { imu_bridge_->StopAsync(); }
