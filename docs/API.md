@@ -1,5 +1,12 @@
 # カチャカAPIでできること
 
+* APIの詳細
+    * [protos/kachaka-api.proto](protos/kachaka-api.proto)を参照してください。
+* エラーコード
+    * [docs/KachakaErrorCode.json](docs/KachakaErrorCode.json)
+* カチャカを移動させるコマンドは、アプリの安全設定などに従い、障害物を検出して止まる事があります。
+
+
 * Pythonから利用できるカチャカのAPIは、[kachaka_api/aio/base.py](https://github.com/pf-robotics/kachaka-api/blob/main/python/kachaka_api/aio/base.py)のKachakaApiClientのメソッドとして定義されています。
 * それぞれがどのような機能なのかは、2.1以降のセクションで説明します。
 

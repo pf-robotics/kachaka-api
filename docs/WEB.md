@@ -1,15 +1,13 @@
-# Web
+# WebアプリでカチャカAPIを利用する
 
 * ブラウザで動作するwebアプリからも、カチャカAPIを利用することができます。
-* ただし、webアプリからの通信は現状grpc-webのプロトコルに則る必要があり、これを仲介してくれるプロキシサーバーを立てる必要があります。
+* ただし、現状webアプリから直接gRPCを使うことはできないため、仲介してくれるプロキシサーバーを立ててgrpc-webのプロトコルに則る必要があります。
   * gRPCの通信に必要なHTTP/2の通信をjavascriptから自由に取り扱うことが可能な環境は限られており、HTTP/1.1で表現するgrpc-webプロトコルが必要です。
 * ここでは、プロキシをenvoyを使って立てる方法を紹介し、webアプリからカチャカAPIを利用するサンプルをご紹介します。
 
 ## 目次
 - [プロキシサーバ](#プロキシサーバ)
 - [Webサンプル(React + TypeScript)](#webサンプル-react--typescript)
-
-
 
 
 ## プロキシサーバ
@@ -24,7 +22,7 @@ $ ./tools/web_proxy/start_proxy_remote.sh <カチャカのIPアドレス>
 
 ## Webサンプル (React + TypeScript)
 
-![](docs/images/web_sample_capture.png)
+![](web/images/web_sample_capture.png)
 
 * Reactを利用して、カチャカAPIと連携するwebアプリのサンプルです。
 * プラスボタンを押すとパネルが追加され、パネルの種類を選ぶと対応するAPIを利用した表示がなされるデモです。
