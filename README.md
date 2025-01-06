@@ -56,7 +56,7 @@
 
 ## カチャカAPIマニュアル
 
-* 📖 [カチャカAPIでできること](./docs/FEATURES.md)
+* 📖 [カチャカAPIでできること](./docs/API.md)
     * カチャカAPIでできることをまとめています。
 * 🚀 [カチャカAPIを簡単に試してみる (JupyterLab)](./docs/QUICKSTART.md)
     * Webブラウザから、JupyterLabを使ってカチャカAPIを利用する方法を説明します。

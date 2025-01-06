@@ -1,37 +1,10 @@
 # カチャカAPIでできること
 
-* APIの詳細
-    * [protos/kachaka-api.proto](protos/kachaka-api.proto)を参照してください。
-* エラーコード
-    * [docs/KachakaErrorCode.json](docs/KachakaErrorCode.json)
-* カチャカを移動させるコマンドは、アプリの安全設定などに従い、障害物を検出して止まる事があります。
+* カチャカAPIの各機能の簡易的な説明は、[Jupyter Notebook](./kachaka_api_client.ipynb)としてまとめています。
+    * すべてのAPIをひとつずつ実行しながら確認することができるドキュメントになっているので、まずはこちらをご覧ください。
+
+* このドキュメントでは、分かりづらい機能を図や比較などをしながら解説していきます。
 
 
-* Pythonから利用できるカチャカのAPIは、[kachaka_api/aio/base.py](https://github.com/pf-robotics/kachaka-api/blob/main/python/kachaka_api/aio/base.py)のKachakaApiClientのメソッドとして定義されています。
-* それぞれがどのような機能なのかは、2.1以降のセクションで説明します。
-
-<details>
-<summary>KachakaApiClientのメソッド一覧</summary>
-
-```python
-{{#include ../kachaka-api/python/kachaka_api/aio/base.py}}
-```
-
-</details>
-
-## カチャカAPIとは？
-
-* ちなみに、PythonライブラリはあくまでカチャカAPIをPythonから使えるようにするラッパーで、カチャカAPIは実はgRPCという通信プロトコルによって提供されています。
-* そのgRPCのプロトコル定義は[protos/kachaka-api.proto](https://github.com/pf-robotics/kachaka-api/blob/main/protos/kachaka-api.proto)にあります。
-
-<details>
-<summary>kachaka-api.protoの全文</summary>
-
-```proto
-{{#include ../kachaka-api/protos/kachaka-api.proto}}
-```
-
-</details>
-
-## カチャカAPIでできること
+## ドキュメント
 - [カチャカによる家具の操作](./api/SHELF_HANDLING.md)
