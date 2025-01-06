@@ -1,64 +1,39 @@
-# Playground
+# カチャカ体内 (Playground) で自作のプログラムを動かす
 
-* カチャカ本体の資源の一部（Playground）を開発者が使用する事が出来ます。
-* 以下にログイン方法や、便利な使い方の説明をします。
-* カチャカ本体内で動くコンテナ環境。ユーザが自由にログインして自作のソフトウェアを実行できる。
+カチャカAPIを使ったプログラムを、カチャカ本体の資源の一部（Playground）を利用して動かすことができます。
+Playgroundは、カチャカ体内で動くDockerコンテナで、Ubuntu 22.04 LTSをベースにしています。
+Playgroundを使えば、カチャカだけで簡潔するシステムを開発することができます。
 
 
 ## 目次
-- [IPアドレスとポート番号](#ipアドレスとポート番号)
+- [Playgroundの仕様](#playgroundの仕様)
+  - [ポート](#ポート)
+  - [PlaygroundからカチャカAPIへのアクセス](#playgroundからカチャカapiへのアクセス)
+  - [Playgroundのリソース制限](#playgroundのリソース制限)
 - [Playgroundにsshでログインする](#playgroundにsshでログインする)
 - [Playgroundでサンプルプログラムを実行する](#playgroundでサンプルプログラムを実行する)
 - [自作ソフトの自動起動](#自作ソフトの自動起動)
-- [サンプルを自動起動する例](#サンプルを自動起動する例)
-- [Playgroundのリソース制限](#playgroundのリソース制限)
+  - [例) 時報のサンプルを自動起動する](#例-時報のサンプルを自動起動する)
 
-## IPアドレスとポート番号
+## Playgroundの仕様
+### ポート
+* カチャカの公開ポートの中で、Playgroundに関連するものは以下の通りです。
 
-* IPアドレス
-    * カチャカのIPアドレス
-        * スマートフォンアプリの「設定」→「アプリ情報」→「IPアドレス」に表示されます
-    * Playground内部からgRPCを利用する場合のIPアドレス
-        * 100.94.1.1
-* ポート番号
+| ポート番号 | 用途 |
+| --- | --- |
+| 26400 | KachakaAPI サーバー (gRPC) |
+| 26500 | Playground の ssh |
+| 26501 | Playground の JupyterLab |
+| 26502~26509 | 割り当てなし（自由利用可能） |
 
-<table>
-  <tr>
-   <td>ポート番号
-   </td>
-   <td>用途
-   </td>
-  </tr>
-  <tr>
-   <td>26400
-   </td>
-   <td>gRPC
-   </td>
-  </tr>
-  <tr>
-   <td>26500
-   </td>
-   <td>ssh
-   </td>
-  </tr>
-  <tr>
-   <td>26501
-   </td>
-   <td>JupyterLab
-   </td>
-  </tr>
-  <tr>
-   <td>26502~26509
-   </td>
-   <td>割り当てなし（自由利用可能）
-   </td>
-  </tr>
-</table>
+### PlaygroundからカチャカAPIへのアクセス
+* Playground内部からカチャカAPIを利用する場合、サーバーのアドレスは `100.94.1.1:26400`になります。
+  * pythonのkachaka_apiライブラリでは、`KachakaApiClient`のデフォルト値はこのアドレスになっています。
 
-> **Note**
-> IPアドレスが変わってしまい不便な場合は、ルータ等でカチャカのMACアドレスに対して固定IPアドレスを付与すると便利です。
+### Playgroundのリソース制限
 
-
+* ストレージ総計(/home, tmp) 3GB
+* メモリー 512MB
 
 
 ## Playgroundにsshでログインする
@@ -73,7 +48,7 @@
     * 画面中央のpublic_keysに公開鍵のテキストを貼り付けます。
     * 上部メニューの「▶▶」ボタンを押します。
 
-![set-authorized-keys](docs/images/set_authorized_kyes.png)
+<img src="playground/images/set_authorized_kyes.png" alt="set-authorized-keys" width="600">
 
 * utils/set_authorized_keys_from_github.ipynbを使用した設定方法
     * 画面左上のFile Browserを選択します。
@@ -81,7 +56,7 @@
     * 画面中央のuserにgithubのユーザ名を入力します。
     * 上部メニューの「▶▶」ボタンを押します
 
-![set-authorized-keys-from-github](docs/images/set_authorized_keys_from_github.png)
+<img src="playground/images/set_authorized_keys_from_github.png" alt="set-authorized-keys-from-github" width="600">
 
 以下のコマンドを実行してPlaygroundにログインします
 
@@ -103,15 +78,17 @@ python3 /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400
 
 ## 自作ソフトの自動起動
 
-* /home/kachaka/kachaka_startup.sh に自動起動したい処理を記述してください。
-* カチャカ起動時に自動的に実行されます
-* ログが /tmp/kachaka_startup.log に記録されます
+* カチャカが再起動したときに自動でプログラムが実行されてほしい場合には、自動起動の機能を使うことができます。
+* Playgroundの `/home/kachaka/kachaka_startup.sh` に自動起動したい処理を記述すると、カチャカ起動時に自動的に実行されます。
+* ログは `/tmp/kachaka_startup.log` に記録されます
     * python3 を自動起動する際は `-u` オプションを付けると良いです。そうでないと標準出力がバッファリングされてしまい、ログが確認できないことがあります。
 
-## サンプルを自動起動する例
+### 例) 時報のサンプルを自動起動する
 
-* /home/kachaka/kachaka_startup.sh を以下のように編集します。
-```
+* 例として、カチャカによる時報のサンプルを自動起動する場合を示します。
+* `/home/kachaka/kachaka_startup.sh` を以下のように編集します。
+
+```bash
 #!/bin/bash
 
 jupyter-lab --port=26501 --ip='0.0.0.0' &
@@ -120,10 +97,4 @@ jupyter-lab --port=26501 --ip='0.0.0.0' &
 python3 -u /home/kachaka/kachaka-api/python/demos/time_signal.py 100.94.1.1:26400 &
 ```
 
-* 保存後、カチャカを再起動します。再起動後、暫くすると、1分間隔で現在時刻を発話します。
-
-
-## Playgroundのリソース制限
-
-* ストレージ総計(/home, tmp) 3GB
-* メモリー 512MB
+* 保存後、カチャカを再起動して暫くすると、1分間隔で現在時刻を発話します。
