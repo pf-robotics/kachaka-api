@@ -34,4 +34,4 @@
 </details>
 
 ## カチャカAPIでできること
-- [カチャカによる家具の操作](./api/shelf_handling.md)
+- [カチャカによる家具の操作](./api/SHELF_HANDLING.md)

@@ -1,24 +1,25 @@
 # カチャカAPIを簡単に試してみる (JupyterLab)
 
-カチャカ本体内で動作するJupyterLabを利用することで、OSを問わずWebブラウザのみ用意すれば開発を行うことができます。カチャカAPIの動作確認やサンプルコードの実行におすすめです。
+カチャカ本体内で動作するJupyterLabを利用することで、OSを問わずWebブラウザのみでカチャカAPI (Python) を実行することができます。カチャカAPIの動作確認やサンプルコードの実行におすすめです。
 
 > [!NOTE]
 > 対応ブラウザについては、[JupyterLab公式ドキュメント](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html#supported-browsers)をご確認ください。
 
 ## 目次
-- [準備](#準備)
-- [パスワードの変更方法](#パスワードの変更方法)
-- [サンプルコードのダウンロード](#サンプルコードのダウンロード)
-- [依存ライブラリのインストール](#依存ライブラリのインストール)
-- [サンプルコードの実行方法](#サンプルコードの実行方法)
-
+- [JupyterLabを開く](#JupyterLabを開く)
+- [サンプルコードを動かしてみる](#サンプルコードを動かしてみる)
+    - [サンプルコードのダウンロード](#サンプルコードのダウンロード)
+    - [サンプル実行のための依存ライブラリのインストール](#サンプル実行のための依存ライブラリのインストール)
+    - [サチャカが発話するサンプルコード](#カチャカが発話するサンプルコード)
+- [カチャカAPIのメソッドを試してみる](#カチャカAPIのメソッドを試してみる)
 
 ## JupyterLabを開く
 
 1. カチャカのIPアドレスを確認します。
     * スマートフォンアプリの「⚙設定」>「アプリ情報」>「IPアドレス」にカチャカのIPアドレスが記載されています。
 2. ブラウザを起動し、以下のURLにアクセスします。
-    * `http://<カチャカのIPアドレス>:26501/` (例: `http://192.168.1.100:26501/`)
+    * `http://<カチャカのIPアドレス>:26501/` (例: `http://192.168.0.20:26501/`)
+    <img src="./quickstart/images/jupyter_url.png" width="400">
 * ログイン画面が表示されるので、以下のパスワードを入力してください。
     * パスワード：kachaka
 
@@ -44,38 +45,50 @@ Verify password: <新しいパスワード>
 
 </details>
 
+## サンプルコードを動かしてみる
 ### サンプルコードのダウンロード
 
 * 左側のファイル一覧から README.ipynb をダブルクリックしてください。
 * 上部メニューの「▶▶」をクリックしてください。
 
-![jupyter-readme](./quickstart/images/jupyter-readme.png)
+<img src="./quickstart/images/jupyter-readme.png" width="600">
 
 * 以下のダイアログが表示された場合は「Restart」ボタンを押してください。
 
-![jupyter-restart-dialog](./quickstart/images/jupyter-restart-dialog.png)
+<img src="./quickstart/images/jupyter-restart-dialog.png" width="400">
 
 * サンプルコードのダウンロードが完了すると、以下のようなメッセージが表示され、左側のファイル一覧に kachaka-apiフォルダが作成されます。
 
-![jupyter-clone-sample](./quickstart/images/jupyter-clone-sample.png)
+<img src="./quickstart/images/jupyter-clone-sample.png" width="600">
 
-### 依存ライブラリのインストール
+### サンプル実行のための依存ライブラリのインストール
 
-ダウンロード後初回の一回だけ、下記の手順を実行する必要があります。
+サンプルを実行するために必要な依存ライブラリをインストールします。
+ダウンロード後初回の一回だけでOKです。
 
-* 左側のファイル一覧からkachaka-api → python → demosフォルダを選択します。
+* 左側のファイル一覧からkachaka-api/python/demosフォルダを選択します。
 * install_libraries.ipynbをダブルクリックすると、右側にソースコードが表示されます。
 * 上部メニューの「▶▶」ボタンを押して実行します。
 
-### サンプルコードの実行方法
+### カチャカが発話するサンプルコード
 
-* 左側のファイル一覧からkachaka-api → python → demosフォルダを選択します。
-* speak.ipynbをダブルクリックすると、右側にソースコードが表示されます。
-* 上部メニューの「▶▶」ボタンを押して実行します。
+* 左側のファイル一覧からkachaka-api/python/demosフォルダを選択します。
+* 例えばspeak.ipynbをダブルクリックして開いてみましょう。
+* すると、右側にソースコードが表示されます。
+* 上部メニューの「▶▶」ボタンを押すと、コード全体が実行されます。
 
-![jupyter-sample-speak](./quickstart/images/jupyter-sample-speak.png)
+<img src="./quickstart/images/jupyter-sample-speak.png" width="600">
 
 実行結果
 
 「カチャカです、よろしくね」とカチャカが発話します。
 
+
+## カチャカAPIのメソッドを試してみる
+* 今度は、`kachaka-api/docs/kachaka_api_client.ipynb` を開いてみましょう。
+* すべてのAPIを1つずつ説明付きで実行するドキュメントになっています。
+
+<img src="./quickstart/images/kachaka_api_client_docs.png" width="600">
+
+* 上部メニューで今度は「▶」ボタンを押すと、コードが一つずつ実行されます。
+* 一番上から順番に実行して、ひとつひとつのAPIの動作を確認してみましょう。
