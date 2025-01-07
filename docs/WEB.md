@@ -13,7 +13,8 @@
 ## プロキシサーバ
 
 * プロキシサーバーの起動
-```
+
+```bash
 $ ./tools/web_proxy/start_proxy_remote.sh <カチャカのIPアドレス>
 ```
 
@@ -27,7 +28,8 @@ $ ./tools/web_proxy/start_proxy_remote.sh <カチャカのIPアドレス>
 * Reactを利用して、カチャカAPIと連携するwebアプリのサンプルです。
 * プラスボタンを押すとパネルが追加され、パネルの種類を選ぶと対応するAPIを利用した表示がなされるデモです。
 * 起動するには、以下のコマンドを実行してください。
-```
+
+```bash
 $ cd web/demos/kachaka_api_web_sample
 $ npm install
 $ npm run dev
@@ -37,7 +39,8 @@ $ npm run dev
 * 以下にインストール方法の例を示します。
   * aptでインストールされるnpmは古い可能性があります。nで最新のstableをインストールすることを推奨します。
   * サンプルは nodejs v18.17.1、npm 9.6.7 で動作を確認しています。
-```
+
+```bash
 $ sudo apt install nodejs npm
 $ sudo npm install -g n
 $ sudo n stable

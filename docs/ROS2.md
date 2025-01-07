@@ -63,7 +63,7 @@ docker exec -it ros2_bridge_ros2_bridge_1 /opt/kachaka/env.sh ros2 topic echo /k
 
 * 以下のようなレスポンスが返ってきたら成功です。
 
-```
+```yaml
 locations:
 - id: L01
   name: ダイニング
@@ -83,7 +83,7 @@ locations:
     * kachaka_descriptionはお好みでビルドしてください。
 * 以下の手順でビルドします。
 
-```
+```bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 ln -s ~/kachaka-api/ros2/kachaka_interfaces/ kachaka_interfaces
@@ -98,7 +98,7 @@ colcon build
 * RViz2でブリッジから得られる情報を可視化してみましょう。
 * kachaka_descriptionにサンプルのconfigがあるので、まずはこれを使います。
 
-```
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 cd src/kachaka_description/config
@@ -119,7 +119,7 @@ rviz2 -d kachaka.rviz
     * 以下の実行例では`BASE_ARCH=x86_64`としていますが、ros2_bridgeをx86_64アーキテクチャのCPU上で実行させる場合の例です。
     * ros2_bridgeをarm64アーキテクチャのCPU上で実行させる場合は`BASE_ARCH=arm64`としてください。
 
-```
+```bash
 docker buildx build -t kachaka-api --target kachaka-grpc-ros2-bridge -f Dockerfile.ros2 . --build-arg BASE_ARCH=x86_64 --load
 ```
 

@@ -35,8 +35,8 @@
 
 * Terminalで、以下のコマンドを入力します。
 
-```
-jupyter lab password
+```console
+$ jupyter lab password
 Enter password: <新しいパスワード>
 Verify password: <新しいパスワード>
 ```

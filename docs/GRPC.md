@@ -33,14 +33,14 @@ gRPCは、データのシリアライズにはProtocol Buffersを利用してお
   * つまり、protoで定義されているようなメッセージ型やrpc定義を、自分の言語で使えるようにしてくれるわけです。
 * 以下のコマンドを実行し、サンプルコードをダウンロードします。
 
-```
+```bash
 cd ~
 git clone https://github.com/pf-robotics/kachaka-api.git
 ``` 
 
 * 以下のコマンドを実行すると、protoファイルから gRPC を利用するのに必要なコードが生成されます。
   
-```
+```bash
 mkdir -p ~/kachaka_grpc_client
 cd ~/kachaka_grpc_client
 python3 -m venv venv
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 * PCで実行する場合、以下のコマンドを実行します。
     * `<カチャカのIPアドレス>`部分は、スマートフォンアプリで確認したIPアドレスを入力します。
 
-```
+```bash
 cd ~
 source venv/bin/activate
 cd ~/kachaka-api/python/demos/grpc_samples
@@ -110,7 +110,7 @@ python get_locations.py <カチャカのIPアドレス>:26400
     * ログイン後、以下のコマンドを実行します。
         * Playground内から実行する場合は、IPアドレスは100.94.1.1とします。
 
-```
+```bash
 cd ~/kachaka-api/python/demos/grpc_samples
 python3 get_locations.py 100.94.1.1:26400
 ```
@@ -119,7 +119,7 @@ python3 get_locations.py 100.94.1.1:26400
 
 スマートフォンアプリで登録済みの目的地が表示されます。
 
-```
+```javascript
 metadata {
   cursor: 1902856679949
 }
@@ -142,7 +142,6 @@ locations {
   type: LOCATION_TYPE_CHARGER
 }
 default_location_id: "L01"
-
 ```
 
 ## Cursorによるロングポーリング
@@ -222,7 +221,6 @@ sequenceDiagram
   B -->>- C: 
   Note over C: cursor = 150 を取得したので、<br/>それを次の Get に利用します
   R -->> B: data (cursor = 160)
-
 ```
 
 ### データがごくまれにしか更新されない場合
@@ -248,5 +246,4 @@ sequenceDiagram
   Note over B: データが更新されるまで待ちます<br/>(ロングポーリング)
   R -->> B: data (cursor = 120)
   B -->>- C: 
-
 ```

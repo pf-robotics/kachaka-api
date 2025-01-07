@@ -60,7 +60,7 @@ Playgroundを使えば、カチャカだけで簡潔するシステムを開発�
 
 以下のコマンドを実行してPlaygroundにログインします
 
-```
+```bash
 ssh -p 26500 -i <登録した公開鍵に対応する秘密鍵> kachaka@<kachakaのIPアドレス>
 ```
 
@@ -69,7 +69,7 @@ ssh -p 26500 -i <登録した公開鍵に対応する秘密鍵> kachaka@<kachaka
 * カチャカにsshでログインします。
 * 以下のコマンドを実行すると、カチャカが時報を1分間隔で発話します。
 
-```
+```bash
 cd ~
 git clone https://github.com/pf-robotics/kachaka-api.git
 pip install -r /home/kachaka/kachaka-api/python/demos/requirements.txt

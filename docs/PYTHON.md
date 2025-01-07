@@ -27,7 +27,7 @@ uvの場合は、pyproject.tomlに以下を追加してインストールする�
 url = "https://pf-robotics.github.io/kachaka-python-packages/simple"
 ```
 
-```
+```bash
 uv add kachaka-api
 ```
 
