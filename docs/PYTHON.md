@@ -64,8 +64,8 @@ client.speak("カチャカです、よろしくね")
 
 ## サンプルコード
 
-* [sample_llm_speak.py](python/demos/sample_llm_speak.py) ... ChatGPT を使って、コマンド終了時にお喋りをするサンプル
-* その他、[python/demos/](python/demos) 以下に、JupyterLab で利用できる Notebook 形式が多数あります
+* [sample_llm_speak.py](../python/demos/sample_llm_speak.py) ... ChatGPT を使って、コマンド終了時にお喋りをするサンプル
+* その他、[python/demos/](../python/demos) 以下に、JupyterLab で利用できる Notebook 形式が多数あります
 
 ## 非同期ライブラリ (aio)
 > [!NOTE]
