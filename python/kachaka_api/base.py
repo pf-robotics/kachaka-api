@@ -469,6 +469,22 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    def localize(
+        self,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(localize_command=pb2.LocalizeCommand()),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = self.stub.CancelCommand(request)
