@@ -77,7 +77,6 @@
 
 * カチャカAPIはOSSとして公開されています。要望やバグ報告など大歓迎です。
 * 質問や要望などは、[GitHub Discussions](https://github.com/pf-robotics/kachaka-api/discussions) からお願いします。
-* PRを出していただける方向けの説明は、[カチャカAPIの開発について](./docs/CONTRIBUTION.md) をご覧ください。
 
 ## License
 Copyright 2023 Preferred Robotics, Inc.
