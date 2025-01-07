@@ -5,10 +5,9 @@ set -eu
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # build docker image specifying the target stage
-pushd "${SCRIPT_DIR}/gen_proto"
+pushd "${SCRIPT_DIR}/gen_proto/python"
 docker build \
-    -t kachaka-api-gen-proto \
-    --target kachaka-api-gen-proto \
+    -t kachaka-api-gen-proto-python \
     .
 popd
 
@@ -19,5 +18,5 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "${REPO_TOP_DIR}/protos:/protos" \
     -v "${REPO_TOP_DIR}/python/kachaka_api/generated:/generated" \
-    -v "${REPO_TOP_DIR}/tools/gen_proto:/app" \
-    kachaka-api-gen-proto
+    -v "${REPO_TOP_DIR}/tools/gen_proto/python:/app" \
+    kachaka-api-gen-proto-python
