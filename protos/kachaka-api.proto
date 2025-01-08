@@ -254,6 +254,7 @@ message Command {
     RotateInPlaceCommand rotate_in_place_command = 17;
     // DockAnyShelfWithRegistrationCommand is available only in Kachaka Pro.
     DockAnyShelfWithRegistrationCommand dock_any_shelf_with_registration_command = 18;
+    LocalizeCommand localize_command = 19;
   }
 }
 
@@ -309,6 +310,9 @@ message RotateInPlaceCommand {
 message DockAnyShelfWithRegistrationCommand {
   string target_location_id = 1;
   bool dock_forward = 2;
+}
+
+message LocalizeCommand {
 }
 
 enum CommandState {
