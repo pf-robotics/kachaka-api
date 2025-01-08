@@ -26,10 +26,10 @@
                izz="4.2667e-02" />
     </inertial>
     <visual>
-      <origin xyz="0.0435 0.0 0.0475"
+      <origin xyz="-0.150 -0.120 0.0"
               rpy="0 0 0" />
       <geometry>
-        <box size="0.387 0.240 0.095" />
+        <mesh filename="package://kachaka_description/meshes/kachaka/body.stl" />
       </geometry>
       <material name="body" />
     </visual>
@@ -96,10 +96,10 @@
     </inertial>
     <visual>
       <origin xyz="0 0 0"
-              rpy="${PI / 2.0} 0 0" />
+              rpy="0 0 0" />
       <geometry>
-        <cylinder length="0.025"
-                  radius="0.045" />
+        <mesh filename="package://kachaka_description/meshes/kachaka/right_tire.stl"
+              scale="1.0 1.0 1.0" />
       </geometry>
       <material name="tire" />
     </visual>
@@ -139,11 +139,11 @@
                izz="0.001" />
     </inertial>
     <visual>
-      <origin xyz="0 0 0.1075"
+      <origin xyz="0 0 0.073"
               rpy="0 0 0" />
       <geometry>
-        <cylinder length="0.015"
-                  radius="0.025" />
+        <mesh filename="package://kachaka_description/meshes/kachaka/solenoid.stl"
+              scale="1.0 1.0 1.0" />
       </geometry>
       <material name="body" />
     </visual>
@@ -210,10 +210,10 @@
     </inertial>
     <visual>
       <origin xyz="0 0 0"
-              rpy="${PI / 2.0} 0 0" />
+              rpy="0 0 0" />
       <geometry>
-        <cylinder length="0.025"
-                  radius="0.045" />
+        <mesh filename="package://kachaka_description/meshes/kachaka/left_tire.stl"
+              scale="1.0 1.0 1.0" />
       </geometry>
       <material name="tire" />
     </visual>
