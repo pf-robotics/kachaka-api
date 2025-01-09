@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.5)
 
 project(kachaka_grpc_ros2_bridge)
 
+# workaround for conditional include for each ROS distribution
+if($ENV{ROS_DISTRO} STREQUAL "jazzy")
+  add_compile_definitions(ROS_DISTRO_JAZZY)
+endif()
+
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)

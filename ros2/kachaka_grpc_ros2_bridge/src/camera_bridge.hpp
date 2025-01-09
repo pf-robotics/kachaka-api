@@ -16,7 +16,12 @@
 #include <memory>
 #include <utility>
 
+#if defined(ROS_DISTRO_JAZZY)  // Jazzy
+#include <cv_bridge/cv_bridge.hpp>
+#else  // Humble (default)
 #include <cv_bridge/cv_bridge.h>
+#endif
+
 #include <grpcpp/grpcpp.h>
 #include <opencv2/opencv.hpp>
 #include <rclcpp/rclcpp.hpp>
