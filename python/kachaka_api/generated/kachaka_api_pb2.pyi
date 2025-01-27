@@ -395,7 +395,7 @@ class ObjectDetectionFeatures(_message.Message):
     def __init__(self, name: _Optional[str] = ..., shape: _Optional[_Iterable[int]] = ..., data: _Optional[_Iterable[float]] = ...) -> None: ...
 
 class Command(_message.Message):
-    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command")
+    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command", "localize_command")
     MOVE_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     RETURN_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     UNDOCK_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
@@ -408,6 +408,7 @@ class Command(_message.Message):
     MOVE_FORWARD_COMMAND_FIELD_NUMBER: _ClassVar[int]
     ROTATE_IN_PLACE_COMMAND_FIELD_NUMBER: _ClassVar[int]
     DOCK_ANY_SHELF_WITH_REGISTRATION_COMMAND_FIELD_NUMBER: _ClassVar[int]
+    LOCALIZE_COMMAND_FIELD_NUMBER: _ClassVar[int]
     move_shelf_command: MoveShelfCommand
     return_shelf_command: ReturnShelfCommand
     undock_shelf_command: UndockShelfCommand
@@ -420,7 +421,8 @@ class Command(_message.Message):
     move_forward_command: MoveForwardCommand
     rotate_in_place_command: RotateInPlaceCommand
     dock_any_shelf_with_registration_command: DockAnyShelfWithRegistrationCommand
-    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ...) -> None: ...
+    localize_command: LocalizeCommand
+    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ...) -> None: ...
 
 class MoveShelfCommand(_message.Message):
     __slots__ = ("target_shelf_id", "destination_location_id")
@@ -499,6 +501,10 @@ class DockAnyShelfWithRegistrationCommand(_message.Message):
     target_location_id: str
     dock_forward: bool
     def __init__(self, target_location_id: _Optional[str] = ..., dock_forward: bool = ...) -> None: ...
+
+class LocalizeCommand(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
 
 class EmptyRequest(_message.Message):
     __slots__ = ()
