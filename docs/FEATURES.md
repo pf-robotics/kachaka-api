@@ -8,3 +8,4 @@
 
 ## ドキュメント
 - [カチャカによる家具の操作](./api/SHELF_HANDLING.md)
+- [エラー状態の検知・ハンドリング](./api/ERROR_HANDLING.md)
