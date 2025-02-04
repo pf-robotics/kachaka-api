@@ -115,6 +115,6 @@ message GetErrorResponse {
 |------------|------|------|
 | Warn | 伝えておいたほうがいい程度の情報 |  |
 | Error | 再起動以外で復帰可能 | 黄色 |
-| Recoverable | 一定時間で復帰可能 | 赤色が回転 |
+| Recoverable | 一定時間で復帰可能 | 白色が回転 |
 | Fatal | 再起動で復帰可能 | 赤色 |
 | CallForSupport | 深刻な故障 (カスタマーサポートにご連絡ください) | 赤色点滅 |
