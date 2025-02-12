@@ -65,7 +65,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /kachaka_description/robot_description
+        Value: /kachaka/robot_description
       Enabled: true
       Links:
         All Links Enabled: true

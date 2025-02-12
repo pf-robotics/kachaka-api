@@ -3,7 +3,7 @@
   <arg name="namespace"
        default="kachaka" />
   <arg name="frame_prefix"
-       default="/" />
+       default="false" />
   <arg name="server_uri"
        default="localhost:2021" />
   <node_container pkg="rclcpp_components"
@@ -23,8 +23,6 @@
                      plugin="kachaka::grpc_ros2_bridge::BackCameraComponent"
                      name="back_camera"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -52,8 +50,6 @@
                      plugin="kachaka::grpc_ros2_bridge::FrontCameraComponent"
                      name="front_camera"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -72,8 +68,6 @@
                      plugin="kachaka::grpc_ros2_bridge::ImuComponent"
                      name="imu"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -92,8 +86,6 @@
                      plugin="kachaka::grpc_ros2_bridge::LidarComponent"
                      name="lidar"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -112,8 +104,6 @@
                      plugin="kachaka::grpc_ros2_bridge::MappingComponent"
                      name="mapping"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -142,8 +132,6 @@
                      plugin="kachaka::grpc_ros2_bridge::OdometryComponent"
                      name="odometry"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -153,8 +141,6 @@
                      plugin="kachaka::grpc_ros2_bridge::WheelOdometryComponent"
                      name="wheel_odometry"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -164,8 +150,6 @@
                      plugin="kachaka::grpc_ros2_bridge::TofCameraComponent"
                      name="tof_camera"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -184,8 +168,6 @@
                      plugin="kachaka::grpc_ros2_bridge::StaticTfComponent"
                      name="static_tf"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
@@ -195,8 +177,6 @@
                      plugin="kachaka::grpc_ros2_bridge::DynamicTfComponent"
                      name="dynamic_tf"
                      namespace="$(var namespace)">
-      <param name="frame_prefix"
-             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
