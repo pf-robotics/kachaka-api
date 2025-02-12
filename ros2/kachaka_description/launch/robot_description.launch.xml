@@ -3,7 +3,7 @@
   <arg name="namespace"
        default="kachaka" />
   <arg name="frame_prefix"
-       default="/" />
+       default="$(env FRAME_PREFIX)" />
   <node pkg="robot_state_publisher"
         exec="robot_state_publisher"
         name="robot_state_publisher"
