@@ -2,7 +2,6 @@
 <launch>
   <arg name="namespace"
        default="kachaka" />
-
   <arg name="frame_prefix"
        default="false" />
 
