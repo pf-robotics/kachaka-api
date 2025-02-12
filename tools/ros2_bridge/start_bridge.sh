@@ -17,10 +17,10 @@ fi
 
 if [[ $# -lt 2 ]]; then
     NAMESPACE="kachaka"
-    FRAME_PREFIX='/'
+    FRAME_PREFIX="false"
 else
     NAMESPACE=$2
-    FRAME_PREFIX=$2"/"
+    FRAME_PREFIX=$2"true"
 fi
 
 USER_ID="$(id -u)"

@@ -2,15 +2,27 @@
 <launch>
   <arg name="namespace"
        default="kachaka" />
+
   <arg name="frame_prefix"
-       default="/" />
+       default="false" />
+
   <node pkg="robot_state_publisher"
         exec="robot_state_publisher"
         name="robot_state_publisher"
-        namespace="$(var namespace)">
+        namespace="$(var namespace)"
+        if="$(var frame_prefix)" >
+     <param name="robot_description"
+             value="$(command 'cat $(find-pkg-share kachaka_description)/robot/kachaka.urdf')" />
+     <param name="frame_prefix"
+            value="$(var namespace)/" />
+  </node>
+
+  <node pkg="robot_state_publisher"
+        exec="robot_state_publisher"
+        name="robot_state_publisher"
+        namespace="$(var namespace)"
+        unless="$(var frame_prefix)" >
     <param name="robot_description"
            value="$(command 'cat $(find-pkg-share kachaka_description)/robot/kachaka.urdf')" />
-    <param name="frame_prefix"
-           value="$(var frame_prefix)" />
   </node>
 </launch>
