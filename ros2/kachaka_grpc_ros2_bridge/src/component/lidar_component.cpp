@@ -28,8 +28,6 @@ class LidarComponent : public rclcpp::Node {
  public:
   explicit LidarComponent(const rclcpp::NodeOptions& options)
       : Node("lidar", options) {
-    this->declare_parameter("frame_prefix", "");
-    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SensorDataQoS qos;
@@ -45,7 +43,7 @@ class LidarComponent : public rclcpp::Node {
         [this](const kachaka_api::GetRosLaserScanResponse& grpc_msg,
                sensor_msgs::msg::LaserScan* ros2_msg) {
           converter::ConvertGrpcHeaderToRos2Header(
-              grpc_msg.scan().header(), &ros2_msg->header, this->frame_prefix_);
+              grpc_msg.scan().header(), &ros2_msg->header, std::string(this->get_namespace()).substr(1));
           ros2_msg->angle_min = grpc_msg.scan().angle_min();
           ros2_msg->angle_max = grpc_msg.scan().angle_max();
           ros2_msg->angle_increment = grpc_msg.scan().angle_increment();
@@ -71,7 +69,6 @@ class LidarComponent : public rclcpp::Node {
   LidarComponent& operator=(const LidarComponent&) = delete;
 
  private:
-  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<Ros2TopicBridge<kachaka_api::GetRosLaserScanResponse,
                                   sensor_msgs::msg::LaserScan>>

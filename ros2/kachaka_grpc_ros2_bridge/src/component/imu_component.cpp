@@ -28,8 +28,6 @@ class ImuComponent : public rclcpp::Node {
  public:
   explicit ImuComponent(const rclcpp::NodeOptions& options)
       : Node("imu", options) {
-    this->declare_parameter("frame_prefix", "");
-    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SensorDataQoS qos;
@@ -45,7 +43,7 @@ class ImuComponent : public rclcpp::Node {
                sensor_msgs::msg::Imu* ros2_msg) {
           const auto& imu = grpc_msg.imu();
           converter::ConvertGrpcHeaderToRos2Header(
-              imu.header(), &ros2_msg->header, this->frame_prefix_);
+              imu.header(), &ros2_msg->header, std::string(this->get_namespace()).substr(1));
           ros2_msg->orientation.x = imu.orientation().x();
           ros2_msg->orientation.y = imu.orientation().y();
           ros2_msg->orientation.z = imu.orientation().z();
@@ -88,7 +86,6 @@ class ImuComponent : public rclcpp::Node {
   ImuComponent& operator=(const ImuComponent&) = delete;
 
  private:
-  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<
       Ros2TopicBridge<kachaka_api::GetRosImuResponse, sensor_msgs::msg::Imu>>

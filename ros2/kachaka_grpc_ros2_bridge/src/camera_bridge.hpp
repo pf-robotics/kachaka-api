@@ -42,7 +42,6 @@ template <class GetCameraInfoResponse, class GetImageResponse,
 class CameraBridge {
  public:
   explicit CameraBridge(
-      std::string frame_prefix,
       std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node,
       bool is_depth,
       typename GrpcBridge<kachaka_api::GetRequest,
@@ -53,8 +52,7 @@ class CameraBridge {
       typename GrpcBridge<kachaka_api::GetRequest,
                           GetCompressedImageResponse>::GrpcService
           compressed_image_service)
-      : frame_prefix_(std::move(frame_prefix)),
-        stub_(std::move(stub)),
+      : stub_(std::move(stub)),
         node_(node) {
     rclcpp::SensorDataQoS qos;
     // camera_info
@@ -75,10 +73,11 @@ class CameraBridge {
         node, image_service, "~/image_raw", qos);
     image_bridge_->SetConverter([this](const GetImageResponse& grpc_msg,
                                        sensor_msgs::msg::Image* ros2_msg) {
-      ConvertToRos2Image(grpc_msg.image(), ros2_msg, this->frame_prefix_);
+      ConvertToRos2Image(grpc_msg.image(), ros2_msg,
+                         std::string(node_->get_namespace()).substr(1));
       if (camera_info_publisher_->get_subscription_count() > 0) {
         PublishCameraInfo(camera_info_publisher_, grpc_msg.image().header(),
-                          this->frame_prefix_);
+                          std::string(node_->get_namespace()).substr(1));
       }
       return true;
     });
@@ -97,10 +96,10 @@ class CameraBridge {
         [this](const GetCompressedImageResponse& grpc_msg,
                sensor_msgs::msg::CompressedImage* ros2_msg) {
           ConvertToRos2CompressedImage(grpc_msg.image(), ros2_msg,
-                                       this->frame_prefix_);
+                                       std::string(node_->get_namespace()).substr(1));
           if (camera_info_compressed_publisher_->get_subscription_count() > 0) {
             PublishCameraInfo(camera_info_compressed_publisher_,
-                              grpc_msg.image().header(), this->frame_prefix_);
+                              grpc_msg.image().header(), std::string(node_->get_namespace()).substr(1));
           }
           return true;
         });
@@ -209,7 +208,6 @@ class CameraBridge {
     ros2_msg->data = std::move(buffer);
   }
 
-  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   rclcpp::Node* node_;
   std::unique_ptr<GrpcBridge<kachaka_api::GetRequest, GetCameraInfoResponse>>
