@@ -46,7 +46,10 @@ class MappingComponent : public rclcpp::Node {
         [this](const kachaka_api::GetPngMapResponse& grpc_msg,
                nav_msgs::msg::OccupancyGrid* ros2_msg) {
           ros2_msg->header.frame_id =
-              std::string(this->get_namespace()).substr(1) == "kachaka" ? std::string(kOriginFrameId) : std::string(this->get_namespace()).substr(1) + "/" + std::string(kOriginFrameId);
+              (std::string(this->get_namespace()).substr(1) == "kachaka")
+                  ? std::string(kOriginFrameId)
+                  : std::string(this->get_namespace()).substr(1) + "/" +
+                        std::string(kOriginFrameId);
           ros2_msg->header.stamp = get_clock()->now();
           if (grpc_msg.map().data().empty()) {
             return false;

@@ -60,7 +60,10 @@ class DiagnosticsComponent : public rclcpp::Node {
         [&, this](const kachaka_api::GetErrorResponse& grpc_msg,
                   diagnostic_msgs::msg::DiagnosticArray* ros2_msg) {
           ros2_msg->header.stamp = this->now();
-          ros2_msg->header.frame_id = (std::string(this->get_namespace()).substr(1) == "kachaka") ? "" : std::string(this->get_namespace()).substr(1);
+          ros2_msg->header.frame_id =
+              (std::string(this->get_namespace()).substr(1) == "kachaka")
+                  ? ""
+                  : std::string(this->get_namespace()).substr(1);
 
           const auto& error_codes = grpc_msg.error_codes();
           for (auto& ec : error_codes) {

@@ -31,7 +31,9 @@ bool ConvertGrpcTfToRosTf(
         transform_grpc.header(), &(transform_ros.header), frame_prefix);
 
     transform_ros.child_frame_id =
-        frame_prefix == "kachaka" ? transform_grpc.child_frame_id() : frame_prefix + "/" + transform_grpc.child_frame_id();
+        (frame_prefix == "kachaka")
+            ? transform_grpc.child_frame_id()
+            : frame_prefix + "/" + transform_grpc.child_frame_id();
     transform_ros.transform.translation.x = transform_grpc.translation().x();
     transform_ros.transform.translation.y = transform_grpc.translation().y();
     transform_ros.transform.translation.z = transform_grpc.translation().z();
@@ -67,7 +69,8 @@ void TfStreamClient::ReadStream() {
 
   while (reader->Read(&response)) {
     tf2_msgs::msg::TFMessage msg;
-    ConvertGrpcTfToRosTf(response, &msg, std::string(node_->get_namespace()).substr(1));
+    ConvertGrpcTfToRosTf(response, &msg,
+                         std::string(node_->get_namespace()).substr(1));
     publisher_->publish(msg);
   }
   RCLCPP_INFO(node_->get_logger(), "dynamic tf server is stopped.");

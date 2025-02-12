@@ -36,7 +36,9 @@ bool ConvertGrpcTfToRosTf(
         transform_grpc.header(), &(transform_ros.header), frame_prefix);
 
     transform_ros.child_frame_id =
-        frame_prefix == "kachaka" ? transform_grpc.child_frame_id() : frame_prefix + "/" + transform_grpc.child_frame_id();
+        (frame_prefix == "kachaka")
+            ? transform_grpc.child_frame_id()
+            : frame_prefix + "/" + transform_grpc.child_frame_id();
     transform_ros.transform.translation.x = transform_grpc.translation().x();
     transform_ros.transform.translation.y = transform_grpc.translation().y();
     transform_ros.transform.translation.z = transform_grpc.translation().z();
@@ -70,7 +72,8 @@ class StaticTfComponent : public rclcpp::Node {
     static_tf_bridge_->SetConverter(
         [this](const kachaka_api::GetStaticTransformResponse& grpc_msg,
                tf2_msgs::msg::TFMessage* ros2_msg) {
-          ConvertGrpcTfToRosTf(grpc_msg, ros2_msg, std::string(this->get_namespace()).substr(1));
+          ConvertGrpcTfToRosTf(grpc_msg, ros2_msg,
+                               std::string(this->get_namespace()).substr(1));
           return true;
         });
     static_tf_bridge_->StartAsync();

@@ -44,7 +44,11 @@ class ObjectDetectionComponent : public rclcpp::Node {
                kachaka_interfaces::msg::ObjectDetectionListStamped* ros2_msg) {
           ros2_msg->header.stamp = rclcpp::Time(grpc_msg.header().stamp_nsec());
           // ros2_msg->header.frame_id = grpc_msg.header().frame_id();
-          ros2_msg->header.frame_id = std::string(this->get_namespace()).substr(1) == "kachaka" ? grpc_msg.header().frame_id() : std::string(this->get_namespace()).substr(1) + "/" + grpc_msg.header().frame_id();
+          ros2_msg->header.frame_id =
+              (std::string(this->get_namespace()).substr(1) == "kachaka")
+                  ? grpc_msg.header().frame_id()
+                  : std::string(this->get_namespace()).substr(1) + "/" +
+                        grpc_msg.header().frame_id();
           for (const auto& object : grpc_msg.objects()) {
             kachaka_interfaces::msg::ObjectDetection ros2_object;
             const std::optional<uint8_t> lavel =

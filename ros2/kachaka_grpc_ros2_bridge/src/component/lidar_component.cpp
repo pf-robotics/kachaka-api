@@ -43,7 +43,8 @@ class LidarComponent : public rclcpp::Node {
         [this](const kachaka_api::GetRosLaserScanResponse& grpc_msg,
                sensor_msgs::msg::LaserScan* ros2_msg) {
           converter::ConvertGrpcHeaderToRos2Header(
-              grpc_msg.scan().header(), &ros2_msg->header, std::string(this->get_namespace()).substr(1));
+              grpc_msg.scan().header(), &ros2_msg->header,
+              std::string(this->get_namespace()).substr(1));
           ros2_msg->angle_min = grpc_msg.scan().angle_min();
           ros2_msg->angle_max = grpc_msg.scan().angle_max();
           ros2_msg->angle_increment = grpc_msg.scan().angle_increment();

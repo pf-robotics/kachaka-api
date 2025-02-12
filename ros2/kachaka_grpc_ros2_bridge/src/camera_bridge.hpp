@@ -52,8 +52,7 @@ class CameraBridge {
       typename GrpcBridge<kachaka_api::GetRequest,
                           GetCompressedImageResponse>::GrpcService
           compressed_image_service)
-      : stub_(std::move(stub)),
-        node_(node) {
+      : stub_(std::move(stub)), node_(node) {
     rclcpp::SensorDataQoS qos;
     // camera_info
     camera_info_publisher_ =
@@ -95,11 +94,13 @@ class CameraBridge {
     compressed_image_bridge_->SetConverter(
         [this](const GetCompressedImageResponse& grpc_msg,
                sensor_msgs::msg::CompressedImage* ros2_msg) {
-          ConvertToRos2CompressedImage(grpc_msg.image(), ros2_msg,
-                                       std::string(node_->get_namespace()).substr(1));
+          ConvertToRos2CompressedImage(
+              grpc_msg.image(), ros2_msg,
+              std::string(node_->get_namespace()).substr(1));
           if (camera_info_compressed_publisher_->get_subscription_count() > 0) {
             PublishCameraInfo(camera_info_compressed_publisher_,
-                              grpc_msg.image().header(), std::string(node_->get_namespace()).substr(1));
+                              grpc_msg.image().header(),
+                              std::string(node_->get_namespace()).substr(1));
           }
           return true;
         });

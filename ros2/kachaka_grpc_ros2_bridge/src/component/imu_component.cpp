@@ -43,7 +43,8 @@ class ImuComponent : public rclcpp::Node {
                sensor_msgs::msg::Imu* ros2_msg) {
           const auto& imu = grpc_msg.imu();
           converter::ConvertGrpcHeaderToRos2Header(
-              imu.header(), &ros2_msg->header, std::string(this->get_namespace()).substr(1));
+              imu.header(), &ros2_msg->header,
+              std::string(this->get_namespace()).substr(1));
           ros2_msg->orientation.x = imu.orientation().x();
           ros2_msg->orientation.y = imu.orientation().y();
           ros2_msg->orientation.z = imu.orientation().z();

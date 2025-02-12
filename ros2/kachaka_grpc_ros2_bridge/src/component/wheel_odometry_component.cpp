@@ -29,7 +29,10 @@ void SetOdometryMsg(const kachaka_api::RosOdometry& odometry,
                     const std::string& frame_prefix) {
   kachaka::grpc_ros2_bridge::converter::ConvertGrpcHeaderToRos2Header(
       odometry.header(), &ros2_msg->header, frame_prefix);
-  ros2_msg->child_frame_id = frame_prefix=="kachaka" ? odometry.child_frame_id() : frame_prefix + "/" + odometry.child_frame_id();
+  ros2_msg->child_frame_id =
+      (frame_prefix == "kachaka")
+          ? odometry.child_frame_id()
+          : frame_prefix + "/" + odometry.child_frame_id();
   ros2_msg->pose.pose.position.x = odometry.pose().pose().position().x();
   ros2_msg->pose.pose.position.y = odometry.pose().pose().position().y();
   ros2_msg->pose.pose.position.z = odometry.pose().pose().position().z();
@@ -77,7 +80,8 @@ class WheelOdometryComponent : public rclcpp::Node {
         [this](const kachaka_api::GetRosWheelOdometryResponse& grpc_msg,
                nav_msgs::msg::Odometry* ros2_msg) {
           const auto& odometry = grpc_msg.odometry();
-          SetOdometryMsg(odometry, ros2_msg, std::string(this->get_namespace()).substr(1));
+          SetOdometryMsg(odometry, ros2_msg,
+                         std::string(this->get_namespace()).substr(1));
           return true;
         });
     wheel_odometry_bridge_->StartAsync();
