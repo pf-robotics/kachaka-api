@@ -20,7 +20,7 @@ if [[ $# -lt 2 ]]; then
     FRAME_PREFIX="false"
 else
     NAMESPACE=$2
-    FRAME_PREFIX=$2"true"
+    FRAME_PREFIX="true"
 fi
 
 USER_ID="$(id -u)"
