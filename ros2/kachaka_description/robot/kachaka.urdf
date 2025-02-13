@@ -21,9 +21,9 @@
       <inertia ixx="0.05552083333333333" ixy="0" ixz="0" iyy="0.13232833333333333" iyz="0" izz="0.1728075"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="0.0435 0.0 0.0475"/>
+      <origin rpy="0 0 0" xyz="-0.150 -0.120 0.0"/>
       <geometry>
-        <box size="0.387 0.240 0.095"/>
+        <mesh filename="file:///home/sobits/colcon_ws/install/kachaka_description/share/kachaka_description/meshes/kachaka/body.stl"/>
       </geometry>
       <material name="body"/>
     </visual>
@@ -66,15 +66,15 @@
     <inertial>
       <mass value="0.2"/>
       <!-- TODO - Update mass value -->
-      <origin rpy="0.0 0 0" xyz="0 0 0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
       <!-- Bug - inertial rotation is not reflected in Rviz2 -->
       <!-- https://github.com/ros2/rviz/pull/1316 -->
       <inertia ixx="0.00011166666666666665" ixy="0" ixz="0" iyy="0.00011166666666666665" iyz="0" izz="0.0002025"/>
     </inertial>
     <visual>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.025" radius="0.045"/>
+        <mesh filename="file:///home/sobits/colcon_ws/install/kachaka_description/share/kachaka_description/meshes/kachaka/right_tire.stl" scale="1.0 1.0 1.0"/>
       </geometry>
       <material name="tire"/>
     </visual>
@@ -95,9 +95,9 @@
       <inertia ixx="3.5000000000000004e-05" ixy="0" ixz="0" iyy="3.5000000000000004e-05" iyz="0" izz="6.250000000000001e-05"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.1075"/>
+      <origin rpy="0 0 0" xyz="0 0 0.073"/>
       <geometry>
-        <cylinder length="0.015" radius="0.025"/>
+        <mesh filename="file:///home/sobits/colcon_ws/install/kachaka_description/share/kachaka_description/meshes/kachaka/solenoid.stl" scale="1.0 1.0 1.0"/>
       </geometry>
       <material name="body"/>
     </visual>
@@ -121,9 +121,9 @@
       <inertia ixx="0.00011166666666666665" ixy="0" ixz="0" iyy="0.00011166666666666665" iyz="0" izz="0.0002025"/>
     </inertial>
     <visual>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.025" radius="0.045"/>
+        <mesh filename="file:///home/sobits/colcon_ws/install/kachaka_description/share/kachaka_description/meshes/kachaka/left_tire.stl" scale="1.0 1.0 1.0"/>
       </geometry>
       <material name="tire"/>
     </visual>
