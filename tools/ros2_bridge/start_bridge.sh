@@ -17,7 +17,7 @@ fi
 
 if [[ $# -lt 2 ]]; then
     NAMESPACE="kachaka"
-    FRAME_PREFIX='/'
+    FRAME_PREFIX=''
 else
     NAMESPACE=$2
     FRAME_PREFIX=$2"/"

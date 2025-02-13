@@ -3,7 +3,7 @@
   <arg name="namespace"
        default="kachaka" />
   <arg name="frame_prefix"
-       default="/" />
+       default="$(env FRAME_PREFIX)" />
   <arg name="server_uri"
        default="localhost:2021" />
   <node_container pkg="rclcpp_components"
