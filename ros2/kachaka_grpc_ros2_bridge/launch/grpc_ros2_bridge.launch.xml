@@ -203,7 +203,7 @@
                  value="false" />
     </composable_node>
   </node_container>
-  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" >
+  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.py" >
     <arg name="namespace"
          value="$(var namespace)" />
     <arg name="frame_prefix"
