@@ -14,7 +14,12 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
-install(DIRECTORY config launch robot DESTINATION share/${PROJECT_NAME})
+install(
+  DIRECTORY config
+            launch
+            robot
+            meshes
+            urdf DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

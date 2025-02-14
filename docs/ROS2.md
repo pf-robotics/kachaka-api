@@ -123,6 +123,6 @@ rviz2 -d kachaka.rviz
 docker buildx build -t kachaka-api --target kachaka-grpc-ros2-bridge -f Dockerfile.ros2 . --build-arg BASE_ARCH=x86_64 --load
 ```
 
-* [tools/ros2_bridge/docker-compose.yaml](tools/ros2_bridge/docker-compose.yaml)に対して以下の変更を行います。
+* [tools/ros2_bridge/docker-compose.yaml](../tools/ros2_bridge/docker-compose.yaml)に対して以下の変更を行います。
     * 変更前：`image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"`
     * 変更後：`image: kachaka-api:latest`
