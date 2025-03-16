@@ -4,7 +4,7 @@
   <arg name="frame_prefix" default="/" />
   <arg name="use_gui" default="true" />
 
-  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.xml" >
+  <include file="$(find-pkg-share kachaka_description)/launch/robot_description.launch.py" >
       <arg name="namespace" value="$(var namespace)" />
       <arg name="frame_prefix" value="$(var frame_prefix)" />
   </include>
