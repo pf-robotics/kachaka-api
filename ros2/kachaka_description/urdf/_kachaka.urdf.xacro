@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
-<robot name="kachaka_robot"
-       xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="kachaka_robot" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="kachaka_robot" params="parent *origin">
+    <!-- base_footprint -->
+    <joint name="base_footprint_joint"
+          type="fixed">
+      <parent link="${parent}" />
+      <child link="base_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
     <link name="base_link">
       <inertial>
         <mass value="10.0" />
@@ -12,10 +18,10 @@
                 izz="${1/12*10*(0.387**2+0.240**2)}" />
       </inertial>
       <visual>
-	<origin rpy="0 0 0" xyz="-0.150 -0.120 0.0"/>
-	<geometry>
+        <origin rpy="0 0 0" xyz="-0.150 -0.120 0.0"/>
+        <geometry>
           <mesh filename="package://kachaka_description/meshes/kachaka/body.stl"/>
-	</geometry>
+        </geometry>
         <material name="body" />
       </visual>
       <collision>
@@ -27,45 +33,17 @@
         <material name="body" />
       </collision>
     </link>
-    <joint name="lidar_joint"
-          type="fixed">
+
+    <!-- Wheel(right) -->
+    <joint name="base_r_drive_wheel_joint"
+          type="continuous">
       <parent link="base_link" />
-      <child link="laser_frame" />
-      <origin rpy="0 0 ${PI / 2.0}"
-              xyz="0.156 0 0.1049" />
-    </joint>
-    <joint name="docking_joint"
-          type="prismatic">
-      <parent link="base_link" />
-      <child link="docking_link" />
-      <axis xyz="0 0 1.0" />
+      <child link="base_r_drive_wheel_link" />
       <origin rpy="0 0 0"
-              xyz="0 0 0" />
-      <limit lower="0.0"
-            upper="0.012"
-            effort="1.0"
-            velocity="1.0" />
-    </joint>
-    <joint name="camera_front_joint"
-          type="fixed">
-      <parent link="base_link" />
-      <child link="camera_front_link" />
-      <origin rpy="-${PI / 2.0} 0 -${PI / 2.0}"
-              xyz="${0.2196 - 0.01} 0 0.070" />
-    </joint>
-    <joint name="camera_back_joint"
-          type="fixed">
-      <parent link="base_link" />
-      <child link="camera_back_link" />
-      <origin rpy="-${PI / 2.0} 0 ${PI / 2.0}"
-              xyz="${-0.150 + 0.01} 0 0.070" />
-    </joint>
-    <joint name="tof_joint"
-          type="fixed">
-      <parent link="base_link" />
-      <child link="tof_link" />
-      <origin rpy="-${PI / 4.0} 0 -${PI / 2.0}"
-              xyz="0.221 0.0 0.0418" />
+              xyz="0.0 -0.100 0.045" />
+      <axis xyz="0 1 0" />
+      <limit velocity="10"
+            effort="100" />
     </joint>
     <link name="base_r_drive_wheel_link">
       <inertial>
@@ -79,7 +57,7 @@
                 izz="${1/2*0.2*(0.045**2)}" />
       </inertial>
       <visual>
-	<origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://kachaka_description/meshes/kachaka/right_tire.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -95,36 +73,18 @@
         <material name="tire" />
       </collision>
     </link>
-    <link name="laser_frame" />
-    <link name="docking_link">
-      <inertial>
-        <mass value="0.2" /> <!-- TODO - Update mass value -->
-        <origin xyz="0 0 0.1075"
-                rpy="0 0 0" />
-        <inertia ixx="${1/12*0.2*(3*0.025**2+0.015**2)}" ixy="0" ixz="0"
-                 iyy="${1/12*0.2*(3*0.025**2+0.015**2)}" iyz="0"
-                 izz="${1/2*0.2*(0.025**2)}" />
-      </inertial>
-      <visual>
-	<geometry>
-          <mesh filename="package://kachaka_description/meshes/kachaka/solenoid.stl"
-		scale="1.0 1.0 1.0" />
-	</geometry>
-        <material name="body" />
-      </visual>
-      <collision>
-        <origin xyz="0 0 0.1075"
-                rpy="0 0 0" />
-        <geometry>
-          <cylinder length="0.015"
-                    radius="0.025" />
-        </geometry>
-        <material name="body" />
-      </collision>
-    </link>
-    <link name="camera_front_link" />
-    <link name="camera_back_link" />
-    <link name="tof_link" />
+
+    <!-- Wheel(left) -->
+    <joint name="base_l_drive_wheel_joint"
+          type="continuous">
+      <parent link="base_link" />
+      <child link="base_l_drive_wheel_link" />
+      <origin rpy="0 0 0"
+              xyz="0.0 0.100 0.045" />
+      <axis xyz="0 1 0" />
+      <limit velocity="10"
+            effort="100" />
+    </joint>
     <link name="base_l_drive_wheel_link">
       <inertial>
         <mass value="0.2" />
@@ -154,33 +114,88 @@
         <material name="tire" />
       </collision>
     </link>
-    <joint name="base_footprint_joint"
+
+    <!-- 2D LiDAR -->
+    <joint name="lidar_joint"
           type="fixed">
-      <parent link="${parent}" />
-      <child link="base_link" />
-      <xacro:insert_block name="origin" />
-    </joint>
-    <joint name="base_r_drive_wheel_joint"
-          type="continuous">
       <parent link="base_link" />
-      <child link="base_r_drive_wheel_link" />
-      <origin rpy="0 0 0"
-              xyz="0.0 -0.100 0.045" />
-      <axis xyz="0 1 0" />
-      <limit velocity="10"
-            effort="100" />
+      <child link="laser_frame" />
+      <origin rpy="0 0 ${PI / 2.0}"
+              xyz="0.156 0 0.1049" />
     </joint>
-    <joint name="base_l_drive_wheel_joint"
-          type="continuous">
+    <link name="laser_frame" />
+
+    <!-- Camera(front) -->
+    <joint name="camera_front_joint"
+          type="fixed">
       <parent link="base_link" />
-      <child link="base_l_drive_wheel_link" />
-      <origin rpy="0 0 0"
-              xyz="0.0 0.100 0.045" />
-      <axis xyz="0 1 0" />
-      <limit velocity="10"
-            effort="100" />
+      <child link="camera_front_link" />
+      <origin rpy="-${PI / 2.0} 0 -${PI / 2.0}"
+              xyz="${0.2196 - 0.01} 0 0.070" />
     </joint>
-    <link name="imu_link" />
+    <link name="camera_front_link" />
+
+    <!-- Camera(back) -->
+    <joint name="camera_back_joint"
+          type="fixed">
+      <parent link="base_link" />
+      <child link="camera_back_link" />
+      <origin rpy="-${PI / 2.0} 0 ${PI / 2.0}"
+              xyz="${-0.150 + 0.01} 0 0.070" />
+    </joint>
+    <link name="camera_back_link" />
+
+    <!-- ToF camera -->
+    <joint name="tof_joint"
+          type="fixed">
+      <parent link="base_link" />
+      <child link="tof_link" />
+      <origin rpy="-${PI / 4.0} 0 -${PI / 2.0}"
+              xyz="0.221 0.0 0.0418" />
+    </joint>
+    <link name="tof_link" />
+
+    <!-- Docking -->
+    <joint name="docking_joint"
+          type="prismatic">
+      <parent link="base_link" />
+      <child link="docking_link" />
+      <axis xyz="0 0 1.0" />
+      <origin rpy="0 0 0"
+              xyz="0 0 0" />
+      <limit lower="0.0"
+            upper="0.012"
+            effort="1.0"
+            velocity="1.0" />
+    </joint>
+    <link name="docking_link">
+      <inertial>
+        <mass value="0.2" /> <!-- TODO - Update mass value -->
+        <origin xyz="0 0 0.1075"
+                rpy="0 0 0" />
+        <inertia ixx="${1/12*0.2*(3*0.025**2+0.015**2)}" ixy="0" ixz="0"
+                 iyy="${1/12*0.2*(3*0.025**2+0.015**2)}" iyz="0"
+                 izz="${1/2*0.2*(0.025**2)}" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kachaka_description/meshes/kachaka/solenoid.stl"
+                scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="body" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.1075"
+                rpy="0 0 0" />
+        <geometry>
+          <cylinder length="0.015"
+                    radius="0.025" />
+        </geometry>
+        <material name="body" />
+      </collision>
+    </link>
+
+    <!-- IMU -->
     <joint name="imu_joint"
           type="fixed">
       <parent link="base_link" />
@@ -188,5 +203,6 @@
       <origin rpy="0 0 0"
               xyz="0.0756 -0.0655 0.05146" />
     </joint>
+    <link name="imu_link" />
   </xacro:macro>
 </robot>
