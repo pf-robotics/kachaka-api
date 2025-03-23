@@ -130,7 +130,7 @@
           type="fixed">
       <parent link="base_link" />
       <child link="camera_front_link" />
-      <origin rpy="-${PI / 2.0} 0 -${PI / 2.0}"
+      <origin rpy="0 0 0"
               xyz="${0.2196 - 0.01} 0 0.070" />
     </joint>
     <link name="camera_front_link" />
@@ -140,7 +140,7 @@
           type="fixed">
       <parent link="base_link" />
       <child link="camera_back_link" />
-      <origin rpy="-${PI / 2.0} 0 ${PI / 2.0}"
+      <origin rpy="0 0 ${PI}"
               xyz="${-0.150 + 0.01} 0 0.070" />
     </joint>
     <link name="camera_back_link" />
@@ -150,7 +150,7 @@
           type="fixed">
       <parent link="base_link" />
       <child link="tof_link" />
-      <origin rpy="-${PI / 4.0} 0 -${PI / 2.0}"
+      <origin rpy="0 -${PI / 4.0} 0"
               xyz="0.221 0.0 0.0418" />
     </joint>
     <link name="tof_link" />
