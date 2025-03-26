@@ -75,7 +75,7 @@
 
 ## 💬 要望・バグ報告・コントリビューション
 
-* カチャカAPIはOSSとして公開されています。要望やバグ報告など大歓迎です。
+* カチャカAPIはOSSとして公開されています。要望やバグ報告など大歓迎です。[コントリビューションガイドライン](./CONTRIBUTING.md)をご覧ください。
 * 質問や要望などは、[GitHub Discussions](https://github.com/pf-robotics/kachaka-api/discussions) からお願いします。
 
 ## License

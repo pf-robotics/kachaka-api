@@ -403,6 +403,25 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    def lock(
+        self,
+        duration_sec: float,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return self.start_command(
+            pb2.Command(
+                lock_command=pb2.LockCommand(duration_sec=duration_sec)
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     def move_forward(
         self,
         distance_meter: float,
@@ -517,6 +536,11 @@ class KachakaApiClientBase:
             self.stub.GetLastCommandResult(request)
         )
         return (response.result, response.command)
+
+    def proceed(self) -> pb2.Result:
+        request = pb2.EmptyRequest()
+        response: pb2.ProceedResponse = self.stub.Proceed(request)
+        return response.result
 
     def get_locations(
         self,
