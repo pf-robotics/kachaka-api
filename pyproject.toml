@@ -1,6 +1,6 @@
 [project]
 name = "kachaka-api"
-version = "3.9.5"
+version = "3.10.6"
 authors = [{name="Preferred Robotics inc."}]
 dependencies = [
     "grpcio==1.66.1",
