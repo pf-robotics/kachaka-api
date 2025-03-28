@@ -36,13 +36,30 @@
     * https://docs.docker.com/engine/install/ubuntu/
 
 ### ブリッジの起動
+* [初回のみ] Dockerイメージをビルドします。
+
+```bash
+cd ~/kachaka-api
+docker buildx build -t kachaka-api --target kachaka-grpc-ros2-bridge -f Dockerfile.ros2 . --build-arg BASE_ARCH=x86_64 --load
+```
+
 * 以下のスクリプトを実行すると、ブリッジが実行されます。
-* 初回実行時に、Dockerイメージがダウンロードされます。
-    * ※ イメージの提供は予告なく停止される場合があります。
 
 ```bash
 cd ~/kachaka-api/tools/ros2_bridge
-./start_bridge.sh <カチャカのIPアドレス>
+./start_bridge.sh <カチャカのIPアドレス> [カチャカの名前] [カチャカのステート発行] [その他]
+```
+
+それぞれの設定の説明はこちらを確認してください。
+* **カチャカの名前**: ロボットの`namespace`を設定します．
+* **カチャカのステート発行**: カチャカ側から`robot_state_publisher`を発行するか否か設定します．(`yes` or `no`)
+* **その他**: Docker Compose関連の設定を追加することができます．
+
+* [初回のみ] ROSが入っている環境にKachaka-APIを活用するための必要なパッケージをインストールします。
+
+```bash
+cd ~/kachaka-api
+bash install.sh
 ```
 
 ### 動作を確認する
@@ -123,6 +140,6 @@ rviz2 -d kachaka.rviz
 docker buildx build -t kachaka-api --target kachaka-grpc-ros2-bridge -f Dockerfile.ros2 . --build-arg BASE_ARCH=x86_64 --load
 ```
 
-* [tools/ros2_bridge/docker-compose.yaml](../tools/ros2_bridge/docker-compose.yaml)に対して以下の変更を行います。
+* [tools/ros2_bridge/docker-compose.yaml](tools/ros2_bridge/docker-compose.yaml)に対して以下の変更を行います。
     * 変更前：`image: "asia-northeast1-docker.pkg.dev/kachaka-api/docker/kachaka-grpc-ros2-bridge:${TAG}"`
     * 変更後：`image: kachaka-api:latest`
