@@ -20,7 +20,7 @@
       <visual>
         <origin rpy="0 0 0" xyz="-0.150 -0.120 0.0"/>
         <geometry>
-          <mesh filename="package://kachaka_description/meshes/kachaka/body.stl"/>
+          <mesh filename="file://$(find kachaka_description)/meshes/kachaka/body.stl"/>
         </geometry>
         <material name="body" />
       </visual>
@@ -59,7 +59,7 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://kachaka_description/meshes/kachaka/right_tire.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="file://$(find kachaka_description)/meshes/kachaka/right_tire.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="tire" />
       </visual>
@@ -100,7 +100,7 @@
         <origin xyz="0 0 0"
                 rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://kachaka_description/meshes/kachaka/left_tire.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="file://$(find kachaka_description)/meshes/kachaka/left_tire.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="tire" />
       </visual>
@@ -179,7 +179,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kachaka_description/meshes/kachaka/solenoid.stl"
+          <mesh filename="file://$(find kachaka_description)/meshes/kachaka/solenoid.stl"
                 scale="1.0 1.0 1.0" />
         </geometry>
         <material name="body" />
