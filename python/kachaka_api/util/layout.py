@@ -61,3 +61,25 @@ class ShelfLocationResolver:
                 return location.id
         print(f"Failed to get location id of {location_name}")
         return location_name
+
+    def resolve_location_id_or_name(
+        self, location_id_or_name: str
+    ) -> str | None:
+        if location_id_or_name in self.locations:
+            return location_id_or_name
+        else:
+            location_id = self.get_location_id_by_name(location_id_or_name)
+            if location_id == location_id_or_name:
+                return None
+            else:
+                return location_id
+
+    def resolve_shelf_id_or_name(self, shelf_id_or_name: str) -> str | None:
+        if shelf_id_or_name in self.shelves:
+            return shelf_id_or_name
+        else:
+            shelf_id = self.get_shelf_id_by_name(shelf_id_or_name)
+            if shelf_id == shelf_id_or_name:
+                return None
+            else:
+                return shelf_id
