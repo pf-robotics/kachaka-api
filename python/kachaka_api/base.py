@@ -258,8 +258,10 @@ class KachakaApiClientBase:
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
-        shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
-        location_id = self.resolver.get_location_id_by_name(location_name_or_id)
+        shelf_id = self.resolver.resolve_shelf_id_or_name(shelf_name_or_id)
+        location_id = self.resolver.resolve_location_id_or_name(
+            location_name_or_id
+        )
         return self.start_command(
             pb2.Command(
                 move_shelf_command=pb2.MoveShelfCommand(
@@ -282,7 +284,7 @@ class KachakaApiClientBase:
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
-        shelf_id = self.resolver.get_shelf_id_by_name(shelf_name_or_id)
+        shelf_id = self.resolver.resolve_shelf_id_or_name(shelf_name_or_id)
         return self.start_command(
             pb2.Command(
                 return_shelf_command=pb2.ReturnShelfCommand(
@@ -320,7 +322,9 @@ class KachakaApiClientBase:
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
-        location_id = self.resolver.get_location_id_by_name(location_name_or_id)
+        location_id = self.resolver.resolve_location_id_or_name(
+            location_name_or_id
+        )
         return self.start_command(
             pb2.Command(
                 move_to_location_command=pb2.MoveToLocationCommand(
