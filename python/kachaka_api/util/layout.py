@@ -62,9 +62,7 @@ class ShelfLocationResolver:
         print(f"Failed to get location id of {location_name}")
         return location_name
 
-    def resolve_location_id_or_name(
-        self, location_id_or_name: str
-    ) -> str | None:
+    def resolve_location_id_or_name(self, location_id_or_name: str) -> str:
         location_id_with_name = None
         for location in self.locations:
             if location.id == location_id_or_name:
@@ -73,9 +71,9 @@ class ShelfLocationResolver:
             if location.name == location_id_or_name:
                 location_id_with_name = location.id
 
-        return location_id_with_name
+        return location_id_with_name or location_id_or_name
 
-    def resolve_shelf_id_or_name(self, shelf_id_or_name: str) -> str | None:
+    def resolve_shelf_id_or_name(self, shelf_id_or_name: str) -> str:
         shelf_id_with_name = None
         for shelf in self.shelves:
             if shelf.id == shelf_id_or_name:
@@ -84,4 +82,4 @@ class ShelfLocationResolver:
             if shelf.name == shelf_id_or_name:
                 shelf_id_with_name = shelf.id
 
-        return shelf_id_with_name
+        return shelf_id_with_name or shelf_id_or_name
