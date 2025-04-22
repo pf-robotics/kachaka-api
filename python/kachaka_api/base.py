@@ -471,7 +471,7 @@ class KachakaApiClientBase:
 
     def dock_any_shelf_with_registration(
         self,
-        target_location_id: str,
+        location_name_or_id: str,
         dock_forward: bool = False,
         *,
         wait_for_completion: bool = True,
@@ -479,10 +479,13 @@ class KachakaApiClientBase:
         tts_on_success: str = "",
         title: str = "",
     ) -> pb2.Result:
+        location_id = self.resolver.resolve_location_id_or_name(
+            location_name_or_id
+        )
         return self.start_command(
             pb2.Command(
                 dock_any_shelf_with_registration_command=pb2.DockAnyShelfWithRegistrationCommand(
-                    target_location_id=target_location_id,
+                    target_location_id=location_id,
                     dock_forward=dock_forward,
                 )
             ),
