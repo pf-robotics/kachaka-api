@@ -150,6 +150,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetErrorResponse.FromString,
                 _registered_method=True)
+        self.IsReady = channel.unary_unary(
+                '/kachaka_api.KachakaApi/IsReady',
+                request_serializer=kachaka__api__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.IsReadyResponse.FromString,
+                _registered_method=True)
         self.StartCommand = channel.unary_unary(
                 '/kachaka_api.KachakaApi/StartCommand',
                 request_serializer=kachaka__api__pb2.StartCommandRequest.SerializeToString,
@@ -450,6 +455,13 @@ class KachakaApiServicer(object):
 
     def GetError(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def IsReady(self, request, context):
+        """This rpc always returns immediately
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -773,6 +785,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetError,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetErrorResponse.SerializeToString,
+            ),
+            'IsReady': grpc.unary_unary_rpc_method_handler(
+                    servicer.IsReady,
+                    request_deserializer=kachaka__api__pb2.EmptyRequest.FromString,
+                    response_serializer=kachaka__api__pb2.IsReadyResponse.SerializeToString,
             ),
             'StartCommand': grpc.unary_unary_rpc_method_handler(
                     servicer.StartCommand,
@@ -1557,6 +1574,33 @@ class KachakaApi(object):
             '/kachaka_api.KachakaApi/GetError',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetErrorResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def IsReady(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/IsReady',
+            kachaka__api__pb2.EmptyRequest.SerializeToString,
+            kachaka__api__pb2.IsReadyResponse.FromString,
             options,
             channel_credentials,
             insecure,
