@@ -425,12 +425,14 @@ class Command(_message.Message):
     def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ...) -> None: ...
 
 class MoveShelfCommand(_message.Message):
-    __slots__ = ("target_shelf_id", "destination_location_id")
+    __slots__ = ("target_shelf_id", "destination_location_id", "undock_on_destination")
     TARGET_SHELF_ID_FIELD_NUMBER: _ClassVar[int]
     DESTINATION_LOCATION_ID_FIELD_NUMBER: _ClassVar[int]
+    UNDOCK_ON_DESTINATION_FIELD_NUMBER: _ClassVar[int]
     target_shelf_id: str
     destination_location_id: str
-    def __init__(self, target_shelf_id: _Optional[str] = ..., destination_location_id: _Optional[str] = ...) -> None: ...
+    undock_on_destination: bool
+    def __init__(self, target_shelf_id: _Optional[str] = ..., destination_location_id: _Optional[str] = ..., undock_on_destination: bool = ...) -> None: ...
 
 class ReturnShelfCommand(_message.Message):
     __slots__ = ("target_shelf_id",)
@@ -713,6 +715,12 @@ class GetTofCameraRosCompressedImageResponse(_message.Message):
     image: RosCompressedImage
     is_available: bool
     def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., image: _Optional[_Union[RosCompressedImage, _Mapping]] = ..., is_available: bool = ...) -> None: ...
+
+class IsReadyResponse(_message.Message):
+    __slots__ = ("ready",)
+    READY_FIELD_NUMBER: _ClassVar[int]
+    ready: bool
+    def __init__(self, ready: bool = ...) -> None: ...
 
 class LockOnEnd(_message.Message):
     __slots__ = ("duration_sec",)
