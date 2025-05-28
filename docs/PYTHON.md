@@ -12,24 +12,24 @@
 
 ## インストール方法
 
-## pip
+### pip
 以下のコマンドでインストールできます：
 
 ```bash
-pip install --extra-index-url https://pf-robotics.github.io/kachaka-python-packages/simple kachaka-api
+pip install kachaka-api
 ```
 
-## uv
-uvの場合は、pyproject.tomlに以下を追加してインストールすることができます。
-
-```toml
-[[tool.uv.index]]
-url = "https://pf-robotics.github.io/kachaka-python-packages/simple"
-```
+### uv
+uvの場合は以下でインストールできます。
 
 ```bash
 uv add kachaka-api
 ```
+
+### リリースとバージョン番号
+kachaka_apiライブラリは、カチャカのSWアップデートの公開のタイミングでリリースされます (数日から1週間程度遅れる場合があります)。
+バージョンは4つの番号からなり、カチャカSWバージョンの3つの番号に、kachaka_apiライブラリのバージョン番号が続きます。
+たとえばカチャカSW3.10.6のリリース時にはkachaka_apiライブラリ3.10.6.0がリリースされ、ここからライブラリのみに重要な変更があった場合には、4つ目の番号がインクリメントされた3.10.6.1、3.10.6.2といったリリースが行われます。
 
 ## 基本的な使い方
 * kachaka_apiライブラリでは、 `KachakaApiClient` クラスが1台のカチャカに対応します。
