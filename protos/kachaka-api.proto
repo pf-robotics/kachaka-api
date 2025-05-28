@@ -261,6 +261,7 @@ message Command {
 message MoveShelfCommand {
   string target_shelf_id = 1;
   string destination_location_id = 2;
+  bool undock_on_destination = 3;
 }
 
 message ReturnShelfCommand {
@@ -450,6 +451,10 @@ message GetTofCameraRosCompressedImageResponse {
   Metadata metadata = 1;
   RosCompressedImage image = 2;
   bool is_available = 3;
+}
+
+message IsReadyResponse {
+  bool ready = 1;
 }
 
 message LockOnEnd {
@@ -729,6 +734,7 @@ service KachakaApi {
   rpc GetTofCameraRosCompressedImage (GetRequest) returns (GetTofCameraRosCompressedImageResponse);
   rpc GetRobotErrorCodeJson (EmptyRequest) returns (GetRobotErrorCodeJsonResponse);
   rpc GetError (GetRequest) returns (GetErrorResponse);
+  rpc IsReady (EmptyRequest) returns (IsReadyResponse);  // This rpc always returns immediately
   // Commands
   rpc StartCommand (StartCommandRequest) returns (StartCommandResponse);
   rpc CancelCommand (EmptyRequest) returns (CancelCommandResponse);
