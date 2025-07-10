@@ -19,6 +19,7 @@ class LocationType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     LOCATION_TYPE_UNSPECIFIED: _ClassVar[LocationType]
     LOCATION_TYPE_CHARGER: _ClassVar[LocationType]
     LOCATION_TYPE_SHELF_HOME: _ClassVar[LocationType]
+    LOCATION_TYPE_SLAM_MARKER: _ClassVar[LocationType]
 
 class ShelfAppearance(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
@@ -55,6 +56,7 @@ POWER_SUPPLY_STATUS_FULL: PowerSupplyStatus
 LOCATION_TYPE_UNSPECIFIED: LocationType
 LOCATION_TYPE_CHARGER: LocationType
 LOCATION_TYPE_SHELF_HOME: LocationType
+LOCATION_TYPE_SLAM_MARKER: LocationType
 SHELF_APPEARANCE_UNSPECIFIED: ShelfAppearance
 SHELF_APPEARANCE_DEFAULT_SHELF: ShelfAppearance
 SHELF_APPEARANCE_KACHAKA_SHELF_3DRAWERS: ShelfAppearance
