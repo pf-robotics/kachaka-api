@@ -93,6 +93,7 @@ enum LocationType {
   LOCATION_TYPE_UNSPECIFIED = 0;  // normal location
   LOCATION_TYPE_CHARGER = 1;
   LOCATION_TYPE_SHELF_HOME = 2;
+  LOCATION_TYPE_SLAM_MARKER = 3;
 }
 
 message Location {
