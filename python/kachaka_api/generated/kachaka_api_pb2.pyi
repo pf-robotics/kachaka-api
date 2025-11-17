@@ -1028,6 +1028,24 @@ class ImportMapResponse(_message.Message):
     map_id: str
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map_id: _Optional[str] = ...) -> None: ...
 
+class ImportImageAsMapRequest(_message.Message):
+    __slots__ = ("data", "charger_pose", "resolution")
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    CHARGER_POSE_FIELD_NUMBER: _ClassVar[int]
+    RESOLUTION_FIELD_NUMBER: _ClassVar[int]
+    data: bytes
+    charger_pose: Pose
+    resolution: float
+    def __init__(self, data: _Optional[bytes] = ..., charger_pose: _Optional[_Union[Pose, _Mapping]] = ..., resolution: _Optional[float] = ...) -> None: ...
+
+class ImportImageAsMapResponse(_message.Message):
+    __slots__ = ("result", "map_id")
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    MAP_ID_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    map_id: str
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map_id: _Optional[str] = ...) -> None: ...
+
 class Shortcut(_message.Message):
     __slots__ = ("id", "name")
     ID_FIELD_NUMBER: _ClassVar[int]
