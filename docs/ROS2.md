@@ -52,13 +52,13 @@ cd ~/kachaka-api/tools/ros2_bridge
 
 * トピック一覧の取得
 ```bash
-docker exec -it ros2_bridge_ros2_bridge_1 /opt/kachaka/env.sh ros2 topic list
+docker exec -it ros2_bridge-ros2_bridge-1 /opt/kachaka/env.sh ros2 topic list
 ```
 
 * 目的地一覧の取得
 
 ```bash
-docker exec -it ros2_bridge_ros2_bridge_1 /opt/kachaka/env.sh ros2 topic echo /kachaka/layout/locations/list
+docker exec -it ros2_bridge-ros2_bridge-1 /opt/kachaka/env.sh ros2 topic echo /kachaka/layout/locations/list
 ```
 
 * 以下のようなレスポンスが返ってきたら成功です。

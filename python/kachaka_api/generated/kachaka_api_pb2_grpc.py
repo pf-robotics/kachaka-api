@@ -270,6 +270,11 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.ImportMapRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.ImportMapResponse.FromString,
                 _registered_method=True)
+        self.ImportImageAsMap = channel.stream_unary(
+                '/kachaka_api.KachakaApi/ImportImageAsMap',
+                request_serializer=kachaka__api__pb2.ImportImageAsMapRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.ImportImageAsMapResponse.FromString,
+                _registered_method=True)
         self.GetShortcuts = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetShortcuts',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
@@ -610,6 +615,12 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ImportImageAsMap(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetShortcuts(self, request, context):
         """Shortcut
         """
@@ -905,6 +916,11 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.ImportMap,
                     request_deserializer=kachaka__api__pb2.ImportMapRequest.FromString,
                     response_serializer=kachaka__api__pb2.ImportMapResponse.SerializeToString,
+            ),
+            'ImportImageAsMap': grpc.stream_unary_rpc_method_handler(
+                    servicer.ImportImageAsMap,
+                    request_deserializer=kachaka__api__pb2.ImportImageAsMapRequest.FromString,
+                    response_serializer=kachaka__api__pb2.ImportImageAsMapResponse.SerializeToString,
             ),
             'GetShortcuts': grpc.unary_unary_rpc_method_handler(
                     servicer.GetShortcuts,
@@ -2222,6 +2238,33 @@ class KachakaApi(object):
             '/kachaka_api.KachakaApi/ImportMap',
             kachaka__api__pb2.ImportMapRequest.SerializeToString,
             kachaka__api__pb2.ImportMapResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ImportImageAsMap(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(
+            request_iterator,
+            target,
+            '/kachaka_api.KachakaApi/ImportImageAsMap',
+            kachaka__api__pb2.ImportImageAsMapRequest.SerializeToString,
+            kachaka__api__pb2.ImportImageAsMapResponse.FromString,
             options,
             channel_credentials,
             insecure,

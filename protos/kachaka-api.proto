@@ -655,6 +655,17 @@ message ImportMapResponse {
   string map_id = 2;
 }
 
+message ImportImageAsMapRequest {
+  bytes data = 1;
+  Pose charger_pose = 2;
+  double resolution = 3;
+}
+
+message ImportImageAsMapResponse {
+  Result result = 1;
+  string map_id = 2;
+}
+
 message Shortcut {
   string id = 1;
   string name = 3;
@@ -765,6 +776,7 @@ service KachakaApi {
   rpc SwitchMap (SwitchMapRequest) returns (SwitchMapResponse);
   rpc ExportMap (ExportMapRequest) returns (stream ExportMapResponse);
   rpc ImportMap (stream ImportMapRequest) returns (ImportMapResponse);
+  rpc ImportImageAsMap (stream ImportImageAsMapRequest) returns (ImportImageAsMapResponse);
   // Shortcut
   rpc GetShortcuts (GetRequest) returns (GetShortcutsResponse);
   rpc StartShortcutCommand (StartShortcutCommandRequest) returns (StartShortcutCommandResponse);
