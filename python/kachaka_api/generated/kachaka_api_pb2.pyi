@@ -397,7 +397,7 @@ class ObjectDetectionFeatures(_message.Message):
     def __init__(self, name: _Optional[str] = ..., shape: _Optional[_Iterable[int]] = ..., data: _Optional[_Iterable[float]] = ...) -> None: ...
 
 class Command(_message.Message):
-    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command", "localize_command")
+    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command", "localize_command", "enter_elevator_command", "exit_elevator_command")
     MOVE_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     RETURN_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     UNDOCK_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
@@ -411,6 +411,8 @@ class Command(_message.Message):
     ROTATE_IN_PLACE_COMMAND_FIELD_NUMBER: _ClassVar[int]
     DOCK_ANY_SHELF_WITH_REGISTRATION_COMMAND_FIELD_NUMBER: _ClassVar[int]
     LOCALIZE_COMMAND_FIELD_NUMBER: _ClassVar[int]
+    ENTER_ELEVATOR_COMMAND_FIELD_NUMBER: _ClassVar[int]
+    EXIT_ELEVATOR_COMMAND_FIELD_NUMBER: _ClassVar[int]
     move_shelf_command: MoveShelfCommand
     return_shelf_command: ReturnShelfCommand
     undock_shelf_command: UndockShelfCommand
@@ -424,7 +426,9 @@ class Command(_message.Message):
     rotate_in_place_command: RotateInPlaceCommand
     dock_any_shelf_with_registration_command: DockAnyShelfWithRegistrationCommand
     localize_command: LocalizeCommand
-    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ...) -> None: ...
+    enter_elevator_command: EnterElevatorCommand
+    exit_elevator_command: ExitElevatorCommand
+    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ..., enter_elevator_command: _Optional[_Union[EnterElevatorCommand, _Mapping]] = ..., exit_elevator_command: _Optional[_Union[ExitElevatorCommand, _Mapping]] = ...) -> None: ...
 
 class MoveShelfCommand(_message.Message):
     __slots__ = ("target_shelf_id", "destination_location_id", "undock_on_destination")
@@ -509,6 +513,50 @@ class DockAnyShelfWithRegistrationCommand(_message.Message):
 class LocalizeCommand(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
+
+class EnterElevatorCommand(_message.Message):
+    __slots__ = ("door_location_id", "rotate_at_end", "enter_outside_door_distance", "enter_inside_door_distance", "enter_speed", "enter_tts_message", "enter_acceptable_door_distance", "play_stop_distance_in_collided_path", "play_stop_in_collided_path_timeout")
+    DOOR_LOCATION_ID_FIELD_NUMBER: _ClassVar[int]
+    ROTATE_AT_END_FIELD_NUMBER: _ClassVar[int]
+    ENTER_OUTSIDE_DOOR_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    ENTER_INSIDE_DOOR_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    ENTER_SPEED_FIELD_NUMBER: _ClassVar[int]
+    ENTER_TTS_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    ENTER_ACCEPTABLE_DOOR_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    PLAY_STOP_DISTANCE_IN_COLLIDED_PATH_FIELD_NUMBER: _ClassVar[int]
+    PLAY_STOP_IN_COLLIDED_PATH_TIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    door_location_id: str
+    rotate_at_end: bool
+    enter_outside_door_distance: float
+    enter_inside_door_distance: float
+    enter_speed: float
+    enter_tts_message: str
+    enter_acceptable_door_distance: float
+    play_stop_distance_in_collided_path: float
+    play_stop_in_collided_path_timeout: float
+    def __init__(self, door_location_id: _Optional[str] = ..., rotate_at_end: bool = ..., enter_outside_door_distance: _Optional[float] = ..., enter_inside_door_distance: _Optional[float] = ..., enter_speed: _Optional[float] = ..., enter_tts_message: _Optional[str] = ..., enter_acceptable_door_distance: _Optional[float] = ..., play_stop_distance_in_collided_path: _Optional[float] = ..., play_stop_in_collided_path_timeout: _Optional[float] = ...) -> None: ...
+
+class ExitElevatorCommand(_message.Message):
+    __slots__ = ("door_location_id", "exit_outside_door_distance", "exit_post_distance", "exit_post_angle", "exit_speed", "exit_tts_message", "exit_acceptable_door_distance", "play_stop_distance_in_collided_path", "play_stop_in_collided_path_timeout")
+    DOOR_LOCATION_ID_FIELD_NUMBER: _ClassVar[int]
+    EXIT_OUTSIDE_DOOR_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    EXIT_POST_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    EXIT_POST_ANGLE_FIELD_NUMBER: _ClassVar[int]
+    EXIT_SPEED_FIELD_NUMBER: _ClassVar[int]
+    EXIT_TTS_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    EXIT_ACCEPTABLE_DOOR_DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    PLAY_STOP_DISTANCE_IN_COLLIDED_PATH_FIELD_NUMBER: _ClassVar[int]
+    PLAY_STOP_IN_COLLIDED_PATH_TIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    door_location_id: str
+    exit_outside_door_distance: float
+    exit_post_distance: float
+    exit_post_angle: float
+    exit_speed: float
+    exit_tts_message: str
+    exit_acceptable_door_distance: float
+    play_stop_distance_in_collided_path: float
+    play_stop_in_collided_path_timeout: float
+    def __init__(self, door_location_id: _Optional[str] = ..., exit_outside_door_distance: _Optional[float] = ..., exit_post_distance: _Optional[float] = ..., exit_post_angle: _Optional[float] = ..., exit_speed: _Optional[float] = ..., exit_tts_message: _Optional[str] = ..., exit_acceptable_door_distance: _Optional[float] = ..., play_stop_distance_in_collided_path: _Optional[float] = ..., play_stop_in_collided_path_timeout: _Optional[float] = ...) -> None: ...
 
 class EmptyRequest(_message.Message):
     __slots__ = ()

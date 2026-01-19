@@ -256,6 +256,8 @@ message Command {
     // DockAnyShelfWithRegistrationCommand is available only in Kachaka Pro.
     DockAnyShelfWithRegistrationCommand dock_any_shelf_with_registration_command = 18;
     LocalizeCommand localize_command = 19;
+    EnterElevatorCommand enter_elevator_command = 20;
+    ExitElevatorCommand exit_elevator_command = 21;
   }
 }
 
@@ -315,6 +317,30 @@ message DockAnyShelfWithRegistrationCommand {
 }
 
 message LocalizeCommand {
+}
+
+message EnterElevatorCommand {
+  string door_location_id = 1;
+  bool rotate_at_end = 2;
+  double enter_outside_door_distance = 3;
+  double enter_inside_door_distance = 4;
+  double enter_speed = 5;
+  string enter_tts_message = 6;
+  double enter_acceptable_door_distance = 7;
+  double play_stop_distance_in_collided_path = 8;
+  double play_stop_in_collided_path_timeout = 9;
+}
+
+message ExitElevatorCommand {
+  string door_location_id = 1;
+  double exit_outside_door_distance = 2;
+  double exit_post_distance = 3;
+  double exit_post_angle = 4;
+  double exit_speed = 5;
+  string exit_tts_message = 6;
+  double exit_acceptable_door_distance = 7;
+  double play_stop_distance_in_collided_path = 8;
+  double play_stop_in_collided_path_timeout = 9;
 }
 
 enum CommandState {
