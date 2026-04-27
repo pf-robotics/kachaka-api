@@ -185,10 +185,20 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetLocationsResponse.FromString,
                 _registered_method=True)
+        self.GetLocationsDigest = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetLocationsDigest',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetLocationsDigestResponse.FromString,
+                _registered_method=True)
         self.GetShelves = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetShelves',
                 request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetShelvesResponse.FromString,
+                _registered_method=True)
+        self.GetShelvesDigest = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetShelvesDigest',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetShelvesDigestResponse.FromString,
                 _registered_method=True)
         self.GetMovingShelfId = channel.unary_unary(
                 '/kachaka_api.KachakaApi/GetMovingShelfId',
@@ -509,9 +519,21 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetLocationsDigest(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetShelves(self, request, context):
         """Shelves
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetShelvesDigest(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -832,10 +854,20 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetLocationsResponse.SerializeToString,
             ),
+            'GetLocationsDigest': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLocationsDigest,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetLocationsDigestResponse.SerializeToString,
+            ),
             'GetShelves': grpc.unary_unary_rpc_method_handler(
                     servicer.GetShelves,
                     request_deserializer=kachaka__api__pb2.GetRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetShelvesResponse.SerializeToString,
+            ),
+            'GetShelvesDigest': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetShelvesDigest,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetShelvesDigestResponse.SerializeToString,
             ),
             'GetMovingShelfId': grpc.unary_unary_rpc_method_handler(
                     servicer.GetMovingShelfId,
@@ -1790,6 +1822,33 @@ class KachakaApi(object):
             _registered_method=True)
 
     @staticmethod
+    def GetLocationsDigest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/GetLocationsDigest',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetLocationsDigestResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
     def GetShelves(request,
             target,
             options=(),
@@ -1806,6 +1865,33 @@ class KachakaApi(object):
             '/kachaka_api.KachakaApi/GetShelves',
             kachaka__api__pb2.GetRequest.SerializeToString,
             kachaka__api__pb2.GetShelvesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetShelvesDigest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/GetShelvesDigest',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetShelvesDigestResponse.FromString,
             options,
             channel_credentials,
             insecure,
