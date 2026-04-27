@@ -106,6 +106,12 @@ message Location {
   bool ignore_voice_recognition = 7;
 }
 
+message LocationDigest {
+  string id = 1;
+  string name = 2;
+  LocationType type = 3;
+}
+
 message ShelfSize {
   double width = 1;
   double depth = 2;
@@ -141,6 +147,11 @@ message Shelf {
   string home_location_id = 8;
   ShelfSpeedMode speed_mode = 9;
   bool ignore_voice_recognition = 10;
+}
+
+message ShelfDigest {
+  string id = 1;
+  string name = 2;
 }
 
 message RosImu {
@@ -256,6 +267,7 @@ message Command {
     // DockAnyShelfWithRegistrationCommand is available only in Kachaka Pro.
     DockAnyShelfWithRegistrationCommand dock_any_shelf_with_registration_command = 18;
     LocalizeCommand localize_command = 19;
+    MoveByVelocityWithMutedSensorsCommand move_by_velocity_with_muted_sensors_command = 22;
   }
 }
 
@@ -278,6 +290,7 @@ message UndockShelfCommand {
 
 message MoveToLocationCommand {
   string target_location_id = 1;
+  string source_location_id = 2;
 }
 
 message ReturnHomeCommand {
@@ -303,6 +316,7 @@ message LockCommand {
 message MoveForwardCommand {
   double distance_meter = 1;
   double speed = 2;  // [m/s]
+  bool mute_sensors = 3;
 }
 
 message RotateInPlaceCommand {
@@ -315,6 +329,11 @@ message DockAnyShelfWithRegistrationCommand {
 }
 
 message LocalizeCommand {
+}
+
+message MoveByVelocityWithMutedSensorsCommand {
+  double signed_velocity = 1;  // [m/s]
+  double move_duration_sec = 2;
 }
 
 enum CommandState {
@@ -505,9 +524,19 @@ message GetLocationsResponse {
   string default_location_id = 3;
 }
 
+message GetLocationsDigestResponse {
+  Metadata metadata = 1;
+  repeated LocationDigest locations = 2;
+}
+
 message GetShelvesResponse {
   Metadata metadata = 1;
   repeated Shelf shelves = 2;
+}
+
+message GetShelvesDigestResponse {
+  Metadata metadata = 1;
+  repeated ShelfDigest shelves = 2;
 }
 
 message GetMovingShelfIdResponse {
@@ -755,8 +784,10 @@ service KachakaApi {
   rpc Proceed (EmptyRequest) returns (ProceedResponse);
   // Locations
   rpc GetLocations (GetRequest) returns (GetLocationsResponse);
+  rpc GetLocationsDigest (GetRequest) returns (GetLocationsDigestResponse);
   // Shelves
   rpc GetShelves (GetRequest) returns (GetShelvesResponse);
+  rpc GetShelvesDigest (GetRequest) returns (GetShelvesDigestResponse);
   rpc GetMovingShelfId (GetRequest) returns (GetMovingShelfIdResponse);
   rpc ResetShelfPose (ResetShelfPoseRequest) returns (ResetShelfPoseResponse);
   // Auto homing
