@@ -15,7 +15,7 @@
 
 import json
 import socket
-from typing import Iterator, NamedTuple, TypedDict
+from typing import Any, Iterator, NamedTuple, Sequence, TypedDict
 
 import grpc
 from google._upb._message import RepeatedCompositeContainer
@@ -59,11 +59,17 @@ def _resolve_target(target: str) -> str | None:
 
 
 class KachakaApiClientBase:
-    def __init__(self, target: str = "100.94.1.1:26400") -> None:
+    def __init__(
+        self,
+        target: str = "100.94.1.1:26400",
+        options: Sequence[tuple[str, Any]] | None = None,
+    ) -> None:
         target_resolved = _resolve_target(target)
         if target_resolved is None:
             raise ValueError(f"Invalid target: {target}")
-        self.stub = KachakaApiStub(grpc.insecure_channel(target_resolved))
+        self.stub = KachakaApiStub(
+            grpc.insecure_channel(target_resolved, options=options)
+        )
         self.resolver = ShelfLocationResolver()
 
     def get_robot_serial_number(self) -> str:
