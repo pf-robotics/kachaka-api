@@ -48,6 +48,12 @@ class CommandState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     COMMAND_STATE_UNSPECIFIED: _ClassVar[CommandState]
     COMMAND_STATE_PENDING: _ClassVar[CommandState]
     COMMAND_STATE_RUNNING: _ClassVar[CommandState]
+
+class SwitchMapInheritMethod(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    SWITCH_MAP_INHERIT_METHOD_UNSPECIFIED: _ClassVar[SwitchMapInheritMethod]
+    SWITCH_MAP_INHERIT_METHOD_SHELF_ID_BASED: _ClassVar[SwitchMapInheritMethod]
+    SWITCH_MAP_INHERIT_METHOD_FIDUCIAL_ID_BASED: _ClassVar[SwitchMapInheritMethod]
 POWER_SUPPLY_STATUS_UNSPECIFIED: PowerSupplyStatus
 POWER_SUPPLY_STATUS_CHARGING: PowerSupplyStatus
 POWER_SUPPLY_STATUS_DISCHARGING: PowerSupplyStatus
@@ -73,6 +79,9 @@ OBJECT_LABEL_DOOR: ObjectLabel
 COMMAND_STATE_UNSPECIFIED: CommandState
 COMMAND_STATE_PENDING: CommandState
 COMMAND_STATE_RUNNING: CommandState
+SWITCH_MAP_INHERIT_METHOD_UNSPECIFIED: SwitchMapInheritMethod
+SWITCH_MAP_INHERIT_METHOD_SHELF_ID_BASED: SwitchMapInheritMethod
+SWITCH_MAP_INHERIT_METHOD_FIDUCIAL_ID_BASED: SwitchMapInheritMethod
 
 class Metadata(_message.Message):
     __slots__ = ("cursor",)
@@ -1023,14 +1032,16 @@ class LoadMapPreviewResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., map: _Optional[_Union[Map, _Mapping]] = ...) -> None: ...
 
 class SwitchMapRequest(_message.Message):
-    __slots__ = ("map_id", "initial_pose", "inherit_docking_state_and_docked_shelf")
+    __slots__ = ("map_id", "initial_pose", "inherit_docking_state_and_docked_shelf", "docking_state_inherit_method")
     MAP_ID_FIELD_NUMBER: _ClassVar[int]
     INITIAL_POSE_FIELD_NUMBER: _ClassVar[int]
     INHERIT_DOCKING_STATE_AND_DOCKED_SHELF_FIELD_NUMBER: _ClassVar[int]
+    DOCKING_STATE_INHERIT_METHOD_FIELD_NUMBER: _ClassVar[int]
     map_id: str
     initial_pose: Pose
     inherit_docking_state_and_docked_shelf: bool
-    def __init__(self, map_id: _Optional[str] = ..., initial_pose: _Optional[_Union[Pose, _Mapping]] = ..., inherit_docking_state_and_docked_shelf: bool = ...) -> None: ...
+    docking_state_inherit_method: SwitchMapInheritMethod
+    def __init__(self, map_id: _Optional[str] = ..., initial_pose: _Optional[_Union[Pose, _Mapping]] = ..., inherit_docking_state_and_docked_shelf: bool = ..., docking_state_inherit_method: _Optional[_Union[SwitchMapInheritMethod, str]] = ...) -> None: ...
 
 class SwitchMapResponse(_message.Message):
     __slots__ = ("result",)
@@ -1173,6 +1184,74 @@ class RestartRobotResponse(_message.Message):
     def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
 
 class SetEmergencyStopResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class Sound(_message.Message):
+    __slots__ = ("id", "name")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    name: str
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
+
+class GetSoundListResponse(_message.Message):
+    __slots__ = ("metadata", "sounds")
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SOUNDS_FIELD_NUMBER: _ClassVar[int]
+    metadata: Metadata
+    sounds: _containers.RepeatedCompositeFieldContainer[Sound]
+    def __init__(self, metadata: _Optional[_Union[Metadata, _Mapping]] = ..., sounds: _Optional[_Iterable[_Union[Sound, _Mapping]]] = ...) -> None: ...
+
+class AddSoundRequest(_message.Message):
+    __slots__ = ("name", "data")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    data: bytes
+    def __init__(self, name: _Optional[str] = ..., data: _Optional[bytes] = ...) -> None: ...
+
+class AddSoundResponse(_message.Message):
+    __slots__ = ("result", "sound_id")
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    SOUND_ID_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    sound_id: str
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ..., sound_id: _Optional[str] = ...) -> None: ...
+
+class DeleteSoundRequest(_message.Message):
+    __slots__ = ("sound_id",)
+    SOUND_ID_FIELD_NUMBER: _ClassVar[int]
+    sound_id: str
+    def __init__(self, sound_id: _Optional[str] = ...) -> None: ...
+
+class DeleteSoundResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class PlaySoundRequest(_message.Message):
+    __slots__ = ("sound_id", "loop")
+    SOUND_ID_FIELD_NUMBER: _ClassVar[int]
+    LOOP_FIELD_NUMBER: _ClassVar[int]
+    sound_id: str
+    loop: bool
+    def __init__(self, sound_id: _Optional[str] = ..., loop: bool = ...) -> None: ...
+
+class PlaySoundResponse(_message.Message):
+    __slots__ = ("result",)
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: Result
+    def __init__(self, result: _Optional[_Union[Result, _Mapping]] = ...) -> None: ...
+
+class StopSoundRequest(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class StopSoundResponse(_message.Message):
     __slots__ = ("result",)
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: Result
