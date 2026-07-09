@@ -646,12 +646,19 @@ message LoadMapPreviewResponse {
   Map map = 2;
 }
 
+enum SwitchMapInheritMethod {
+  SWITCH_MAP_INHERIT_METHOD_UNSPECIFIED = 0;
+  SWITCH_MAP_INHERIT_METHOD_SHELF_ID_BASED = 1;
+  SWITCH_MAP_INHERIT_METHOD_FIDUCIAL_ID_BASED = 2;
+}
+
 message SwitchMapRequest {
   string map_id = 1;
   Pose initial_pose = 2;  // use the charger pose if the message is empty
 
   // Available only in Kachaka Pro. In the standard version, setting this flag to true will throw an error.
   bool inherit_docking_state_and_docked_shelf = 3;
+  SwitchMapInheritMethod docking_state_inherit_method = 4;
 }
 
 message SwitchMapResponse {
@@ -750,6 +757,51 @@ message SetEmergencyStopResponse {
   Result result = 1;
 }
 
+// Sound
+message Sound {
+  string id = 1;
+  string name = 2;
+}
+
+message GetSoundListResponse {
+  Metadata metadata = 1;
+  repeated Sound sounds = 2;
+}
+
+message AddSoundRequest {
+  string name = 1;
+  bytes data = 2;
+}
+
+message AddSoundResponse {
+  Result result = 1;
+  string sound_id = 2;
+}
+
+message DeleteSoundRequest {
+  string sound_id = 1;
+}
+
+message DeleteSoundResponse {
+  Result result = 1;
+}
+
+message PlaySoundRequest {
+  string sound_id = 1;
+  bool loop = 2;
+}
+
+message PlaySoundResponse {
+  Result result = 1;
+}
+
+message StopSoundRequest {
+}
+
+message StopSoundResponse {
+  Result result = 1;
+}
+
 // Services
 service KachakaApi {
   rpc GetRobotSerialNumber (GetRequest) returns (GetRobotSerialNumberResponse);
@@ -821,4 +873,10 @@ service KachakaApi {
   // Transform
   rpc GetStaticTransform (GetRequest) returns (GetStaticTransformResponse);
   rpc GetDynamicTransform (EmptyRequest) returns (stream GetDynamicTransformResponse);
+  // Sound
+  rpc GetSoundList (GetRequest) returns (GetSoundListResponse);
+  rpc AddSound (AddSoundRequest) returns (AddSoundResponse);
+  rpc DeleteSound (DeleteSoundRequest) returns (DeleteSoundResponse);
+  rpc PlaySound (PlaySoundRequest) returns (PlaySoundResponse);
+  rpc StopSound (StopSoundRequest) returns (StopSoundResponse);
 }

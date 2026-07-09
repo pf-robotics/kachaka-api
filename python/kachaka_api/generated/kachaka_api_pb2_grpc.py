@@ -330,6 +330,31 @@ class KachakaApiStub(object):
                 request_serializer=kachaka__api__pb2.EmptyRequest.SerializeToString,
                 response_deserializer=kachaka__api__pb2.GetDynamicTransformResponse.FromString,
                 _registered_method=True)
+        self.GetSoundList = channel.unary_unary(
+                '/kachaka_api.KachakaApi/GetSoundList',
+                request_serializer=kachaka__api__pb2.GetRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.GetSoundListResponse.FromString,
+                _registered_method=True)
+        self.AddSound = channel.unary_unary(
+                '/kachaka_api.KachakaApi/AddSound',
+                request_serializer=kachaka__api__pb2.AddSoundRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.AddSoundResponse.FromString,
+                _registered_method=True)
+        self.DeleteSound = channel.unary_unary(
+                '/kachaka_api.KachakaApi/DeleteSound',
+                request_serializer=kachaka__api__pb2.DeleteSoundRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.DeleteSoundResponse.FromString,
+                _registered_method=True)
+        self.PlaySound = channel.unary_unary(
+                '/kachaka_api.KachakaApi/PlaySound',
+                request_serializer=kachaka__api__pb2.PlaySoundRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.PlaySoundResponse.FromString,
+                _registered_method=True)
+        self.StopSound = channel.unary_unary(
+                '/kachaka_api.KachakaApi/StopSound',
+                request_serializer=kachaka__api__pb2.StopSoundRequest.SerializeToString,
+                response_deserializer=kachaka__api__pb2.StopSoundResponse.FromString,
+                _registered_method=True)
 
 
 class KachakaApiServicer(object):
@@ -701,6 +726,37 @@ class KachakaApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetSoundList(self, request, context):
+        """Sound
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AddSound(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteSound(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PlaySound(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def StopSound(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KachakaApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -998,6 +1054,31 @@ def add_KachakaApiServicer_to_server(servicer, server):
                     servicer.GetDynamicTransform,
                     request_deserializer=kachaka__api__pb2.EmptyRequest.FromString,
                     response_serializer=kachaka__api__pb2.GetDynamicTransformResponse.SerializeToString,
+            ),
+            'GetSoundList': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSoundList,
+                    request_deserializer=kachaka__api__pb2.GetRequest.FromString,
+                    response_serializer=kachaka__api__pb2.GetSoundListResponse.SerializeToString,
+            ),
+            'AddSound': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddSound,
+                    request_deserializer=kachaka__api__pb2.AddSoundRequest.FromString,
+                    response_serializer=kachaka__api__pb2.AddSoundResponse.SerializeToString,
+            ),
+            'DeleteSound': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteSound,
+                    request_deserializer=kachaka__api__pb2.DeleteSoundRequest.FromString,
+                    response_serializer=kachaka__api__pb2.DeleteSoundResponse.SerializeToString,
+            ),
+            'PlaySound': grpc.unary_unary_rpc_method_handler(
+                    servicer.PlaySound,
+                    request_deserializer=kachaka__api__pb2.PlaySoundRequest.FromString,
+                    response_serializer=kachaka__api__pb2.PlaySoundResponse.SerializeToString,
+            ),
+            'StopSound': grpc.unary_unary_rpc_method_handler(
+                    servicer.StopSound,
+                    request_deserializer=kachaka__api__pb2.StopSoundRequest.FromString,
+                    response_serializer=kachaka__api__pb2.StopSoundResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -2594,6 +2675,141 @@ class KachakaApi(object):
             '/kachaka_api.KachakaApi/GetDynamicTransform',
             kachaka__api__pb2.EmptyRequest.SerializeToString,
             kachaka__api__pb2.GetDynamicTransformResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetSoundList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/GetSoundList',
+            kachaka__api__pb2.GetRequest.SerializeToString,
+            kachaka__api__pb2.GetSoundListResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddSound(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/AddSound',
+            kachaka__api__pb2.AddSoundRequest.SerializeToString,
+            kachaka__api__pb2.AddSoundResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteSound(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/DeleteSound',
+            kachaka__api__pb2.DeleteSoundRequest.SerializeToString,
+            kachaka__api__pb2.DeleteSoundResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PlaySound(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/PlaySound',
+            kachaka__api__pb2.PlaySoundRequest.SerializeToString,
+            kachaka__api__pb2.PlaySoundResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def StopSound(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/kachaka_api.KachakaApi/StopSound',
+            kachaka__api__pb2.StopSoundRequest.SerializeToString,
+            kachaka__api__pb2.StopSoundResponse.FromString,
             options,
             channel_credentials,
             insecure,
