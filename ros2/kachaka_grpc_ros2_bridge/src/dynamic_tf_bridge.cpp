@@ -20,12 +20,21 @@
 #include "kachaka-api.grpc.pb.h"
 
 namespace {
+constexpr char kMapFrameId[] = "map";
+
+// Returns true if the converted message has at least one transform.
 bool ConvertGrpcTfToRosTf(
     const kachaka_api::GetDynamicTransformResponse& grpc_msg,
-    tf2_msgs::msg::TFMessage* msg, const std::string& frame_prefix = "") {
+    tf2_msgs::msg::TFMessage* msg, const std::string& frame_prefix = "",
+    const bool publish_map_tf = true) {
   msg->transforms.clear();
   msg->transforms.reserve(grpc_msg.transforms_size());
   for (const auto& transform_grpc : grpc_msg.transforms()) {
+    // Check the frame_id on the gRPC side not to depend on frame_prefix.
+    if (!publish_map_tf && transform_grpc.header().frame_id() == kMapFrameId) {
+      continue;
+    }
+
     geometry_msgs::msg::TransformStamped transform_ros;
     kachaka::grpc_ros2_bridge::converter::ConvertGrpcHeaderToRos2Header(
         transform_grpc.header(), &(transform_ros.header), frame_prefix);
@@ -42,7 +51,7 @@ bool ConvertGrpcTfToRosTf(
 
     msg->transforms.push_back(transform_ros);
   }
-  return true;
+  return !msg->transforms.empty();
 }
 
 }  // namespace
@@ -50,9 +59,10 @@ bool ConvertGrpcTfToRosTf(
 namespace kachaka::grpc_ros2_bridge {
 
 TfStreamClient::TfStreamClient(
-    std::string frame_prefix,
+    std::string frame_prefix, bool publish_map_tf,
     std::shared_ptr<kachaka_api::KachakaApi::Stub> stub, rclcpp::Node* node)
     : frame_prefix_(std::move(frame_prefix)),
+      publish_map_tf_(publish_map_tf),
       stub_(stub),
       node_(node),
       publisher_(node->create_publisher<tf2_msgs::msg::TFMessage>(
@@ -69,8 +79,9 @@ void TfStreamClient::ReadStream() {
 
   while (reader->Read(&response)) {
     tf2_msgs::msg::TFMessage msg;
-    ConvertGrpcTfToRosTf(response, &msg, frame_prefix_);
-    publisher_->publish(msg);
+    if (ConvertGrpcTfToRosTf(response, &msg, frame_prefix_, publish_map_tf_)) {
+      publisher_->publish(msg);
+    }
   }
   RCLCPP_INFO(node_->get_logger(), "dynamic tf server is stopped.");
 }

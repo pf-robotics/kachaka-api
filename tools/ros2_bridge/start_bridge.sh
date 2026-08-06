@@ -8,6 +8,8 @@ cd "${DOCKER_COMPOSE_DIR}"
 usage() {
     echo "Usage: $0 KACHAKA_IP_ADRESS [KACHAKA_NAME] [Option]"
     echo "  -d    daemonize"
+    echo "Environment variables:"
+    echo "  PUBLISH_MAP_TF=false    do not publish tf whose parent frame is map (default: true)"
     exit 1
 }
 
@@ -26,9 +28,11 @@ fi
 USER_ID="$(id -u)"
 GROUP_ID="$(id -g)"
 GRPC_PORT=26400
+PUBLISH_MAP_TF="${PUBLISH_MAP_TF:-true}"
 
 export USER_ID
 export GROUP_ID
+export PUBLISH_MAP_TF
 
 KACHAKA_IP=$1
 
