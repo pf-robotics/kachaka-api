@@ -34,12 +34,18 @@ class DynamicTfComponent : public rclcpp::Node {
 
     this->declare_parameter("frame_prefix", "");
     frame_prefix_ = this->get_parameter("frame_prefix").as_string();
+    this->declare_parameter("publish_map_tf", true);
+    publish_map_tf_ = this->get_parameter("publish_map_tf").as_bool();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     RCLCPP_INFO(this->get_logger(), "get stub");
 
-    dynamic_tf_client_ =
-        std::make_unique<TfStreamClient>(frame_prefix_, stub_, this);
+    if (!publish_map_tf_) {
+      RCLCPP_INFO(this->get_logger(), "map tf is not published");
+    }
+
+    dynamic_tf_client_ = std::make_unique<TfStreamClient>(
+        frame_prefix_, publish_map_tf_, stub_, this);
 
     dynamic_tf_client_->ReadStream();
     RCLCPP_INFO(this->get_logger(), "start read dynamic tf");
@@ -51,6 +57,7 @@ class DynamicTfComponent : public rclcpp::Node {
 
  private:
   std::string frame_prefix_;
+  bool publish_map_tf_{true};
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<TfStreamClient> dynamic_tf_client_;
 };

@@ -13,6 +13,7 @@
 - [他のROS 2パッケージと連携する](#他のros-2パッケージと連携する)
   - [kachaka_interfaces, kachaka_descriptionのビルド](#kachaka_interfaces-kachaka_descriptionのビルド)
   - [RViz2による可視化](#rviz2による可視化)
+  - [外部の自己位置推定ノードと連携する](#外部の自己位置推定ノードと連携する)
 - [サンプルコード](#サンプルコード)
 - [Dockerイメージを自分でビルドする](#dockerイメージを自分でビルドする)
 
@@ -104,6 +105,27 @@ source install/setup.bash
 cd src/kachaka_description/config
 rviz2 -d kachaka.rviz
 ```
+
+### 外部の自己位置推定ノードと連携する
+
+* ブリッジは既定でカチャカ本体の自己位置推定結果を`map -> odom`のTFとして出力します。
+* AMCLやemcl2など外部の自己位置推定ノードを併用する場合、同じ`map -> odom`を2つのノードが出力することになり、TFが競合して正しく動作しません。
+* この場合は`PUBLISH_MAP_TF=false`を指定してブリッジを起動すると、`map`を親とする動的TFを出力しなくなります。
+
+```bash
+cd ~/kachaka-api/tools/ros2_bridge
+PUBLISH_MAP_TF=false ./start_bridge.sh <カチャカのIPアドレス>
+```
+
+* Dockerを使わずにlaunchファイルを直接実行する場合は、`publish_map_tf`引数を指定してください。
+
+```bash
+ros2 launch kachaka_grpc_ros2_bridge grpc_ros2_bridge.launch.xml publish_map_tf:=false
+```
+
+* 外部の自己位置推定ノードには、ブリッジが出力する`/kachaka/lidar/scan`と`/kachaka/mapping/map`を入力として与えます。
+* なお`/tf_static`で出力される目的地(`L01`など)のTFは`map`を親としたままです。これらは子フレームが競合しないためTFツリーは壊れませんが、外部の自己位置推定ノードがカチャカと異なる地図を使う場合は目的地の位置がずれる点に注意してください。
+* `PUBLISH_MAP_TF=false`の場合、カチャカ本体の自己位置推定結果はROS 2側から取得できなくなります。
 
 ## サンプルコード
 
