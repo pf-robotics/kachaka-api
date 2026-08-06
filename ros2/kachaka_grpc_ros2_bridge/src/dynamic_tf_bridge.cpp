@@ -22,7 +22,7 @@
 namespace {
 constexpr char kMapFrameId[] = "map";
 
-// 変換結果が1件以上ある場合にtrueを返す。
+// Returns true if the converted message has at least one transform.
 bool ConvertGrpcTfToRosTf(
     const kachaka_api::GetDynamicTransformResponse& grpc_msg,
     tf2_msgs::msg::TFMessage* msg, const std::string& frame_prefix = "",
@@ -30,7 +30,7 @@ bool ConvertGrpcTfToRosTf(
   msg->transforms.clear();
   msg->transforms.reserve(grpc_msg.transforms_size());
   for (const auto& transform_grpc : grpc_msg.transforms()) {
-    // frame_prefixの有無に依存しないようgRPC側のframe_idで判定する。
+    // Check the frame_id on the gRPC side not to depend on frame_prefix.
     if (!publish_map_tf && transform_grpc.header().frame_id() == kMapFrameId) {
       continue;
     }
