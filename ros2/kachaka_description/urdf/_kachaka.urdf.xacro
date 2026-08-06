@@ -119,11 +119,11 @@
     <joint name="lidar_joint"
           type="fixed">
       <parent link="base_link" />
-      <child link="laser_frame" />
+      <child link="laser_link" />
       <origin rpy="0 0 ${PI / 2.0}"
               xyz="0.156 0 0.1049" />
     </joint>
-    <link name="laser_frame" />
+    <link name="laser_link" />
 
     <!-- Camera(front) -->
     <joint name="camera_front_joint"

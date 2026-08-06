@@ -104,7 +104,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        laser_frame:
+        laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -306,6 +306,8 @@ Visualization Manager:
           Value: true
         laser_frame:
           Value: true
+        laser_link:
+          Value: true
         layout_offset:
           Value: true
         lidar_center_frame:
@@ -467,9 +469,10 @@ Visualization Manager:
                   {}
                 imu_link:
                   {}
-                laser_frame:
-                  lidar_center_frame:
-                    {}
+                laser_link:
+                  laser_frame:
+                    lidar_center_frame:
+                      {}
                 tof_link:
                   tof_camera:
                     {}
