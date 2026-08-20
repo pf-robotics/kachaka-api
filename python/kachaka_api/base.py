@@ -711,6 +711,9 @@ class KachakaApiClientBase:
         *,
         pose: Pose2d | None = None,
         inherit_docking_state_and_docked_shelf: bool = False,
+        docking_state_inherit_method: pb2.SwitchMapInheritMethod = (
+            pb2.SWITCH_MAP_INHERIT_METHOD_UNSPECIFIED
+        ),
     ) -> pb2.Result:
         # If "pose" is not specified, the initial pose is automatically determined to the charger pose.
         initial_pose = (
@@ -722,6 +725,7 @@ class KachakaApiClientBase:
             map_id=map_id,
             initial_pose=initial_pose,
             inherit_docking_state_and_docked_shelf=inherit_docking_state_and_docked_shelf,
+            docking_state_inherit_method=docking_state_inherit_method,
         )
         response: pb2.SwitchMapResponse = self.stub.SwitchMap(request)
         return response.result
