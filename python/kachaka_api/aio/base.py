@@ -516,6 +516,24 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    async def depart_from_charger(
+        self,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return await self.start_command(
+            pb2.Command(
+                depart_from_charger_command=pb2.DepartFromChargerCommand()
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
