@@ -424,7 +424,7 @@ class ObjectDetectionFeatures(_message.Message):
     def __init__(self, name: _Optional[str] = ..., shape: _Optional[_Iterable[int]] = ..., data: _Optional[_Iterable[float]] = ...) -> None: ...
 
 class Command(_message.Message):
-    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command", "localize_command", "move_by_velocity_with_muted_sensors_command")
+    __slots__ = ("move_shelf_command", "return_shelf_command", "undock_shelf_command", "move_to_location_command", "return_home_command", "dock_shelf_command", "speak_command", "move_to_pose_command", "lock_command", "move_forward_command", "rotate_in_place_command", "dock_any_shelf_with_registration_command", "localize_command", "move_by_velocity_with_muted_sensors_command", "depart_from_charger_command")
     MOVE_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     RETURN_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
     UNDOCK_SHELF_COMMAND_FIELD_NUMBER: _ClassVar[int]
@@ -439,6 +439,7 @@ class Command(_message.Message):
     DOCK_ANY_SHELF_WITH_REGISTRATION_COMMAND_FIELD_NUMBER: _ClassVar[int]
     LOCALIZE_COMMAND_FIELD_NUMBER: _ClassVar[int]
     MOVE_BY_VELOCITY_WITH_MUTED_SENSORS_COMMAND_FIELD_NUMBER: _ClassVar[int]
+    DEPART_FROM_CHARGER_COMMAND_FIELD_NUMBER: _ClassVar[int]
     move_shelf_command: MoveShelfCommand
     return_shelf_command: ReturnShelfCommand
     undock_shelf_command: UndockShelfCommand
@@ -453,7 +454,8 @@ class Command(_message.Message):
     dock_any_shelf_with_registration_command: DockAnyShelfWithRegistrationCommand
     localize_command: LocalizeCommand
     move_by_velocity_with_muted_sensors_command: MoveByVelocityWithMutedSensorsCommand
-    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ..., move_by_velocity_with_muted_sensors_command: _Optional[_Union[MoveByVelocityWithMutedSensorsCommand, _Mapping]] = ...) -> None: ...
+    depart_from_charger_command: DepartFromChargerCommand
+    def __init__(self, move_shelf_command: _Optional[_Union[MoveShelfCommand, _Mapping]] = ..., return_shelf_command: _Optional[_Union[ReturnShelfCommand, _Mapping]] = ..., undock_shelf_command: _Optional[_Union[UndockShelfCommand, _Mapping]] = ..., move_to_location_command: _Optional[_Union[MoveToLocationCommand, _Mapping]] = ..., return_home_command: _Optional[_Union[ReturnHomeCommand, _Mapping]] = ..., dock_shelf_command: _Optional[_Union[DockShelfCommand, _Mapping]] = ..., speak_command: _Optional[_Union[SpeakCommand, _Mapping]] = ..., move_to_pose_command: _Optional[_Union[MoveToPoseCommand, _Mapping]] = ..., lock_command: _Optional[_Union[LockCommand, _Mapping]] = ..., move_forward_command: _Optional[_Union[MoveForwardCommand, _Mapping]] = ..., rotate_in_place_command: _Optional[_Union[RotateInPlaceCommand, _Mapping]] = ..., dock_any_shelf_with_registration_command: _Optional[_Union[DockAnyShelfWithRegistrationCommand, _Mapping]] = ..., localize_command: _Optional[_Union[LocalizeCommand, _Mapping]] = ..., move_by_velocity_with_muted_sensors_command: _Optional[_Union[MoveByVelocityWithMutedSensorsCommand, _Mapping]] = ..., depart_from_charger_command: _Optional[_Union[DepartFromChargerCommand, _Mapping]] = ...) -> None: ...
 
 class MoveShelfCommand(_message.Message):
     __slots__ = ("target_shelf_id", "destination_location_id", "undock_on_destination")
@@ -550,6 +552,10 @@ class MoveByVelocityWithMutedSensorsCommand(_message.Message):
     signed_velocity: float
     move_duration_sec: float
     def __init__(self, signed_velocity: _Optional[float] = ..., move_duration_sec: _Optional[float] = ...) -> None: ...
+
+class DepartFromChargerCommand(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
 
 class EmptyRequest(_message.Message):
     __slots__ = ()
