@@ -516,6 +516,24 @@ class KachakaApiClientBase:
             title=title,
         )
 
+    async def depart_from_charger(
+        self,
+        *,
+        wait_for_completion: bool = True,
+        cancel_all: bool = True,
+        tts_on_success: str = "",
+        title: str = "",
+    ) -> pb2.Result:
+        return await self.start_command(
+            pb2.Command(
+                depart_from_charger_command=pb2.DepartFromChargerCommand()
+            ),
+            wait_for_completion=wait_for_completion,
+            cancel_all=cancel_all,
+            tts_on_success=tts_on_success,
+            title=title,
+        )
+
     async def cancel_command(self) -> tuple[pb2.Result, pb2.Command]:
         request = pb2.EmptyRequest()
         response: pb2.CancelCommandResponse = await self.stub.CancelCommand(
@@ -732,6 +750,9 @@ class KachakaApiClientBase:
         *,
         pose: Pose2d | None = None,
         inherit_docking_state_and_docked_shelf: bool = False,
+        docking_state_inherit_method: pb2.SwitchMapInheritMethod = (
+            pb2.SWITCH_MAP_INHERIT_METHOD_UNSPECIFIED
+        ),
     ) -> pb2.Result:
         # If "pose" is not specified, the initial pose is automatically determined to the charger pose.
         initial_pose = (
@@ -743,6 +764,7 @@ class KachakaApiClientBase:
             map_id=map_id,
             initial_pose=initial_pose,
             inherit_docking_state_and_docked_shelf=inherit_docking_state_and_docked_shelf,
+            docking_state_inherit_method=docking_state_inherit_method,
         )
         response: pb2.SwitchMapResponse = await self.stub.SwitchMap(request)
         return response.result
