@@ -268,6 +268,7 @@ message Command {
     DockAnyShelfWithRegistrationCommand dock_any_shelf_with_registration_command = 18;
     LocalizeCommand localize_command = 19;
     MoveByVelocityWithMutedSensorsCommand move_by_velocity_with_muted_sensors_command = 22;
+    DepartFromChargerCommand depart_from_charger_command = 23;
   }
 }
 
@@ -334,6 +335,9 @@ message LocalizeCommand {
 message MoveByVelocityWithMutedSensorsCommand {
   double signed_velocity = 1;  // [m/s]
   double move_duration_sec = 2;
+}
+
+message DepartFromChargerCommand {
 }
 
 enum CommandState {
