@@ -109,7 +109,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        laser_frame:
+        laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
