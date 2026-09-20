@@ -246,7 +246,7 @@ class KachakaApiClientBase:
             )
             if command_result_response.command_id == response.command_id:
                 break
-        return (self.get_last_command_result())[0]
+        return command_result_response.result
 
     def move_shelf(
         self,
