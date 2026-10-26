@@ -58,6 +58,8 @@
 
 * 📖 [カチャカAPIでできること](./docs/FEATURES.md)
     * カチャカAPIでできることをまとめています。
+* 📘 [カチャカAPI仕様書](https://pf-robotics.github.io/kachaka-api/)
+    * 各APIのリクエスト・レスポンスと、その使い方を説明します。
 * 🚀 [カチャカAPIを簡単に試してみる (JupyterLab)](./docs/QUICKSTART.md)
     * Webブラウザから、JupyterLabを使ってカチャカAPIを利用する方法を説明します。
     * OS環境を問わず広く利用できるため、カチャカAPIの動作確認やサンプルコードの実行におすすめです。
