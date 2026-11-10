@@ -1,7 +1,7 @@
 import contextlib
 import io
 import threading
-from typing import Generator, List, Optional
+from typing import Any, Generator, List, Optional, Sequence, Tuple
 
 import grpc
 import numpy as np
@@ -16,8 +16,14 @@ OBJECT_LABEL_COLOR = ["pink", "green", "blue", "cyan", "red"]
 
 
 class LaserScanActivator:
-    def __init__(self, target: str = "100.94.1.1:26400") -> None:
-        self._stub = KachakaApiStub(grpc.insecure_channel(target))
+    def __init__(
+        self,
+        target: str = "100.94.1.1:26400",
+        options: Optional[Sequence[Tuple[str, Any]]] = None,
+    ) -> None:
+        self._stub = KachakaApiStub(
+            grpc.insecure_channel(target, options=options)
+        )
         self._thread: Optional[threading.Thread] = None
         self._disposing = threading.Event()
 

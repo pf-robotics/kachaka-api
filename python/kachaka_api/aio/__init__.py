@@ -14,12 +14,14 @@ from __future__ import annotations
 
 import asyncio
 from typing import (
+    Any,
     AsyncGenerator,
     Awaitable,
     Callable,
     Generic,
     ParamSpec,
     Protocol,
+    Sequence,
     TypeVar,
 )
 
@@ -98,8 +100,12 @@ class TupleResponseHandler(ResponseHandler[T, U], Generic[T, U, P]):
 
 
 class KachakaApiClient(KachakaApiClientBase):
-    def __init__(self, target: str = "100.94.1.1:26400") -> None:
-        super().__init__(target)
+    def __init__(
+        self,
+        target: str = "100.94.1.1:26400",
+        options: Sequence[tuple[str, Any]] | None = None,
+    ) -> None:
+        super().__init__(target, options=options)
         self._running = True
 
         self.png_map = ResponseHandler[pb2.GetPngMapResponse, pb2.Map](
