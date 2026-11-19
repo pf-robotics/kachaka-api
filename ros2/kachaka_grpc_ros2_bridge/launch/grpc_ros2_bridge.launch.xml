@@ -133,6 +133,8 @@
                      plugin="kachaka::grpc_ros2_bridge::ObjectDetectionComponent"
                      name="object_detection"
                      namespace="$(var namespace)">
+      <param name="frame_prefix"
+             value="$(var frame_prefix)" />
       <param name="server_uri"
              value="$(var server_uri)" />
       <extra_arg name="use_intra_process_comms"
