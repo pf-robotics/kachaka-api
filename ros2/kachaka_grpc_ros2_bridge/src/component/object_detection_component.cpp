@@ -17,6 +17,7 @@
 #include <rclcpp_components/register_node_macro.hpp>
 #include <sensor_msgs/msg/region_of_interest.hpp>
 
+#include "../converter/ros_header.hpp"
 #include "../ros2_topic_bridge.hpp"
 #include "../stub_util.hpp"
 #include "kachaka-api.grpc.pb.h"
@@ -29,6 +30,8 @@ class ObjectDetectionComponent : public rclcpp::Node {
  public:
   explicit ObjectDetectionComponent(const rclcpp::NodeOptions& options)
       : Node("object_detection", options) {
+    this->declare_parameter("frame_prefix", "");
+    frame_prefix_ = this->get_parameter("frame_prefix").as_string();
     stub_ = GetSharedStub(declare_parameter("server_uri", ""));
 
     rclcpp::SensorDataQoS qos;
@@ -42,8 +45,8 @@ class ObjectDetectionComponent : public rclcpp::Node {
     object_detection_bridge_->SetConverter(
         [this](const kachaka_api::GetObjectDetectionResponse& grpc_msg,
                kachaka_interfaces::msg::ObjectDetectionListStamped* ros2_msg) {
-          ros2_msg->header.stamp = rclcpp::Time(grpc_msg.header().stamp_nsec());
-          ros2_msg->header.frame_id = grpc_msg.header().frame_id();
+          converter::ConvertGrpcHeaderToRos2Header(
+              grpc_msg.header(), &ros2_msg->header, this->frame_prefix_);
           for (const auto& object : grpc_msg.objects()) {
             kachaka_interfaces::msg::ObjectDetection ros2_object;
             const std::optional<uint8_t> lavel =
@@ -87,6 +90,7 @@ class ObjectDetectionComponent : public rclcpp::Node {
     return std::nullopt;
   }
 
+  std::string frame_prefix_;
   std::shared_ptr<kachaka_api::KachakaApi::Stub> stub_{nullptr};
   std::unique_ptr<
       Ros2TopicBridge<kachaka_api::GetObjectDetectionResponse,
